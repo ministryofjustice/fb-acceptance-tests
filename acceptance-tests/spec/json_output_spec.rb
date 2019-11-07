@@ -23,7 +23,12 @@ describe 'JSON Output' do
     fill_in 'COMPOSITE.date-year', with: '2007'
     continue
 
+    # number
     fill_in 'number_cats', with: 28
+    continue
+
+    # select
+    select "I can't say (They can read)", :from => 'cat_spy'
     continue
 
     click_on 'Send complaint'
@@ -40,7 +45,8 @@ describe 'JSON Output' do
       email_address: 'bob.smith@digital.justice.gov.uk',
       complaint_details: 'Foo bar baz',
       date: '2007-11-12',
-      number_cats: 28
+      number_cats: 28,
+      cat_spy: 'machine answer 3'
     })
 
     expect(result).to include(attachments: [])

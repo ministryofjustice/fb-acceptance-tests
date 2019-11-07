@@ -29,6 +29,9 @@ describe 'Filling out an Email output form' do
     fill_in 'number_cats', with: 28
     continue
 
+    select "I can't say (They can read)", :from => "cat_spy"
+    continue
+
     click_on 'Send complaint'
 
     wait_for_pdf_to_be_generated
@@ -89,6 +92,11 @@ describe 'Filling out an Email output form' do
 
       # number
       expect(result).to match(/How many cats\?[\n\r\s]+28/)
+
+      # select
+      expect(result).to include('Is your cat watching you')
+      expect(result).to include('now?')
+      expect(result).to include('machine answer 3') # TODO known bug using the machine value
     end
   end
 end

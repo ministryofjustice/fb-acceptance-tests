@@ -15,6 +15,7 @@
     "page.foobar",
     "page.date",
     "page.number",
+    "page.select",
     "page.check-answers",
     "page.complaint-sent"
   ],
