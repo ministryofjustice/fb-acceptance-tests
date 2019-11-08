@@ -88,7 +88,7 @@ describe 'Filling out an Email output form' do
       # date
       expect(result).to include('When did the cat choose')
       expect(result).to include('you?')
-      expect(result).to include('2007-11-12')
+      expect(result).to include('12 November 2007')
 
       # number
       expect(result).to match(/How many cats\?[\n\r\s]+28/)
