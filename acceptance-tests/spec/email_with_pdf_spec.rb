@@ -71,7 +71,7 @@ describe 'Filling out an Email output form' do
       # radio
       expect(result).to include('Can we contact you by')
       expect(result).to include('email?')
-      expect(result).to include('yes')
+      expect(result).to include('Yes')
 
       # email
       expect(result).to match(/Your email address[\n\r\s]+bob.smith@digital.justice.gov.uk/)
@@ -96,7 +96,7 @@ describe 'Filling out an Email output form' do
       # select
       expect(result).to include('Is your cat watching you')
       expect(result).to include('now?')
-      expect(result).to include('machine answer 3') # TODO known bug using the machine value
+      expect(result).to include('machine answer 3')
     end
   end
 end
