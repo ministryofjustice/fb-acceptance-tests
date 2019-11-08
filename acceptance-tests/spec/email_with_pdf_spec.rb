@@ -96,7 +96,7 @@ describe 'Filling out an Email output form' do
       # select
       expect(result).to include('Is your cat watching you')
       expect(result).to include('now?')
-      expect(result).to include('machine answer 3')
+      expect(result).to include("I can't say (They can read)")
     end
   end
 end
