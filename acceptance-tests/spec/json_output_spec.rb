@@ -13,7 +13,7 @@ describe 'JSON Output' do
     fill_in 'Last name', with: 'Smith'
     continue
 
-    # raido
+    # radio
     choose 'has-email', option: 'yes', visible: false
     continue
 

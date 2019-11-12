@@ -9,24 +9,24 @@ describe 'Filling out an Email output form' do
     visit 'http://runner-app-email:3000'
     click_on 'Start'
 
-    #text
+    # text
     fill_in 'First name', with: 'Bob'
     fill_in 'Last name', with: 'Smith'
     continue
 
-    #radio
+    # radio
     choose 'has-email', option: 'yes', visible: false
     continue
 
-    #email
+    # email
     fill_in 'Your email address', with: 'bob.smith@digital.justice.gov.uk'
     continue
 
-    #text
+    # text
     fill_in 'complaint_details', with: 'Foo bar baz'
     continue
 
-    #checkbox
+    # checkbox
     check 'Apples', visible: false
     continue
 
