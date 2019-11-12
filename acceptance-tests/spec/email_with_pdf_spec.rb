@@ -7,29 +7,45 @@ require 'pdf-reader'
 describe 'Filling out an Email output form' do
   it 'sends an email with the submission in a PDF' do
     visit 'http://runner-app-email:3000'
-
     click_on 'Start'
+
+    #text
     fill_in 'First name', with: 'Bob'
     fill_in 'Last name', with: 'Smith'
     continue
+
+    #radio
     choose 'has-email', option: 'yes', visible: false
     continue
+
+    #email
     fill_in 'Your email address', with: 'bob.smith@digital.justice.gov.uk'
     continue
+
+    #text
     fill_in 'complaint_details', with: 'Foo bar baz'
     continue
+
+    #checkbox
     check 'Apples', visible: false
     continue
 
+    # date
     fill_in 'COMPOSITE.date-day', with: '12'
     fill_in 'COMPOSITE.date-month', with: '11'
     fill_in 'COMPOSITE.date-year', with: '2007'
     continue
 
+    # number
     fill_in 'number_cats', with: 28
     continue
 
-    select "I can't say (They can read)", :from => "cat_spy"
+    # select
+    select "I can't say (They can read)", from: 'cat_spy'
+    continue
+
+    # autocomplete
+    fill_in 'page_autocomplete--autocomplete_autocomplete', with: "California Spangled\n" # the new line "presses enter" on the selected option
     continue
 
     click_on 'Send complaint'
@@ -46,6 +62,7 @@ describe 'Filling out an Email output form' do
     until HTTParty.get(ENV.fetch('EMAIL_ENDPOINT')).success?
       p 'waiting for PDF to be generated'
       fail 'PDF assertion timeout' if tries >= max_tries
+
       tries += 1
       sleep 2
     end
@@ -97,6 +114,9 @@ describe 'Filling out an Email output form' do
       expect(result).to include('Is your cat watching you')
       expect(result).to include('now?')
       expect(result).to include("I can't say (They can read)")
+
+      expect(result).to include('Cat Breed')
+      expect(result).to include('California Spangled')
     end
   end
 end

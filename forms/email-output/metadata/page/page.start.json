@@ -16,6 +16,7 @@
     "page.date",
     "page.number",
     "page.select",
+    "page.autocomplete",
     "page.check-answers",
     "page.complaint-sent"
   ],

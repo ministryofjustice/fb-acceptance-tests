@@ -6,18 +6,26 @@ require 'jwe'
 describe 'JSON Output' do
   it 'sends the JSON payload to the specified endpoint' do
     visit 'http://runner-app-json:3000'
-
     click_on 'Start'
+
+    # text
     fill_in 'First name', with: 'Bob'
     fill_in 'Last name', with: 'Smith'
     continue
+
+    # raido
     choose 'has-email', option: 'yes', visible: false
     continue
+
+    # email
     fill_in 'Your email address', with: 'bob.smith@digital.justice.gov.uk'
     continue
+
+    # text
     fill_in 'complaint_details', with: 'Foo bar baz'
     continue
 
+    # date
     fill_in 'COMPOSITE.date-day', with: '12'
     fill_in 'COMPOSITE.date-month', with: '11'
     fill_in 'COMPOSITE.date-year', with: '2007'
@@ -28,7 +36,11 @@ describe 'JSON Output' do
     continue
 
     # select
-    select "I can't say (They can read)", :from => 'cat_spy'
+    select "I can't say (They can read)", from: 'cat_spy'
+    continue
+
+    # autocomplete
+    fill_in 'page_autocomplete--autocomplete_autocomplete', with: "California Spangled\n" # the new line "presses enter" on the selected option
     continue
 
     click_on 'Send complaint'
@@ -46,7 +58,8 @@ describe 'JSON Output' do
       complaint_details: 'Foo bar baz',
       date: '2007-11-12',
       number_cats: 28,
-      cat_spy: 'machine answer 3'
+      cat_spy: 'machine answer 3',
+      cat_breed: 'California Spangled'
     })
 
     expect(result).to include(attachments: [])
@@ -61,6 +74,7 @@ describe 'JSON Output' do
     until HTTParty.get(ENV.fetch('JSON_ENDPOINT')).success?
       p 'waiting for JSON result'
       fail 'JSON assertion timeout' if tries >= max_tries
+
       tries += 1
       sleep 2
     end
