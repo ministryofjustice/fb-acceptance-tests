@@ -12,6 +12,7 @@
     "page.email-contact",
     "page.email-address",
     "page.complaint",
+    "page.checkbox",
     "page.date",
     "page.number",
     "page.select",

@@ -25,6 +25,10 @@ describe 'JSON Output' do
     fill_in 'complaint_details', with: 'Foo bar baz'
     continue
 
+    # checkbox
+    check 'Apples', visible: false
+    continue
+
     # date
     fill_in 'COMPOSITE.date-day', with: '12'
     fill_in 'COMPOSITE.date-month', with: '11'
@@ -59,7 +63,8 @@ describe 'JSON Output' do
       date: '2007-11-12',
       number_cats: 28,
       cat_spy: 'machine answer 3',
-      cat_breed: 'California Spangled'
+      cat_breed: 'California Spangled',
+      apples: 'apples'
     })
 
     expect(result).to include(attachments: [])

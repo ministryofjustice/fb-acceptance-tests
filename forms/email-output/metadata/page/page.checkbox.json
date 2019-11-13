@@ -1,19 +1,19 @@
 {
-  "_id": "page.foobar",
+  "_id": "page.checkbox",
   "_type": "page.form",
   "components": [
     {
-      "_id": "page.foobar--checkboxes",
+      "_id": "page.checkbox--checkboxes",
       "_type": "checkboxes",
       "items": [
         {
-          "_id": "page.foobar--checkboxes--checkbox.auto_name__3",
+          "_id": "page.checkbox--checkboxes--checkbox.auto_name__3",
           "_type": "checkbox",
           "label": "Apples",
           "name": "auto_name__3"
         },
         {
-          "_id": "page.foobar--checkboxes--checkbox.auto_name__4",
+          "_id": "page.checkbox--checkboxes--checkbox.auto_name__4",
           "_type": "checkbox",
           "label": "Pears",
           "name": "auto_name__4"
@@ -23,5 +23,5 @@
     }
   ],
   "heading": "Some Heading",
-  "url": "foobar"
+  "url": "checkbox"
 }
