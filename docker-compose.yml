@@ -24,8 +24,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: datastore_local
 
-  runner-app-email:
-    container_name: runner-app-email
+  runner-app:
+    container_name: runner-app
     build:
       context: .runner
       dockerfile: Dockerfile
@@ -40,22 +40,6 @@ services:
       SERVICE_TOKEN: "xyz"
       SERVICE_SLUG: slug
       SERVICE_OUTPUT_EMAIL: "bob.admin@digital.justice.gov.uk"
-
-  runner-app-json:
-    container_name: runner-app-json
-    build:
-      context: .runner
-      dockerfile: Dockerfile
-    ports:
-      - 3001:3000
-    environment:
-      SERVICE_PATH: ./forms/json-output
-      SUBMITTER_URL: http://submitter-app:3000
-      USER_DATASTORE_URL: http://datastore-app:3000
-      USER_FILESTORE_URL: http://filestore:3000
-      SERVICE_SECRET: "xyz"
-      SERVICE_TOKEN: "xyz"
-      SERVICE_SLUG: slug
       SERVICE_OUTPUT_JSON_ENDPOINT: 'http://output-recorder:3000/json'
       SERVICE_OUTPUT_JSON_KEY: '19a56ee0e50dd83g'
 
@@ -83,13 +67,12 @@ services:
       NOTIFY_SMS_GENERIC: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
       NOTIFY_SMS_RETURN_SETUP_MOBILE: "54dcaad7-4967-431d-8606-72b0b80b5c6a"
       NOTIFY_SMS_RETURN_SIGNIN_MOBILE: "something"
-      NOTIFY_SMS_RETURN_SETUP_MOBILE: "54dcaad7-4967-431d-8606-72b0b80b5c6a"
       FB_ENVIRONMENT_SLUG: "test"
       SECRET_KEY_BASE: "xxxyyy"
       PDF_GENERATOR_ROOT_URL: "http://pdf-generator:3000"
       RAILS_ENV: development
       SERVICE_TOKEN_CACHE_ROOT_URL: "token-cache-app:3000"
-      RUNNER_CALLBACK_URL_OVERRIDE: "runner-app-email"
+      RUNNER_CALLBACK_URL_OVERRIDE: "runner-app"
       EMAIL_ENDPOINT_OVERRIDE: 'http://output-recorder:3000/email'
       ENCRYPTION_KEY: 'i6USnzeRKljfLMPbRlB2E9oikURx4ou3'
       ENCRYPTION_SALT: 'lGlcn9HabIducdpwlSHcM06e9gFuIfS1Ogg5krtn1Fw='
@@ -110,14 +93,13 @@ services:
       NOTIFY_SMS_GENERIC: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
       NOTIFY_SMS_RETURN_SETUP_MOBILE: "54dcaad7-4967-431d-8606-72b0b80b5c6a"
       NOTIFY_SMS_RETURN_SIGNIN_MOBILE: "something"
-      NOTIFY_SMS_RETURN_SETUP_MOBILE: "54dcaad7-4967-431d-8606-72b0b80b5c6a"
       FB_ENVIRONMENT_SLUG: "test"
       SECRET_KEY_BASE: "xxxyyy"
       PDF_GENERATOR_ROOT_URL: "http://pdf-generator:3000"
       SERVICE_TOKEN_CACHE_ROOT_URL: "token-cache-app:3000"
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
-      RUNNER_CALLBACK_URL_OVERRIDE: "runner-app-email"
+      RUNNER_CALLBACK_URL_OVERRIDE: "runner-app"
       EMAIL_ENDPOINT_OVERRIDE: 'http://output-recorder:3000/email'
       ENCRYPTION_KEY: 'i6USnzeRKljfLMPbRlB2E9oikURx4ou3'
       ENCRYPTION_SALT: 'lGlcn9HabIducdpwlSHcM06e9gFuIfS1Ogg5krtn1Fw='
@@ -150,8 +132,7 @@ services:
       JSON_ENDPOINT: 'http://output-recorder:3000/json'
       SERVICE_OUTPUT_JSON_KEY: '19a56ee0e50dd83g'
     depends_on:
-      - runner-app-email
-      - runner-app-json
+      - runner-app
       - submitter-db
       - datastore-db
       - pdf-generator

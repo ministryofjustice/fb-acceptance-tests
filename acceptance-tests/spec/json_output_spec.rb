@@ -5,7 +5,7 @@ require 'jwe'
 
 describe 'JSON Output' do
   it 'sends the JSON payload to the specified endpoint' do
-    visit 'http://runner-app-json:3000'
+    visit 'http://runner-app:3000'
     click_on 'Start'
 
     # text
@@ -64,7 +64,7 @@ describe 'JSON Output' do
       number_cats: 28,
       cat_spy: 'machine answer 3',
       cat_breed: 'California Spangled',
-      apples: 'apples'
+      'checkbox-apples': 'yes'
     })
 
     expect(result).to include(attachments: [])

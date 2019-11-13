@@ -6,7 +6,7 @@ require 'pdf-reader'
 
 describe 'Filling out an Email output form' do
   it 'sends an email with the submission in a PDF' do
-    visit 'http://runner-app-email:3000'
+    visit 'http://runner-app:3000'
     click_on 'Start'
 
     # text

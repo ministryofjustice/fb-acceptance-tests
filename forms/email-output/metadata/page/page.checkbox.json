@@ -7,16 +7,16 @@
       "_type": "checkboxes",
       "items": [
         {
-          "_id": "page.checkbox--checkboxes--checkbox.auto_name__3",
+          "_id": "page.checkbox--checkboxes--checkbox.checkbox-fruit-1",
           "_type": "checkbox",
           "label": "Apples",
-          "name": "auto_name__3"
+          "name": "checkbox-apples"
         },
         {
-          "_id": "page.checkbox--checkboxes--checkbox.auto_name__4",
+          "_id": "page.checkbox--checkboxes--checkbox.checkbox-fruit-2",
           "_type": "checkbox",
           "label": "Pears",
-          "name": "auto_name__4"
+          "name": "checkbox-pears"
         }
       ],
       "legend": "Best Legend"

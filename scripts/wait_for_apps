@@ -7,7 +7,7 @@ for app in datastore-app submitter-app pdf-generator; do
     done
 done
 
-for app in runner-app-email runner-app-json; do
+for app in runner-app; do
     until docker exec $app wget http://localhost:3000/ping.json -O - | grep APP_SHA; do
         echo "Waiting for ${app} to start accepting traffic...";
         sleep 1
