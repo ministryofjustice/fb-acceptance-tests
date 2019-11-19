@@ -33,6 +33,7 @@ build: stop setup
 serve: build
 	docker-compose up -d
 	./scripts/wait_for_apps
+	./scripts/setup_test_env.sh
 
 spec: serve
 	docker-compose run acceptance-tests rspec

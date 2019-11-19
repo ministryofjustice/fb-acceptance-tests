@@ -153,11 +153,6 @@ services:
 
   service-token-cache-app:
     container_name: service-token-cache-app
-    command:
-      - /bin/sh
-      - -c
-      - | # adds a test token to use in end to end test
-        rails runner "Support::ServiceTokenCache.put('slug', 'token-for-slug')" && bundle exec rails s -e development -p 3000 --binding=0.0.0.0
     build:
       context: .service-token-cache
       dockerfile: ./Dockerfile
@@ -178,25 +173,6 @@ services:
 
   localstack:
     container_name: localstack
-    entrypoint: /bin/bash -c # overwrites entrypoint
-    command:
-      - |
-        echo 'editing startup script'
-
-        # Remove last 3 lines of startup script so we can run some setup -> https://github.com/localstack/localstack/blob/master/bin/docker-entrypoint.sh
-        sed -i -n -e :a -e '1,3!{P;N;D;};N;ba' /usr/local/bin/docker-entrypoint.sh
-
-        # run_startup_scripts function in forground insted of backround
-        echo 'run_startup_scripts' >> /usr/local/bin/docker-entrypoint.sh
-
-        bash '/usr/local/bin/docker-entrypoint.sh'
-        echo 'settting up buckets'
-        aws --endpoint-url=http://localhost:4572 s3 mb s3://filestore-bucket
-        aws --endpoint-url=http://localhost:4572 s3api put-bucket-acl --bucket filestore-bucket --acl public-read
-        aws --endpoint-url=http://localhost:4572 s3 mb s3://external-filestore-bucket
-        aws --endpoint-url=http://localhost:4572 s3api put-bucket-acl --bucket external-filestore-bucket --acl public-read
-
-        tail -qF /tmp/localstack_infra.log /tmp/localstack_infra.err
     image: localstack/localstack:latest
     ports:
       - '4563-4599:4563-4599'
