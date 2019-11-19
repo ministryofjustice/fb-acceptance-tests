@@ -124,6 +124,8 @@ describe 'Filling out an Email output form' do
 
       expect(result).to include('Cat Breed')
       expect(result).to include('California Spangled')
+
+      expect(result).to match(/Upload documents[\n\r\s]+hello_world.txt \(12B\)/)
     end
   end
 
