@@ -1,4 +1,4 @@
-FROM rodolpheche/wiremock
+FROM rodolpheche/wiremock:2.25.1-alpine
 
 WORKDIR /home/wiremock/
 
