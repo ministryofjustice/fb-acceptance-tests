@@ -40,7 +40,7 @@ services:
       SERVICE_TOKEN: "xyz"
       SERVICE_SLUG: slug
       SERVICE_OUTPUT_EMAIL: "bob.admin@digital.justice.gov.uk"
-      SERVICE_OUTPUT_JSON_ENDPOINT: 'http://output-recorder:3000/json'
+      SERVICE_OUTPUT_JSON_ENDPOINT: 'http://output-recorder:8080/json'
       SERVICE_OUTPUT_JSON_KEY: '19a56ee0e50dd83g'
 
   filestore-app:
@@ -99,7 +99,7 @@ services:
       RAILS_ENV: development
       SERVICE_TOKEN_CACHE_ROOT_URL: "token-cache-app:3000"
       RUNNER_CALLBACK_URL_OVERRIDE: "runner-app"
-      EMAIL_ENDPOINT_OVERRIDE: 'http://output-recorder:3000/email'
+      EMAIL_ENDPOINT_OVERRIDE: 'http://output-recorder:8080/email'
       ENCRYPTION_KEY: 'i6USnzeRKljfLMPbRlB2E9oikURx4ou3'
       ENCRYPTION_SALT: 'lGlcn9HabIducdpwlSHcM06e9gFuIfS1Ogg5krtn1Fw='
 
@@ -126,7 +126,7 @@ services:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
       RUNNER_CALLBACK_URL_OVERRIDE: "runner-app"
-      EMAIL_ENDPOINT_OVERRIDE: 'http://output-recorder:3000/email'
+      EMAIL_ENDPOINT_OVERRIDE: 'http://output-recorder:8080/email'
       ENCRYPTION_KEY: 'i6USnzeRKljfLMPbRlB2E9oikURx4ou3'
       ENCRYPTION_SALT: 'lGlcn9HabIducdpwlSHcM06e9gFuIfS1Ogg5krtn1Fw='
     command: bundle exec rake jobs:work
@@ -149,7 +149,7 @@ services:
     build:
       context: ./acceptance-tests/output-recorder
     ports:
-      - 3003:3000
+      - 3003:8080
 
   service-token-cache-app:
     container_name: service-token-cache-app
@@ -175,8 +175,7 @@ services:
     container_name: localstack
     image: localstack/localstack:latest
     ports:
-      - '4563-4599:4563-4599'
-      - '8055:8080'
+      - 4572:4572
     environment:
       SERVICES: 's3'
       AWS_ACCESS_KEY_ID: 'qwerty'
@@ -187,9 +186,9 @@ services:
     build:
       context: acceptance-tests
     environment:
-      EMAIL_ENDPOINT: 'http://output-recorder:3000/email'
-      JSON_ENDPOINT: 'http://output-recorder:3000/json'
-      RECORDER_TEARDOWN_ENDPOINT: 'http://output-recorder:3000/teardown'
+      OUTPUT_RECORDER_ENDPOINT: 'http://output-recorder:8080'
+      EMAIL_PATH: '/email'
+      JSON_PATH: '/json'
       SERVICE_OUTPUT_JSON_KEY: '19a56ee0e50dd83g'
     depends_on:
       - runner-app
@@ -203,3 +202,5 @@ services:
       - submitter-app
       - submitter-worker
       - output-recorder
+    volumes:
+      - ./acceptance-tests:/usr/src/app
