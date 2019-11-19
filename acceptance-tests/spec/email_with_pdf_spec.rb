@@ -3,10 +3,11 @@ require 'spec_helper'
 require 'httparty'
 require 'mail'
 require 'pdf-reader'
+require 'cgi'
 
 describe 'Filling out an Email output form' do
   before :each do
-    HTTParty.delete(ENV.fetch('RECORDER_TEARDOWN_ENDPOINT'))
+    OutputRecorder.cleanup_recorded_requests
   end
 
   it 'sends an email with the submission in a PDF' do
@@ -53,34 +54,32 @@ describe 'Filling out an Email output form' do
     continue
 
     # upload
-    # attach_file("upload[1]", 'spec/fixtures/files/hello_world.txt')
+    attach_file("upload[1]", 'spec/fixtures/files/hello_world.txt')
     continue
 
     click_on 'Send complaint'
 
-    wait_for_pdf_to_be_generated
-    assert_pdf_contents
+    recorded_emails = OutputRecorder.wait_for_result(url: '/email', expected_requests: 2)
+    assert_pdf_contents recorded_emails[0]
+    assert_file_upload(
+        actual: recorded_emails[1],
+        expected: File.read("spec/fixtures/files/hello_world.txt")
+    )
   end
 
   def continue
     click_on 'Continue'
   end
 
-  def wait_for_pdf_to_be_generated(tries = 0, max_tries = 10)
-    until HTTParty.get(ENV.fetch('EMAIL_ENDPOINT')).success?
-      p 'waiting for PDF to be generated'
-      fail 'PDF assertion timeout' if tries >= max_tries
-
-      tries += 1
-      sleep 2
-    end
+  def parse_email(email)
+    url_decoded_hash = CGI::parse(email)
+    Mail.read_from_string(url_decoded_hash.fetch('raw_message'))
   end
 
-  def assert_pdf_contents
+  def assert_pdf_contents(pdf_email)
     pdf_path = '/tmp/submission.pdf'
 
-    response = HTTParty.get(ENV.fetch('EMAIL_ENDPOINT'))
-    parsed_message = Mail.read_from_string(response.parsed_response['raw_message'])
+    parsed_message = parse_email(pdf_email)
 
     parsed_message.attachments.each do |attachment|
       File.open(pdf_path, 'w') { |file| file.write(attachment.decoded) }
@@ -126,5 +125,11 @@ describe 'Filling out an Email output form' do
       expect(result).to include('Cat Breed')
       expect(result).to include('California Spangled')
     end
+  end
+
+  def assert_file_upload(actual:, expected:)
+    attachments = parse_email(actual).attachments
+    expect(attachments.size).to eq(1)
+    expect(attachments.first.decoded).to eq(expected)
   end
 end
