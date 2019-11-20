@@ -28,7 +28,7 @@ build: stop setup
 	echo HEAD > .runner/APP_SHA
 	mkdir -p .runner/forms
 	cp -r forms/* .runner/forms
-	docker-compose build --build-arg BUNDLE_FLAGS='' --build-arg BUNDLE_ARGS='' --parallel
+	docker-compose build --parallel
 
 serve: build
 	docker-compose up -d

@@ -6,6 +6,8 @@ services:
     build:
       context: .datastore
       dockerfile: ./Dockerfile
+      args:
+        BUNDLE_FLAGS: ''
     links:
       - datastore-db
     environment:
@@ -48,6 +50,8 @@ services:
     build:
       context: .filestore
       dockerfile: ./Dockerfile
+      args:
+        BUNDLE_FLAGS: ''
     ports:
       - 10001:3000
     environment:
@@ -57,7 +61,6 @@ services:
       AWS_S3_EXTERNAL_BUCKET_ACCESS_KEY_ID: 'qwerty'
       AWS_S3_EXTERNAL_BUCKET_SECRET_ACCESS_KEY: 'qwerty'
       AWS_S3_EXTERNAL_BUCKET_NAME: 'external-filestore-bucket'
-      SENTRY_DSN: ''
       KEY_ENCRYPTION_IV: '1234567890123456'
       AWS_S3_BUCKET_NAME: 'filestore-bucket'
       ENCRYPTION_KEY: '12345678901234561234567890123456'
@@ -82,6 +85,8 @@ services:
     build:
       context: .submitter
       dockerfile: ./docker/api/Dockerfile
+      args:
+        BUNDLE_ARGS: ''
     environment:
       DATABASE_URL: "postgres://postgres:password@submitter-db/submitter_local"
       NOTIFY_EMAIL_GENERIC: "46a72b64-9541-4000-91a7-fa8a3fa10bf9"
@@ -108,6 +113,8 @@ services:
     build:
       context: .submitter
       dockerfile: ./docker/worker/Dockerfile
+      args:
+        BUNDLE_ARGS: ''
     environment:
       DATABASE_URL: "postgres://postgres:password@submitter-db/submitter_local"
       NOTIFY_EMAIL_GENERIC: "46a72b64-9541-4000-91a7-fa8a3fa10bf9"
@@ -136,6 +143,8 @@ services:
     build:
       context: .pdf-generator
       dockerfile: ./Dockerfile
+      args:
+        BUNDLE_ARGS: '--path vendor/bundle'
     environment:
       SERVICE_TOKEN_CACHE_ROOT_URL: "token-cache-app:3000"
       SENTRY_DSN: "whatever"
@@ -185,6 +194,8 @@ services:
   acceptance-tests:
     build:
       context: acceptance-tests
+      args:
+        BUNDLE_FLAGS: ''
     environment:
       OUTPUT_RECORDER_ENDPOINT: 'http://output-recorder:8080'
       EMAIL_PATH: '/email'
