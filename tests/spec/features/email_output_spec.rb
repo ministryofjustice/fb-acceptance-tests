@@ -85,25 +85,27 @@ describe 'Filling out an Email output form' do
 
     expect(form.text).to include("You've sent us the answers about your cat!")
 
-    # expected 6 emails because the SERVICE_OUTPUT contains 2 emails
-    # 2 emails (submission & attachment) for the first service output
-    # 2 emails (submission & attachment) to the second service output
+    # expected 4 emails because the SERVICE_OUTPUT contains 2 emails
+    # 1 email (submission & attachment) for the first service output
+    # 1 email (submission & attachment) to the second service output
     # 2 emails (CSV submission) to both on the Service Output
     #
-    recorded_emails = OutputRecorder.wait_for_result(url: '/email', expected_requests: 6)
+    recorded_emails = OutputRecorder.wait_for_result(url: '/email', expected_requests: 4)
 
-    assert_pdf_contents recorded_emails[0]
-    assert_file_upload(
-      actual: recorded_emails[1],
-      expected: File.read("spec/fixtures/files/hello_world.txt")
-    )
-    assert_pdf_contents recorded_emails[2]
-    assert_file_upload(
-      actual: recorded_emails[3],
-      expected: File.read("spec/fixtures/files/hello_world.txt")
-    )
-    assert_csv_contents recorded_emails[4]
-    assert_csv_contents recorded_emails[5]
+    recorded_emails[0..1].each do |email|
+      attachments = parse_email(email).attachments
+      pdf_answers = attachments.detect { |attachment| attachment.filename.include?('-answers.pdf') }
+      file_upload = attachments.detect { |attachment| attachment.filename.include?('hello_world.txt') }
+
+      assert_pdf_contents(pdf_answers)
+      assert_file_upload(
+        actual: file_upload,
+        expected: File.read("spec/fixtures/files/hello_world.txt")
+      )
+    end
+
+    assert_csv_contents(recorded_emails[2])
+    assert_csv_contents(recorded_emails[3])
   end
 
   def continue
@@ -115,65 +117,61 @@ describe 'Filling out an Email output form' do
     Mail.read_from_string(url_decoded_hash.fetch('raw_message'))
   end
 
-  def assert_pdf_contents(pdf_email)
+  def assert_pdf_contents(attachment)
     pdf_path = '/tmp/submission.pdf'
 
-    parsed_message = parse_email(pdf_email)
+    File.open(pdf_path, 'w') { |file| file.write(attachment.decoded) }
+    result = PDF::Reader.new(pdf_path).pages.map { |page| page.text }.join(' ')
 
-    parsed_message.attachments.each do |attachment|
-      File.open(pdf_path, 'w') { |file| file.write(attachment.decoded) }
-      result = PDF::Reader.new(pdf_path).pages.map { |page| page.text }.join(' ')
+    p 'Asserting PDF contents'
 
-      p 'Asserting PDF contents'
+    expect(result).to include('Email Output Service PDF Heading')
 
-      expect(result).to include('Email Output Service PDF Heading')
+    # text
+    expect(result).to include('Your name')
+    expect(result).to match(/First name[\n\r\s]+Form/)
+    expect(result).to match(/Last name[\n\r\s]+Builders/)
 
-      # text
-      expect(result).to include('Your name')
-      expect(result).to match(/First name[\n\r\s]+Form/)
-      expect(result).to match(/Last name[\n\r\s]+Builders/)
+    # radio
+    expect(result).to include('Can we contact you by')
+    expect(result).to include('email?')
+    expect(result).to include('Yes')
 
-      # radio
-      expect(result).to include('Can we contact you by')
-      expect(result).to include('email?')
-      expect(result).to include('Yes')
+    # email
+    expect(result).to include('Your email address')
+    expect(result).to include('form-builder-developers@digital.justice.gov.uk')
 
-      # email
-      expect(result).to include('Your email address')
-      expect(result).to include('form-builder-developers@digital.justice.gov.uk')
+    # textarea
+    expect(result).to include('Your cat')
+    expect(result).to include('My cat is a fluffy killer')
 
-      # textarea
-      expect(result).to include('Your cat')
-      expect(result).to include('My cat is a fluffy killer')
+    # checkbox
+    expect(result).to include('Your fruit')
+    expect(result).to include('Choose your fruit')
+    expect(result).to include('Apples')
+    expect(result).to include('Pears')
 
-      # checkbox
-      expect(result).to include('Your fruit')
-      expect(result).to include('Choose your fruit')
-      expect(result).to include('Apples')
-      expect(result).to include('Pears')
+    # date
+    expect(result).to include('When did your cat choose')
+    expect(result).to include('you?')
+    expect(result).to include('12 November 2007')
 
-      # date
-      expect(result).to include('When did your cat choose')
-      expect(result).to include('you?')
-      expect(result).to include('12 November 2007')
+    # number
+    expect(result).to include('How many cats have chosen')
+    expect(result).to include('you?')
+    expect(result).to include('28')
 
-      # number
-      expect(result).to include('How many cats have chosen')
-      expect(result).to include('you?')
-      expect(result).to include('28')
+    # select
+    expect(result).to include('Is your cat watching you')
+    expect(result).to include('now?')
+    expect(result).to include("I can't say (They can read)")
 
-      # select
-      expect(result).to include('Is your cat watching you')
-      expect(result).to include('now?')
-      expect(result).to include("I can't say (They can read)")
+    expect(result).to include('Cat breed')
+    expect(result).to include('California Spangled')
 
-      expect(result).to include('Cat breed')
-      expect(result).to include('California Spangled')
-
-      expect(result).to include('What does your cat look')
-      expect(result).to include('like?')
-      expect(result).to include('hello_world.txt (12B)')
-    end
+    expect(result).to include('What does your cat look')
+    expect(result).to include('like?')
+    expect(result).to include('hello_world.txt (12B)')
   end
 
   def assert_csv_contents(email)
@@ -224,8 +222,6 @@ describe 'Filling out an Email output form' do
   end
 
   def assert_file_upload(actual:, expected:)
-    attachments = parse_email(actual).attachments
-    expect(attachments.size).to eq(1)
-    expect(attachments.first.decoded).to eq(expected)
+    expect(actual.decoded).to eq(expected)
   end
 end
