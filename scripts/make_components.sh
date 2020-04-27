@@ -11,3 +11,4 @@ mkdir -p .components/select
 mkdir -p .components/text
 mkdir -p .components/textarea
 mkdir -p .components/upload
+mkdir -p .components/conditional-with-upload

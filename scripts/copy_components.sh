@@ -11,3 +11,4 @@ cp -r .runner/* .components/select
 cp -r .runner/* .components/text
 cp -r .runner/* .components/textarea
 cp -r .runner/* .components/upload
+cp -r .runner/* .components/conditional-with-upload

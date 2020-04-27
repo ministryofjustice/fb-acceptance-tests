@@ -43,3 +43,7 @@ cp -r ./forms/components/textarea/* .components/textarea/form
 echo HEAD > .components/upload/APP_SHA
 mkdir -p .components/upload/form
 cp -r ./forms/components/upload/* .components/upload/form
+
+echo HEAD > .components/conditional-with-upload/APP_SHA
+mkdir -p .components/conditional-with-upload/form
+cp -r ./forms/components/conditional-with-upload/* .components/conditional-with-upload/form

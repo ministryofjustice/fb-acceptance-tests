@@ -1,0 +1,27 @@
+{
+  "_id": "page._first-page",
+  "_type": "page.singlequestion",
+  "components": [
+    {
+      "_id": "page._first-page--radios.auto_name__1",
+      "_type": "radios",
+      "items": [
+        {
+          "_id": "page._first-page--radios.auto_name__1--radio.auto_value__1",
+          "_type": "radio",
+          "label": "Yes",
+          "value": "yes"
+        },
+        {
+          "_id": "page._first-page--radios.auto_name__1--radio.auto_value__2",
+          "_type": "radio",
+          "label": "No",
+          "value": "no"
+        }
+      ],
+      "legend": "Is it Tuesday today?",
+      "name": "tuesday_today"
+    }
+  ],
+  "url": "/first-page"
+}

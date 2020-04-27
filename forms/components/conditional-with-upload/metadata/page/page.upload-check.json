@@ -1,0 +1,10 @@
+{
+  "_id": "page.upload-check",
+  "_type": "page.uploadCheck",
+  "show": {
+    "identifier": "tuesday_today",
+    "operator": "is",
+    "value": "yes"
+  },
+  "url": "upload-check"
+}

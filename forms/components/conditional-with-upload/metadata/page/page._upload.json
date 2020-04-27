@@ -1,0 +1,22 @@
+{
+  "_id": "page._upload",
+  "_type": "page.singlequestion",
+  "components": [
+    {
+      "_id": "page._upload--upload.auto_name__2",
+      "_type": "upload",
+      "label": "Upload a photo of your week",
+      "name": "auto_name__2"
+    }
+  ],
+  "show": {
+    "identifier": "tuesday_today",
+    "operator": "is",
+    "value": "yes"
+  },
+  "steps": [
+    "page.upload-check",
+    "page.document-upload-summary"
+  ],
+  "url": "/upload"
+}
