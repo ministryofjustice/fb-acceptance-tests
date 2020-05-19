@@ -2,13 +2,13 @@ version: 1
 
 update_configs:
   - package_manager: "ruby:bundler"
-    directory: "/tests"
+    directory: "/integration"
     update_schedule: "live"
     default_reviewers:
     - tomas-stefano
     - brenetic
   - package_manager: "docker"
-    directory: "/tests"
+    directory: "/integration"
     update_schedule: "daily"
     default_reviewers:
     - tomas-stefano
