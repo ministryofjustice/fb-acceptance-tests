@@ -22,6 +22,9 @@ describe 'New Runner' do
       with: 'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?'
     continue
 
+    # optional fields
+    continue
+
     # checkbox
     form.apples_field.check
     form.pears_field.check
@@ -46,6 +49,12 @@ describe 'New Runner' do
     expect(page.text).to include("Last name #{generated_name}")
     expect(page.text).to include('Your email address fb-acceptance-tests@digital.justice.gov.uk')
     expect(page.text).to include('Your cat My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?')
+    expect(page.text).to include('Optional text (Optional)')
+    expect(page.text).to include('Optional textarea (Optional)')
+    expect(page.text).to include('Optional number (Optional)')
+    expect(page.text).to include('Optional radios (Optional)')
+    expect(page.text).to include('Optional checkboxes')
+    expect(page.text).to include('Optional date (Optional)')
     expect(page.text).to include("Your fruit Apples\nPears")
     expect(page.text).to include('12 November 2007')
     expect(page.text).to include('How many cats have chosen you? 28')
@@ -74,9 +83,11 @@ describe 'New Runner' do
     end.join(' ')
     p 'Asserting PDF contents'
 
-    expect(result).to include('Subheading for new acceptance tests')
     expect(result).to include(
-      "Submission for New Acceptance tests Email"
+      'Submission subheading for new-runner-acceptance-tests'
+    )
+    expect(result).to include(
+      'Submission for new-runner-acceptance-tests'
     )
 
     # text
@@ -92,6 +103,14 @@ describe 'New Runner' do
     # textarea
     expect(result).to include('Your cat')
     expect(result).to include('My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?')
+
+    # optional fields
+    expect(result).to include('Optional text (Optional)')
+    expect(result).to include('Optional textarea (Optional)')
+    expect(result).to include('Optional number (Optional)')
+    expect(result).to include('Optional radios (Optional)')
+    expect(result).to include('Optional checkboxes')
+    expect(result).to include('Optional date (Optional)')
 
     # checkbox
     expect(result).to include('Your fruit')
