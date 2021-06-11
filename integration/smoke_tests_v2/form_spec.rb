@@ -68,9 +68,8 @@ describe 'Smoke test' do
     form.red.check
     form.continue_button.click
 
-    # Uncomment this when we have the file upload
-    # attach_file('uploadfile_field[1]', 'spec/fixtures/files/hello_world.txt')
-    # form.continue_button.click
+    attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
+    form.continue_button.click
 
     form.send_application_button.click
 
@@ -80,11 +79,10 @@ describe 'Smoke test' do
       find_criteria: :attachments
     )
 
-    # Uncomment this when we have the file upload
-    # puts 'Verifying file upload'
-    # expect(attachments[:file_upload]).to eq(
-    #   File.read('spec/fixtures/files/hello_world.txt')
-    # )
+    puts 'Verifying file upload'
+    expect(attachments[:file_upload]).to eq(
+      File.read('spec/fixtures/files/hello_world.txt')
+    )
     puts 'Verifying the answers'
     File.open(pdf_path, 'w') { |file| file.write(attachments[:pdf_answers]) }
     result = PDF::Reader.new(pdf_path).pages.map { |page| page.text }.join(' ')
@@ -101,8 +99,6 @@ describe 'Smoke test' do
     expect(result).to include('2')
     expect(result).to include('NW8 6CB')
     expect(result).to include('Red')
-
-    # Uncomment this when we have the file upload
-    # expect(result).to include('hello_world.txt (12B)')
+    expect(result).to include('hello_world.txt')
   end
 end
