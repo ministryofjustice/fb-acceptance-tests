@@ -44,6 +44,10 @@ describe 'New Runner' do
     form.yes_field.choose
     continue
 
+    # attach file
+    attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
+    continue
+
     # check your answers
     expect(page.text).to include('First name Stormtrooper')
     expect(page.text).to include("Last name #{generated_name}")
@@ -59,6 +63,7 @@ describe 'New Runner' do
     expect(page.text).to include('12 November 2007')
     expect(page.text).to include('How many cats have chosen you? 28')
     expect(page.text).to include('Is your cat watching you now? Yes')
+    expect(page.text).to include('Upload a file hello_world.txt')
 
     click_on 'Accept and send application'
 
@@ -67,6 +72,8 @@ describe 'New Runner' do
     attachments = find_attachments(id: generated_name)
 
     assert_pdf_contents(attachments)
+
+    expect(attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
   end
 
   def continue
