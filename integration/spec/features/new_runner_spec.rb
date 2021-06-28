@@ -13,22 +13,29 @@ describe 'New Runner' do
     OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
   end
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
+  let(:error_message) { 'There is a problem' }
 
   it 'sends an email with the submission in a PDF' do
     form.load
     form.start_button.click
 
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.first_name_field.text, form.last_name_field.text])
     form.first_name_field.set('Stormtrooper')
     form.last_name_field.set(generated_name)
     continue
 
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.email_field.text])
     form.email_field.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
 
     # text
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, ['Your cat'])
     fill_in 'Your cat',
       with: 'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?'
     continue
@@ -37,14 +44,20 @@ describe 'New Runner' do
     check_optional_text(page.text)
     continue
 
+    expect(page.text).not_to include(error_message)
+
     # checkbox
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.find('h1').text])
     form.apples_field.check
     form.pears_field.check
     continue
 
     # date
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.find('h1').text])
     form.day_field.set('12')
     form.month_field.set('11')
     form.year_field.set('2007')
@@ -52,16 +65,22 @@ describe 'New Runner' do
 
     # number
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.find('h1').text])
     form.number_cats_field.set(28)
     continue
 
     # radio
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.find('h1').text])
     form.yes_field.choose
     continue
 
     # attach file
     check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.find('h1').text])
     attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
     continue
 
@@ -169,5 +188,10 @@ describe 'New Runner' do
 
   def check_optional_text(text)
     OPTIONAL_TEXT.each { |optional| expect(text).not_to include(optional) }
+  end
+
+  def check_error_message(text, fields)
+    expect(page.text).to include(error_message)
+    fields.each { |field| expect(text).to include("Enter an answer for #{field}")}
   end
 end
