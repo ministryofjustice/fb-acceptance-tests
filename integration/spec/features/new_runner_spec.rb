@@ -42,6 +42,7 @@ describe 'New Runner' do
 
     # optional fields
     check_optional_text(page.text)
+    form.find(:css, '#optional-questions_checkboxes_1').check('Celery', visible: false)
     continue
 
     expect(page.text).not_to include(error_message)
@@ -94,13 +95,21 @@ describe 'New Runner' do
     expect(page.text).to include('Optional textarea (Optional)')
     expect(page.text).to include('Optional number (Optional)')
     expect(page.text).to include('Optional radios (Optional)')
-    expect(page.text).to include('Optional checkboxes')
+    expect(page.text).to include('Celery')
     expect(page.text).to include('Optional date (Optional)')
     expect(page.text).to include("Your fruit Apples\nPears")
     expect(page.text).to include('12 November 2007')
     expect(page.text).to include('How many cats have chosen you? 28')
     expect(page.text).to include('Is your cat watching you now? Yes')
     expect(page.text).to include('Upload a file hello_world.txt')
+
+    # Checking changing an answer
+    # Also checking optional checkboxes will remove a users previous answer
+    form.change_optional_checkbox.click
+    form.find(:css, '#optional-questions_checkboxes_1').uncheck('Celery', visible: false)
+    continue
+    expect(page.text).to include('Check your answers')
+    expect(page.text).not_to include('Celery')
 
     click_on 'Accept and send application'
 
