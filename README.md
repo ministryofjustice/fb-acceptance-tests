@@ -126,6 +126,12 @@ The following are the apps that we have on our platform:
 4. Service token cache
 5. Pdf generator
 
+You can setup the whole platform with:
+
+```
+make platform
+```
+
 ### Services
 
 The services layer contain N forms with the Runner booting up them.
