@@ -3,4 +3,5 @@ class NewRunnerApp < FeaturesEmailApp
 
   element :start_button, :button, 'Start now'
   element :yes_field, :radio_button, 'Yes', visible: false
+  element :change_optional_checkbox, :link, text: 'Your answer for Optional checkboxes (Optional)', visible: false
 end
