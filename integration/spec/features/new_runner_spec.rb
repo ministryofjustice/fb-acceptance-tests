@@ -1,5 +1,12 @@
 require 'pdf-reader'
 
+OPTIONAL_TEXT = [
+  '[Optional section heading]',
+  '[Optional lede paragraph]',
+  '[Optional content]',
+  '[Optional hint text]'
+]
+
 describe 'New Runner' do
   let(:form) { NewRunnerApp.new }
   before :each do
@@ -10,45 +17,56 @@ describe 'New Runner' do
   it 'sends an email with the submission in a PDF' do
     form.load
     form.start_button.click
+
+    check_optional_text(page.text)
     form.first_name_field.set('Stormtrooper')
     form.last_name_field.set(generated_name)
     continue
 
+    check_optional_text(page.text)
     form.email_field.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
 
     # text
+    check_optional_text(page.text)
     fill_in 'Your cat',
       with: 'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?'
     continue
 
     # optional fields
+    check_optional_text(page.text)
     continue
 
     # checkbox
+    check_optional_text(page.text)
     form.apples_field.check
     form.pears_field.check
     continue
 
     # date
+    check_optional_text(page.text)
     form.day_field.set('12')
     form.month_field.set('11')
     form.year_field.set('2007')
     continue
 
     # number
+    check_optional_text(page.text)
     form.number_cats_field.set(28)
     continue
 
     # radio
+    check_optional_text(page.text)
     form.yes_field.choose
     continue
 
     # attach file
+    check_optional_text(page.text)
     attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
     continue
 
     # check your answers
+    check_optional_text(page.text)
     expect(page.text).to include('First name Stormtrooper')
     expect(page.text).to include("Last name #{generated_name}")
     expect(page.text).to include('Your email address fb-acceptance-tests@digital.justice.gov.uk')
@@ -112,6 +130,7 @@ describe 'New Runner' do
     expect(result).to include('My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?')
 
     # optional fields
+    # these are actually the question text for each component, not optional hint text
     expect(result).to include('Optional text (Optional)')
     expect(result).to include('Optional textarea (Optional)')
     expect(result).to include('Optional number (Optional)')
@@ -131,6 +150,9 @@ describe 'New Runner' do
     # number
     expect(result).to include("How many cats have chosen")
     expect(result).to include('28')
+
+    # optional text
+    check_optional_text(result)
   end
 
   def find_attachments(id:)
@@ -143,5 +165,9 @@ describe 'New Runner' do
     else
       {}
     end
+  end
+
+  def check_optional_text(text)
+    OPTIONAL_TEXT.each { |optional| expect(text).not_to include(optional) }
   end
 end
