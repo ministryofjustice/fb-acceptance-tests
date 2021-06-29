@@ -85,6 +85,11 @@ describe 'New Runner' do
     attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
     continue
 
+    # optional upload page to check for adding and removing files
+    check_optional_text(page.text)
+    attach_file('Optional file upload', 'spec/fixtures/files/goodbye_world.txt')
+    continue
+
     # check your answers
     check_optional_text(page.text)
     expect(page.text).to include('First name Stormtrooper')
@@ -102,14 +107,23 @@ describe 'New Runner' do
     expect(page.text).to include('How many cats have chosen you? 28')
     expect(page.text).to include('Is your cat watching you now? Yes')
     expect(page.text).to include('Upload a file hello_world.txt')
+    expect(page.text).to include('Optional file upload (Optional) goodbye_world.txt')
 
-    # Checking changing an answer
+    # Checking changing answer for optional checkboxes
     # Also checking optional checkboxes will remove a users previous answer
     form.change_optional_checkbox.click
     form.find(:css, '#optional-questions_checkboxes_1').uncheck('Celery', visible: false)
     continue
     expect(page.text).to include('Check your answers')
     expect(page.text).not_to include('Celery')
+
+    # Checking removing file for optional file upload
+    form.change_optional_file_upload.click
+    form.remove_file.click
+    continue
+    expect(page.text).to include('Check your answers')
+    expect(page.text).to include('Optional file upload (Optional)')
+    expect(page.text).not_to include('goodbye_world.text')
 
     click_on 'Accept and send application'
 
@@ -178,6 +192,14 @@ describe 'New Runner' do
     # number
     expect(result).to include("How many cats have chosen")
     expect(result).to include('28')
+
+    # file upload
+    expect(result).to include('Upload a file')
+    expect(result).to include('hello_world.txt')
+
+    # optional file upload
+    expect(result).to include('Optional file upload')
+    expect(result).not_to include('goodbye_world.text')
 
     # optional text
     check_optional_text(result)
