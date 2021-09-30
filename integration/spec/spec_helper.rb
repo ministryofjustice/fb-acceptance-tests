@@ -36,6 +36,7 @@ RSpec.configure do |c|
   end
 
   require File.join(File.dirname(__FILE__), 'support', 'service_app')
+  require File.join(File.dirname(__FILE__), 'support', 'pages', 'features_email_app')
   Dir[
     File.expand_path(File.join(File.dirname(__FILE__), 'support', '**', '*.rb'))
   ].each { |f| require f }
