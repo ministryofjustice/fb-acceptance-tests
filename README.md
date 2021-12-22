@@ -163,6 +163,7 @@ This applies for all other containers in the platform (e.g make filestore, etc).
 
 There is a configuration file which contain information about where to locate
 what repos to clone and the container names to build.
+
 This is done automagically but for more details see
 integration/config_file.rb.sample.
 
