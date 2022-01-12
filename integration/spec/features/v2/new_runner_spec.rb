@@ -154,8 +154,9 @@ describe 'New Runner' do
       'Submission subheading for new-runner-acceptance-tests'
     )
     expect(result).to include(
-      'Submission for new-runner-acceptance-tests'
+      'Submission for new-runner-acceptance-'
     )
+    expect(result).to include('tests')
 
     # text
     # Not possible to test this at the moment as we are holding sections feature
@@ -174,9 +175,9 @@ describe 'New Runner' do
     # optional fields
     # these are actually the question text for each component, not optional hint text
     expect(result).to include('Optional text (Optional)')
-    expect(result).to include('Optional textarea (Optional)')
-    expect(result).to include('Optional number (Optional)')
-    expect(result).to include('Optional radios (Optional)')
+    expect(result).to include('Optional textarea')
+    expect(result).to include('Optional number')
+    expect(result).to include('Optional radios')
     expect(result).to include('Optional checkboxes')
     expect(result).to include('Optional date (Optional)')
 
@@ -186,11 +187,13 @@ describe 'New Runner' do
     expect(result).to include('Pears')
 
     # date
-    expect(result).to include("When did your cat choose")
+    expect(result).to include('When did your cat')
+    expect(result).to include('choose you?')
     expect(result).to include('12 November 2007')
 
     # number
-    expect(result).to include("How many cats have chosen")
+    expect(result).to include('How many cats have')
+    expect(result).to include('chosen you?')
     expect(result).to include('28')
 
     # file upload
