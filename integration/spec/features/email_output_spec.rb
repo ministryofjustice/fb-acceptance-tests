@@ -120,7 +120,8 @@ describe 'Filling out an Email output form' do
 
     # textarea
     expect(result).to include('Your cat')
-    expect(result).to include('My cat is a fluffy killer named £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?')
+    expect(result).to include('My cat is a fluffy killer named £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , .')
+    expect(result).to include('?')
 
     # checkbox
     expect(result).to include('Your fruit')
@@ -129,13 +130,13 @@ describe 'Filling out an Email output form' do
     expect(result).to include('Pears')
 
     # date
-    expect(result).to include('When did your cat choose')
-    expect(result).to include('you?')
+    expect(result).to include('When did your cat')
+    expect(result).to include('choose you?')
     expect(result).to include('12 November 2007')
 
     # number
-    expect(result).to include('How many cats have chosen')
-    expect(result).to include('you?')
+    expect(result).to include('How many cats have')
+    expect(result).to include('chosen you?')
     expect(result).to include('28')
 
     # select
