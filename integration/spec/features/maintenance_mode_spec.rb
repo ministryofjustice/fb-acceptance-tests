@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Maintenance mode' do
   let(:maintenance_content) do
-    'Sorry, the service is unavailable'
+    'Sorry, this form is unavailable'
   end
 
   context 'when maintenance mode is on' do
