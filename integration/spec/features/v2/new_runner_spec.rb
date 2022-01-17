@@ -1,12 +1,5 @@
 require 'pdf-reader'
 
-OPTIONAL_TEXT = [
-  '[Optional section heading]',
-  '[Optional lede paragraph]',
-  '[Optional content]',
-  '[Optional hint text]'
-]
-
 describe 'New Runner' do
   let(:form) { NewRunnerApp.new }
   before :each do
@@ -136,9 +129,6 @@ describe 'New Runner' do
     expect(attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
   end
 
-  def continue
-    form.continue_button.click
-  end
 
   def assert_pdf_contents(attachments)
     pdf_path = "/tmp/submission-#{SecureRandom.uuid}.pdf"
@@ -218,14 +208,5 @@ describe 'New Runner' do
     else
       {}
     end
-  end
-
-  def check_optional_text(text)
-    OPTIONAL_TEXT.each { |optional| expect(text).not_to include(optional) }
-  end
-
-  def check_error_message(text, fields)
-    expect(page.text).to include(error_message)
-    fields.each { |field| expect(text).to include("Enter an answer for #{field}")}
   end
 end
