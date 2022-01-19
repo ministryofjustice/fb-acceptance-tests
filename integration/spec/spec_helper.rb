@@ -41,3 +41,23 @@ RSpec.configure do |c|
     File.expand_path(File.join(File.dirname(__FILE__), 'support', '**', '*.rb'))
   ].each { |f| require f }
 end
+
+OPTIONAL_TEXT = [
+  '[Optional section heading]',
+  '[Optional lede paragraph]',
+  '[Optional content]',
+  '[Optional hint text]'
+]
+
+def check_optional_text(text)
+  OPTIONAL_TEXT.each { |optional| expect(text).not_to include(optional) }
+end
+
+def check_error_message(text, fields)
+  expect(page.text).to include(error_message)
+  fields.each { |field| expect(text).to include("Enter an answer for #{field}")}
+end
+
+def continue
+  form.continue_button.click
+end
