@@ -18,7 +18,7 @@ describe 'New Runner Branching App' do
   let(:page_j_changed_answer) { 'Option 3' }
   let(:error_message) { 'There is a problem' }
 
-  it 'navigates the form and changes answers' do
+  it 'navigates the form, changes answers and submits' do
     form.load
     form.start_button.click
 
@@ -142,6 +142,40 @@ describe 'New Runner Branching App' do
     click_on 'Accept and send application'
 
     expect(form.text).to include('Application complete')
+
+    attachments = find_attachments(id: page_a_answer)
+    assert_pdf_contents(attachments)
+  end
+
+  def assert_pdf_contents(attachments)
+    pdf_path = "/tmp/submission-#{SecureRandom.uuid}.pdf"
+    File.open(pdf_path, 'w') do |file|
+      file.write(attachments[:pdf_answers])
+    end
+    result = PDF::Reader.new(pdf_path).pages.map do |page|
+      page.text
+    end.join(' ')
+    p 'Asserting PDF contents'
+
+    expect(result).to include(
+      'Submission subheading for Acceptance Tests'
+    )
+    expect(result).to include(
+      'Submission for Acceptance Tests'
+    )
+
+    expect(result).to include(page_a_answer)
+    expect(result).to include(page_b_changed_answer)
+    expect(result).to include(page_i_answer)
+    expect(result).to include(page_j_changed_answer)
+    expect(result).to include(page_f_answer)
+    expect(result).to include(page_l_answer)
+    # does not include older answers from different path
+    expect(result).not_to include(page_c_answer)
+    expect(result).not_to include(page_d_answer)
+    expect(result).not_to include(page_e_answer)
+    # optional text
+    check_optional_text(result)
   end
 
   def summary_list

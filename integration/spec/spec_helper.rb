@@ -61,3 +61,15 @@ end
 def continue
   form.continue_button.click
 end
+
+def find_attachments(id:)
+  if ENV['CI_MODE'].present?
+    EmailAttachmentExtractor.find(
+      id: id,
+      expected_emails: 1,
+      find_criteria: :attachments
+    )
+  else
+    {}
+  end
+end

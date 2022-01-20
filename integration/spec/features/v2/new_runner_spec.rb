@@ -197,16 +197,4 @@ describe 'New Runner' do
     # optional text
     check_optional_text(result)
   end
-
-  def find_attachments(id:)
-    if ENV['CI_MODE'].present?
-      EmailAttachmentExtractor.find(
-        id: id,
-        expected_emails: 1,
-        find_criteria: :attachments
-      )
-    else
-      {}
-    end
-  end
 end
