@@ -21,13 +21,13 @@ describe 'Conditional steps' do
 
     expect(form.summary_answers.size).to be(5)
 
-    expect(form.first_answer).to include('Radios One')
+    expect(form.first_answer).to include("Radios\nOne")
     expect(form.second_answer).to include("Checkboxes\nA\nB\nC")
     expect(form.third_answer).to include(
-      'Email form-builder-developers@digital.justice.gov.uk'
+      "Email\nform-builder-developers@digital.justice.gov.uk"
     )
-    expect(form.fourth_answer).to include('Number 1')
-    expect(form.fifth_answer).to include('Text a Change')
+    expect(form.fourth_answer).to include("Number\n1")
+    expect(form.fifth_answer).to include("Text\na\nChange")
 
     form.send_application_button.click
 
@@ -46,7 +46,7 @@ describe 'Conditional steps' do
 
     expect(form.all_headings).to include('Summary')
     expect(form.summary_answers.size).to be(1)
-    expect(form.first_answer).to include('Radios Two')
+    expect(form.first_answer).to include("Radios\nTwo")
 
     form.send_application_button.click
     expect(form.confirmation_header).to have_text('Confirmation')
@@ -113,7 +113,8 @@ describe 'Conditional steps' do
 
     expect(form.section_heading.text).to eq('Summary section heading')
     expect(form.all_headings).to include('Summary')
-    expect(form.second_answer).to include("Checkboxes A Change\nYour answer")
+    expect(form.second_answer).to include("Checkboxes\nA")
+    expect(form.second_answer).to include('Change Your answer')
 
     ########################################
     #                                      #
@@ -138,7 +139,7 @@ describe 'Conditional steps' do
     expect(form.section_heading.text).to eq('Summary section heading')
     expect(form.all_headings).to include('Summary')
     expect(form.second_answer).to include(
-      "Checkboxes Not answered Change\nYour answer"
+      "Checkboxes\nNot answered\nChange Your answer"
     )
 
     form.send_application_button.click
@@ -345,7 +346,7 @@ describe 'Conditional steps' do
     ########################################
     expect(form.section_heading.text).to eq('Summary section heading')
 
-    expect(form.first_answer).to include('Radios Two')
+    expect(form.first_answer).to include("Radios\nTwo")
 
     form.send_application_button.click
     expect(form.confirmation_header).to have_text('Confirmation')
