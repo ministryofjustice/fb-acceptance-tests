@@ -6,16 +6,15 @@ describe 'New Runner Branching App' do
     # OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
   end
   let(:page_a_answer) { "FN-#{SecureRandom.uuid}" }
-  let(:page_b_answer) { 'Option 1' }
-  let(:page_b_changed_answer) { 'Option 2' }
+  let(:page_b_answer) { 'Page B Option 1' }
+  let(:page_b_changed_answer) { 'Page B Option 2' }
   let(:page_c_answer) { "FN-#{SecureRandom.uuid}" }
   let(:page_d_answer) { "FN-#{SecureRandom.uuid}" }
   let(:page_e_answer) { "FN-#{SecureRandom.uuid}" }
-  let(:page_f_answer) { 'Option B' }
+  let(:page_f_answer) { 'Page F Option B' }
   let(:page_l_answer) { "FN-#{SecureRandom.uuid}" }
-  let(:page_i_answer) { 'Option 1' }
-  let(:page_j_answer) { 'Option 2' }
-  let(:page_j_changed_answer) { 'Option 3' }
+  let(:page_i_answer) { 'Page I Option 1' }
+  let(:page_j_answer) { 'Page J Option 2' }
   let(:error_message) { 'There is a problem' }
 
   it 'navigates the form, changes answers and submits' do
@@ -96,8 +95,6 @@ describe 'New Runner Branching App' do
 
     # page-j
     check_optional_text(page.text)
-    continue
-    check_error_message(page.text, [form.find('h1').text])
     form.option_2.check
     continue
 
@@ -106,7 +103,7 @@ describe 'New Runner Branching App' do
     expect(page_answer('Page A')).to include(page_a_answer)
     expect(page_answer('Page B')).to include(page_b_changed_answer)
     expect(page_answer('Page I')).to include(page_i_answer)
-    expect(page_answer('Page J')).to include(page_j_answer)
+    expect(page_answer('Page J (Optional)')).to include(page_j_answer)
     # Old answers from different path should no longer be there
     expect(page.text).not_to include(page_c_answer)
     expect(page.text).not_to include(page_d_answer)
@@ -117,7 +114,6 @@ describe 'New Runner Branching App' do
     # change page j answer
     form.change_page_j_answer.click
     form.option_2.uncheck
-    form.option_3.check
     continue
 
     # page f
@@ -131,7 +127,8 @@ describe 'New Runner Branching App' do
     expect(page_answer('Page A')).to include(page_a_answer)
     expect(page_answer('Page B')).to include(page_b_changed_answer)
     expect(page_answer('Page I')).to include(page_i_answer)
-    expect(page_answer('Page J')).to include(page_j_changed_answer)
+    # we removed Page J answer as it is optional
+    expect(page_answer('Page J (Optional)')).to be_empty
     expect(page_answer('Page F')).to include(page_f_answer)
     expect(page_answer('Page L')).to include(page_l_answer)
     # does not include older answers from different path
@@ -167,7 +164,8 @@ describe 'New Runner Branching App' do
     expect(result).to include(page_a_answer)
     expect(result).to include(page_b_changed_answer)
     expect(result).to include(page_i_answer)
-    expect(result).to include(page_j_changed_answer)
+    # we removed Page J answer as it is optional
+    expect(result).to_not include(page_j_answer)
     expect(result).to include(page_f_answer)
     expect(result).to include(page_l_answer)
     # does not include older answers from different path
