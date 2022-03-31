@@ -6,6 +6,9 @@ class ServiceApp < SitePrism::Page
   elements :change_links, '.govuk-summary-list__actions a.govuk-link'
   element :send_application_button, :button, 'Accept and send application'
   element :confirmation_header, 'h1.govuk-panel__title'
+  element :accept_analytics, :button, 'Accept analytics cookies'
+  element :reject_analytics, :button, 'Reject analytics cookies'
+  element :hide_cookie_message, :button, 'Hide this message'
 
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
