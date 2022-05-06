@@ -2,9 +2,8 @@ require 'pdf-reader'
 
 describe 'New Runner Branching App' do
   let(:form) { NewRunnerBranchingApp.new }
-  before :each do
-    # OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
+  let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
+  let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:page_a_answer) { "FN-#{SecureRandom.uuid}" }
   let(:page_b_answer) { 'Page B Option 1' }
   let(:page_b_changed_answer) { 'Page B Option 2' }
@@ -17,8 +16,9 @@ describe 'New Runner Branching App' do
   let(:page_j_answer) { 'Page J Option 2' }
   let(:error_message) { 'There is a problem' }
 
+  before { form.load }
+
   it 'navigates the form, changes answers and submits' do
-    form.load
     form.start_button.click
 
     # page-a
