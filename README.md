@@ -37,6 +37,12 @@ The following environment variables need to be set in order to authorize against
 
 Credentials for interacting with the Gmail API are refreshed each time the test suite is run.
 
+The following environment variables are saved in each platform app on CircleCI:
+- SMOKE_TEST_USER
+- SMOKE_TEST_PASSWORD
+- NEW_RUNNER_ACCEPTANCE_TEST_USER
+- NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD
+
 The tests run against forms published to the `test-dev` environment. Currently these are:
 
 Features:

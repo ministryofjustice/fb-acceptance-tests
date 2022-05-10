@@ -1,15 +1,18 @@
 require 'pdf-reader'
 
 describe 'New Runner' do
-  let(:form) { NewRunnerApp.new }
   before :each do
     OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
   end
+  let(:form) { NewRunnerApp.new }
+  let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
+  let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
 
+  before { form.load }
+
   it 'sends an email with the submission in a PDF' do
-    form.load
     form.start_button.click
 
     check_optional_text(page.text)

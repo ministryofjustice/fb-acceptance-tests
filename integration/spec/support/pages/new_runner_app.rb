@@ -1,5 +1,8 @@
 class NewRunnerApp < FeaturesEmailApp
-  set_url ENV.fetch('NEW_RUNNER_APP')
+  set_url "#{ENV.fetch('NEW_RUNNER_APP')}" % {
+    user: ENV.fetch('NEW_RUNNER_ACCEPTANCE_TEST_USER'),
+    password: ENV.fetch('NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD')
+  }
 
   element :start_button, :button, 'Start now'
   element :yes_field, :radio_button, 'Yes', visible: false
@@ -11,4 +14,9 @@ class NewRunnerApp < FeaturesEmailApp
   element :change_email, :link, text: 'Your answer for Your email address', visible: false
   element :change_cat, :link, text: 'Your answer for Your cat', visible: false
   element :change_upload, :link, text: 'Your answer for Upload a file', visible: false
+
+  def load(expansion_or_html = {}, &block)
+    puts "Visiting form: #{ENV['NEW_RUNNER_APP'] % { user: '*****', password: '*****' }}"
+    SitePrism::Page.instance_method(:load).bind(self).call
+  end
 end
