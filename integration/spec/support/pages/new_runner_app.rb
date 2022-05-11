@@ -1,7 +1,7 @@
 class NewRunnerApp < FeaturesEmailApp
-  set_url "#{ENV.fetch('NEW_RUNNER_APP')}" % {
-    user: ENV.fetch('NEW_RUNNER_ACCEPTANCE_TEST_USER'),
-    password: ENV.fetch('NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD')
+  set_url "#{ENV['NEW_RUNNER_APP']}" % {
+    user: ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'],
+    password: ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
   }
 
   element :start_button, :button, 'Start now'
