@@ -57,6 +57,15 @@ describe 'New Runner' do
     check_error_message(page.text, [form.find('h1').text])
     form.day_field.set('12')
     form.month_field.set('11')
+    form.year_field.set('not a valid year')
+    continue
+    check_validation_error_message('Enter a valid date for When did your cat choose you?')
+    form.year_field.set('1999')
+    continue
+    check_validation_error_message('Enter a later date for When did your cat choose you?')
+    form.year_field.set('2050')
+    continue
+    check_validation_error_message('Enter an earlier date for When did your cat choose you?')
     form.year_field.set('2007')
     continue
 
@@ -64,7 +73,16 @@ describe 'New Runner' do
     check_optional_text(page.text)
     continue
     check_error_message(page.text, [form.find('h1').text])
+    form.number_cats_field.set('i am not a number')
+    continue
+    check_validation_error_message('Enter a number for How many cats have chosen you?')
+    form.number_cats_field.set(1)
+    continue
+    check_validation_error_message('Enter a higher number for How many cats have chosen you?')
     form.number_cats_field.set(28)
+    continue
+    check_validation_error_message('Enter a lower number for How many cats have chosen you?')
+    form.number_cats_field.set(5)
     continue
 
     # radio
@@ -100,7 +118,7 @@ describe 'New Runner' do
     expect(page.text).to include('Optional date (Optional)')
     expect(page.text).to include("Your fruit Apples\nPears")
     expect(page.text).to include('12 November 2007')
-    expect(page.text).to include('How many cats have chosen you? 28')
+    expect(page.text).to include('How many cats have chosen you? 5')
     expect(page.text).to include('Is your cat watching you now? Yes')
     expect(page.text).to include('Upload a file hello_world.txt')
     expect(page.text).to include('Optional file upload (Optional) goodbye_world.txt')
@@ -187,7 +205,7 @@ describe 'New Runner' do
     # number
     expect(result).to include('How many cats have')
     expect(result).to include('chosen you?')
-    expect(result).to include('28')
+    expect(result).to include('5')
 
     # file upload
     expect(result).to include('Upload a file')
