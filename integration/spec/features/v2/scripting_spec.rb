@@ -38,7 +38,7 @@ describe 'New Runner' do
     continue
 
     # number
-    form.number_cats_field.set(28)
+    form.number_cats_field.set(5)
     continue
 
     # radio
