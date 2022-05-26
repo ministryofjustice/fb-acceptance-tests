@@ -18,6 +18,12 @@ describe 'New Runner' do
     check_optional_text(page.text)
     continue
     check_error_message(page.text, [form.first_name_field.text, form.last_name_field.text])
+    form.first_name_field.set('Po')
+    continue
+    check_validation_error_message("Your answer for 'First name' is too short (3 characters at least)")
+    form.first_name_field.set('NaN' * 50)
+    continue
+    check_validation_error_message("Your answer for 'First name' is too long (50 characters at most")
     form.first_name_field.set('Stormtrooper')
     form.last_name_field.set(generated_name)
     continue
@@ -28,10 +34,18 @@ describe 'New Runner' do
     form.email_field.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
 
-    # text
+    # textarea
     check_optional_text(page.text)
     continue
     check_error_message(page.text, ['Your cat'])
+    fill_in 'Your cat',
+      with: 'Not long enough'
+    continue
+    check_validation_error_message('Enter a higher number of words for Your cat')
+    fill_in 'Your cat',
+      with: 'Petrichor ' * 100
+    continue
+    check_validation_error_message('Enter a lower number of words for Your cat')
     fill_in 'Your cat',
       with: 'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?'
     continue
