@@ -24,7 +24,7 @@ describe 'New Runner Branching App' do
     # page-a
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.page_a_field.text])
+    check_error_message(page.text, [form.find('h1').text])
     form.page_a_field.set(page_a_answer)
     continue
 
@@ -38,21 +38,21 @@ describe 'New Runner Branching App' do
     # page-c
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.page_c_field.text])
+    check_error_message(page.text, [form.find('h1').text])
     form.page_c_field.set(page_c_answer)
     continue
 
     # page-d
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.page_d_field.text])
+    check_error_message(page.text, [form.find('h1').text])
     form.page_d_field.set(page_d_answer)
     continue
 
     # page-e
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.page_e_field.text])
+    check_error_message(page.text, [form.find('h1').text])
     form.page_e_field.set(page_e_answer)
     continue
 
@@ -66,7 +66,7 @@ describe 'New Runner Branching App' do
     # page-l
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.page_l_field.text])
+    check_error_message(page.text, [form.find('h1').text])
     form.page_l_field.set(page_l_answer)
     continue
 

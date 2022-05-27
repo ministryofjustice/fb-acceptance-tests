@@ -55,7 +55,7 @@ end
 
 def check_error_message(text, fields)
   expect(page.text).to include(error_message)
-  fields.each { |field| expect(text).to include("Enter an answer for #{field}")}
+  fields.each { |field| expect(text).to include("Enter an answer for \"#{field}\"")}
 end
 
 def check_validation_error_message(error)
