@@ -47,9 +47,9 @@ describe 'Smoke test' do
 
     form.continue_button.click
     # Validations
-    expect(form.text).to include('Enter an answer for Text Field')
-    expect(form.text).to include('Enter an answer for Number Field')
-    expect(form.text).to include('Enter an answer for Date Field')
+    expect(form.text).to include('Enter an answer for "Text Field"')
+    expect(form.text).to include('Enter an answer for "Number Field"')
+    expect(form.text).to include('Enter an answer for "Date Field"')
 
     form.text_field.set('We must join with Him, Gandalf')
     form.number_field.set('2')
