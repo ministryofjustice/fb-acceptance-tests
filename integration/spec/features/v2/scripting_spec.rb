@@ -79,7 +79,7 @@ describe 'New Runner' do
 
   def check_date_error_message(text, fields)
     expect(page.text).to include(error_message)
-    fields.each { |field| expect(text).to include("Enter a valid date for #{field}")}
+    fields.each { |field| expect(text).to include("Enter a valid date for \"#{field}\"")}
   end
 
   def alert_present?

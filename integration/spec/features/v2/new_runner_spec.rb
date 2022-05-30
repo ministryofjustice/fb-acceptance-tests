@@ -17,20 +17,20 @@ describe 'New Runner' do
 
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.first_name_field.text, form.last_name_field.text])
+    check_error_message(page.text, ['First name', 'Last name'])
     form.first_name_field.set('Po')
     continue
-    check_validation_error_message("Your answer for 'First name' is too short (3 characters at least)")
+    check_validation_error_message('Your answer for "First name" must be 3 characters or more')
     form.first_name_field.set('NaN' * 50)
     continue
-    check_validation_error_message("Your answer for 'First name' is too long (50 characters at most")
+    check_validation_error_message('Your answer for "First name" must be 50 characters or fewer')
     form.first_name_field.set('Stormtrooper')
     form.last_name_field.set(generated_name)
     continue
 
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.email_field.text])
+    check_error_message(page.text, ['Your email address'])
     form.email_field.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
 
@@ -41,11 +41,11 @@ describe 'New Runner' do
     fill_in 'Your cat',
       with: 'Not long enough'
     continue
-    check_validation_error_message('Enter a higher number of words for Your cat')
+    check_validation_error_message('Your answer for "Your cat" must be 5 words or more')
     fill_in 'Your cat',
       with: 'Petrichor ' * 100
     continue
-    check_validation_error_message('Enter a lower number of words for Your cat')
+    check_validation_error_message('Your answer for "Your cat" must be 75 words or fewer')
     fill_in 'Your cat',
       with: 'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?'
     continue
@@ -73,13 +73,13 @@ describe 'New Runner' do
     form.month_field.set('11')
     form.year_field.set('not a valid year')
     continue
-    check_validation_error_message('Enter a valid date for When did your cat choose you?')
+    check_validation_error_message('Enter a valid date for "When did your cat choose you?"')
     form.year_field.set('1999')
     continue
-    check_validation_error_message('Enter a later date for When did your cat choose you?')
+    check_validation_error_message('Your answer for "When did your cat choose you?" must be 01 01 2001 or later')
     form.year_field.set('2050')
     continue
-    check_validation_error_message('Enter an earlier date for When did your cat choose you?')
+    check_validation_error_message('Your answer for "When did your cat choose you?" must be 01 01 2022 or earlier')
     form.year_field.set('2007')
     continue
 
@@ -89,13 +89,13 @@ describe 'New Runner' do
     check_error_message(page.text, [form.find('h1').text])
     form.number_cats_field.set('i am not a number')
     continue
-    check_validation_error_message('Enter a number for How many cats have chosen you?')
+    check_validation_error_message('Enter a number for "How many cats have chosen you?"')
     form.number_cats_field.set(1)
     continue
-    check_validation_error_message('Enter a higher number for How many cats have chosen you?')
+    check_validation_error_message('Your answer for "How many cats have chosen you?" must be 3 or higher')
     form.number_cats_field.set(28)
     continue
-    check_validation_error_message('Enter a lower number for How many cats have chosen you?')
+    check_validation_error_message('Your answer for "How many cats have chosen you?" must be 10 or lower')
     form.number_cats_field.set(5)
     continue
 
