@@ -43,13 +43,6 @@ processes:
     env:
       SERVICE_PATH: ./forms/features/conditional-steps
       PORT: 16083
-  features-save-and-return:
-    quantity: 1
-    respawn_window: 3
-    env:
-      SERVICE_PATH: ./forms/features/save-and-return-module
-      SUBMITTER_URL: 'http://save-and-return-simulator:3000'
-      PORT: 16084
   components-autocomplete-app:
     quantity: 1
     respawn_window: 3

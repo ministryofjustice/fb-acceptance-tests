@@ -52,8 +52,6 @@ Features:
 - acceptance-tests-json-output
 - acceptance-tests-maintenance-mode
 
-There will also be a save and return service to test against but it is not currently published
-
 Components:
 
 - acceptance-tests-autocomplete
@@ -86,7 +84,7 @@ Commands to start, stop or restart the containers:
 
 It is possible to fun a set of feature or component specs instead of the whole suite:
 
-    $ make feature FEATURE=save_and_return_module
+    $ make feature FEATURE=email-output
 
 or
 
@@ -98,7 +96,6 @@ Available features:
 - email_output
 - json_output
 - maintenance_mode
-- save_and_return_module
 
 Available components:
 

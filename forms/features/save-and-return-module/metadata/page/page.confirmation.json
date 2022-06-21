@@ -1,8 +1,0 @@
-{
-  "_id": "page.confirmation",
-  "_type": "page.confirmation",
-  "body": "If this is the wrong email address, you can [change your email](/solicitor/change/check) and send your application again.\r\n\r\n### What happens next\r\n\r\nThe LAA will consider your appeal and aim to email you with a decision within 2 working days.\r\n\r\nIf you do not hear back by then, contact <iojappeals@justice.gov.uk>.\r\n\r\n### Make another appeal\r\n\r\nYou can [appeal for another defendant](/).",
-  "heading": "Application complete",
-  "lede": "We’ll send your application to the Legal Aid Agency (LAA) and a copy to {solicitor_email, select, undefined{[solicitor_email]} other{{solicitor_email}}}",
-  "url": "/confirmation"
-}
