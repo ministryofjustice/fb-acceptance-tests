@@ -16,7 +16,7 @@ class NewRunnerApp < FeaturesEmailApp
   element :change_upload, :link, text: 'Your answer for Upload a file', visible: false
 
   def load(expansion_or_html = {}, &block)
-    puts "Visiting form: #{ENV['NEW_RUNNER_APP'] % { user: '*****', password: '*****' }}"
+    puts "Visiting form: #{ENV['NEW_RUNNER_APP']}"
     SitePrism::Page.instance_method(:load).bind(self).call
   end
 end

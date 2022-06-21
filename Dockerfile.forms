@@ -7,7 +7,7 @@ ARG UID=1001
 
 RUN apk add bash openssh git
 RUN apk add nodejs npm
-RUN apk add build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
+RUN apk add openssl-dev build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
 
 RUN addgroup -g ${UID} -S appgroup && \
   adduser -u ${UID} -S appuser -G appgroup

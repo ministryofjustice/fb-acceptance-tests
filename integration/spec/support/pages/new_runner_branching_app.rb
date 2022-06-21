@@ -25,7 +25,7 @@ class NewRunnerBranchingApp < ServiceApp
   element :change_page_j_answer, :link, text: 'Your answer for Page J', visible: false
 
   def load(expansion_or_html = {}, &block)
-    puts "Visiting form: #{ENV['NEW_RUNNER_BRANCHING_APP'] % { user: '*****', password: '*****' }}"
+    puts "Visiting form: #{ENV['NEW_RUNNER_BRANCHING_APP']}"
     SitePrism::Page.instance_method(:load).bind(self).call
   end
 end
