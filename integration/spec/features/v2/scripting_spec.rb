@@ -5,7 +5,7 @@ describe 'New Runner' do
 
   it 'does not run JavaScript when scripts are submitted' do
     form.load
-    form.start_button.click
+    form.start_now_button.click
 
     form.first_name_field.set(script)
     form.last_name_field.set(script)

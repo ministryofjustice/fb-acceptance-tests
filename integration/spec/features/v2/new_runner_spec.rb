@@ -13,7 +13,7 @@ describe 'New Runner' do
   before { form.load }
 
   it 'sends an email with the submission in a PDF' do
-    form.start_button.click
+    form.start_now_button.click
 
     check_optional_text(page.text)
     continue
@@ -153,7 +153,7 @@ describe 'New Runner' do
     expect(page.text).to include('Optional file upload (Optional)')
     expect(page.text).not_to include('goodbye_world.text')
 
-    click_on 'Accept and send application'
+    form.submit_button.click
 
     expect(form.text).to include("You've sent us the answers about your cat!")
 

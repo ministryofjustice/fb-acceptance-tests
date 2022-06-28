@@ -1,10 +1,12 @@
 class ServiceApp < SitePrism::Page
   element :start_button, :button, 'Start'
+  element :start_now_button, :button, 'Start Now'
   element :continue_button, :button, 'Continue'
   elements :summaries, 'dl .govuk-summary-list__value'
   elements :headings, '.govuk-heading-xl'
   elements :change_links, '.govuk-summary-list__actions a.govuk-link'
   element :send_application_button, :button, 'Accept and send application'
+  element :submit_button, :button, 'Submit'
   element :confirmation_header, 'h1.govuk-panel__title'
   element :accept_analytics, :button, 'Accept analytics cookies'
   element :reject_analytics, :button, 'Reject analytics cookies'
