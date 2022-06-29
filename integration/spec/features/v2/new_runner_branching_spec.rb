@@ -19,7 +19,7 @@ describe 'New Runner Branching App' do
   before { form.load }
 
   it 'navigates the form, changes answers and submits' do
-    form.start_button.click
+    form.start_now_button.click
 
     # page-a
     check_optional_text(page.text)
@@ -136,7 +136,7 @@ describe 'New Runner Branching App' do
     expect(page.text).not_to include(page_d_answer)
     expect(page.text).not_to include(page_e_answer)
 
-    click_on 'Accept and send application'
+    form.submit_button.click
 
     expect(form.text).to include('Application complete')
 
