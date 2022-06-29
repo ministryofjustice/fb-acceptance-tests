@@ -71,7 +71,7 @@ describe 'Smoke test' do
     attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
     form.continue_button.click
 
-    form.send_application_button.click
+    form.submit_button.click
 
     attachments = EmailAttachmentExtractor.find(
       id: generated_name,
