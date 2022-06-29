@@ -1,6 +1,6 @@
 class ServiceApp < SitePrism::Page
   element :start_button, :button, 'Start'
-  element :start_now_button, :button, 'Start Now'
+  element :start_now_button, :button, 'Start now'
   element :continue_button, :button, 'Continue'
   elements :summaries, 'dl .govuk-summary-list__value'
   elements :headings, '.govuk-heading-xl'
