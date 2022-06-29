@@ -225,4 +225,4 @@ You will now be able to see the updated values for those keys:
 `kubectl get configmaps -n formbuilder-saas-test  fb-acceptance-tests-config-map -o json`
 
 `ACCEPTANCE_TESTS_PRIVATE_KEY` needs to be set in the environment for the tests to sign each request. See the `fb-deploy`
-repo and run the `/bin/get_environment_variables` script.
+repo and run the `/bin/pipeline_variables` script.
