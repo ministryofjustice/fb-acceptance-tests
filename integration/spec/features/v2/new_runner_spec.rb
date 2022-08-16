@@ -1,4 +1,5 @@
 require 'pdf-reader'
+require 'csv'
 
 describe 'New Runner' do
   before :each do
@@ -11,8 +12,10 @@ describe 'New Runner' do
   let(:error_message) { 'There is a problem' }
 
   before { form.load }
+  # uncomment below and export user and password ENV vars for local testing
+  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
-  it 'sends an email with the submission in a PDF' do
+  it 'sends an email with the submission in a PDF and a CSV' do
     form.start_now_button.click
 
     check_optional_text(page.text)
@@ -157,11 +160,14 @@ describe 'New Runner' do
 
     expect(form.text).to include("You've sent us the answers about your cat!")
 
-    attachments = find_attachments(id: generated_name)
+    pdf_attachments = find_pdf_attachments(id: generated_name)
+    csv_attachments = find_csv_attachments(id: generated_name)
 
-    assert_pdf_contents(attachments)
 
-    expect(attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
+    assert_pdf_contents(pdf_attachments)
+    assert_csv_contents(csv_attachments)
+
+    expect(pdf_attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
   end
 
 
@@ -231,5 +237,58 @@ describe 'New Runner' do
 
     # optional text
     check_optional_text(result)
+  end
+
+  def assert_csv_contents(attachments)
+    content = attachments[:csvs].first || ""
+    csv_path = "/tmp/submission-#{SecureRandom.uuid}.csv"
+    File.open(csv_path, 'w') do |file|
+      file.write(content)
+    end
+    rows = CSV.read(csv_path)
+
+    p 'Asserting CSV contents'
+
+    expect(rows[0]).to match_array([
+      'submission_id',
+      'submission_at',
+      'name_text_1',
+      'name_text_2',
+      'your-email-address_text_1',
+      'your-cat_textarea_1',
+      'optional-questions_text_1',
+      'optional-questions_textarea_1',
+      'optional-questions_number_1',
+      'optional-questions_radios_1',
+      'optional-questions_checkboxes_1',
+      'optional-questions_date_1',
+      'your-fruit_checkboxes_1',
+      'when_date_1',
+      'how-many_number_1',
+      'watch_radios_1',
+      'file-upload_upload_1',
+      'optional-file-upload_upload_1',
+      ])
+
+    expect(rows[1][0]).to match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/) # guid
+    expect(rows[1][1]).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/) # iso timestamp
+    expect(rows[1][2..]).to match_array([
+      'Stormtrooper',
+      generated_name,
+      'fb-acceptance-tests@digital.justice.gov.uk',
+      'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      'Apples; Pears',
+      '12 November 2007',
+      '5',
+      'Yes',
+      'hello_world.txt',
+      ''
+    ])
   end
 end
