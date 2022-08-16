@@ -21,18 +21,22 @@ class EmailFinder
   end
 
   def emails
-    @filtered_emails ||= if find_criteria == :subject
-      all_by_subject
-    else
-      all_by_attachment
-    end
+    @filtered_emails ||=  if find_criteria == :subject
+                            all_by_subject
+                          elsif find_criteria == :pdf_attachments
+                            all_with_pdf_attachment
+                          elsif find_criteria == :csv_attachments
+                            all_with_csv_attachment
+                          else
+                            all_with_attachment
+                          end
   end
 
   def attachments
     hash = {}
 
     @filtered_emails.each do |email|
-      hash.merge!(email.attachments.reject { |_,v| v.blank? })
+      hash.merge!(email.attachments.reject { |_, v| v.blank? })
     end
 
     hash
@@ -51,25 +55,44 @@ class EmailFinder
     end
   end
 
-  def all_by_attachment
+  def all_with_pdf_attachment
     inbox.all.select do |email|
       if email.attachments[:pdf_answers]
         pdf_path = "/tmp/submission-#{SecureRandom.uuid}.pdf"
         File.open(pdf_path, 'w') do |file|
           file.write(email.attachments[:pdf_answers])
         end
-        result = PDF::Reader.new(pdf_path).pages.map do |page|
-          page.text
-        end.join(' ')
+        result = PDF::Reader.new(pdf_path).pages.map(&:text).join(' ')
 
         puts "Looking for attachment with #{id} in #{email.subject}"
         if result.include?(id)
-          puts "=" * 80
+          puts '=' * 80
           puts "Found in #{email.subject}! #{id}"
-          puts "=" * 80
+          puts '=' * 80
         end
         result.include?(id)
       end
+    end
+  end
+
+  def all_with_csv_attachment
+    inbox.all.select do |email|
+      if email.attachments[:csvs]
+        result = email.attachments[:csvs].first || ''
+        puts "Looking for attachment with #{id} in #{email.subject}"
+        if result.include?(id)
+          puts '=' * 80
+          puts "Found in #{email.subject}! #{id}"
+          puts '=' * 80
+        end
+        result.include?(id)
+      end
+    end
+  end
+
+  def all_with_attachment
+    inbox.all.select do |email|
+      email.attachments.reject { |_, v| v.blank? }.size
     end
   end
 
