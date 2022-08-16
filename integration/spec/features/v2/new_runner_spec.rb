@@ -12,7 +12,7 @@ describe 'New Runner' do
   let(:error_message) { 'There is a problem' }
 
   before { form.load }
-  # uncomment below and export user and password ENV vars for local testing
+  # comment above line and uncomment below and export user and password ENV vars for local testing
   # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
   it 'sends an email with the submission in a PDF and a CSV' do
