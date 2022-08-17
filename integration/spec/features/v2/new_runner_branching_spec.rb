@@ -1,4 +1,5 @@
 require 'pdf-reader'
+require 'csv'
 
 describe 'New Runner Branching App' do
   let(:form) { NewRunnerBranchingApp.new }
@@ -17,6 +18,8 @@ describe 'New Runner Branching App' do
   let(:error_message) { 'There is a problem' }
 
   before { form.load }
+  # comment above and uncomment below and export user and password ENV vars for local testing
+  # before { visit "https://#{username}:#{password}@acceptance-tests-branching-fixture-10.dev.test.form.service.justice.gov.uk" }
 
   it 'navigates the form, changes answers and submits' do
     form.start_now_button.click
@@ -140,8 +143,10 @@ describe 'New Runner Branching App' do
 
     expect(form.text).to include('Application complete')
 
-    attachments = find_attachments(id: page_a_answer)
-    assert_pdf_contents(attachments)
+    pdf_attachments = find_pdf_attachments(id: page_a_answer)
+    csv_attachments = find_csv_attachments(id: page_a_answer)
+    assert_pdf_contents(pdf_attachments)
+    assert_csv_contents(csv_attachments)
   end
 
   def assert_pdf_contents(attachments)
@@ -174,6 +179,40 @@ describe 'New Runner Branching App' do
     expect(result).not_to include(page_e_answer)
     # optional text
     check_optional_text(result)
+  end
+
+  def assert_csv_contents(attachments)
+    content = attachments[:csvs].first || ""
+    csv_path = "/tmp/submission-#{SecureRandom.uuid}.csv"
+    File.open(csv_path, 'w') do |file|
+      file.write(content)
+    end
+    rows = CSV.read(csv_path)
+
+    p 'Asserting CSV contents'
+
+    expect(rows[0]).to match_array([
+      'submission_id',
+      'submission_at',
+      'page-a_text_1',
+      'page-b_checkboxes_1',
+      'destinationb_checkboxes_1',
+      'page-j_checkboxes_1',
+      'page-f_checkboxes_1',
+      'page-l_text_1'
+    ])
+
+    expect(rows[1][0]).to match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/) # guid
+    expect(rows[1][1]).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/) # iso timestamp
+
+    expect(rows[1][2..]).to match_array([
+      page_a_answer,
+      page_b_changed_answer,
+      page_i_answer,
+      '',
+      page_f_answer,
+      page_l_answer
+    ])
   end
 
   def summary_list
