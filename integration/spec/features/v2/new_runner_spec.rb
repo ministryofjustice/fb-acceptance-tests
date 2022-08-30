@@ -121,6 +121,15 @@ describe 'New Runner' do
     attach_file('Optional file upload', 'spec/fixtures/files/goodbye_world.txt')
     continue
 
+    # autocomplete
+    check_optional_text(page.text)
+    form.autocomplete_countries_field.set("Wonderland\n")
+    continue
+    check_error_message(page.text, [form.find('h1').text])
+    form.autocomplete_countries_field.set("Na")
+    find('li.autocomplete__option', text: 'Narnia').click
+    continue
+
     # check your answers
     check_optional_text(page.text)
     expect(page.text).to include('First name Stormtrooper')
@@ -139,6 +148,7 @@ describe 'New Runner' do
     expect(page.text).to include('Is your cat watching you now? Yes')
     expect(page.text).to include('Upload a file hello_world.txt')
     expect(page.text).to include('Optional file upload (Optional) goodbye_world.txt')
+    expect(page.text).to include('Narnia')
 
     # Checking changing answer for optional checkboxes
     # Also checking optional checkboxes will remove a users previous answer
@@ -155,6 +165,14 @@ describe 'New Runner' do
     expect(page.text).to include('Check your answers')
     expect(page.text).to include('Optional file upload (Optional)')
     expect(page.text).not_to include('goodbye_world.text')
+
+    # Check changing answer for autocomplete component
+    form.change_autocomplete.click
+    form.autocomplete_countries_field.set("W")
+    find('li.autocomplete__option', text: 'Wakanda').click
+    continue
+    expect(page.text).to include('Check your answers')
+    expect(page.text).not_to include('Narnia')
 
     form.submit_button.click
 
@@ -235,6 +253,11 @@ describe 'New Runner' do
     expect(result).to include('Optional file upload')
     expect(result).not_to include('goodbye_world.text')
 
+    # autocomplete
+    expect(result).to include('Where do you like to')
+    expect(result).to include('holiday?')
+    expect(result).to include('WK')
+
     # optional text
     check_optional_text(result)
   end
@@ -268,6 +291,7 @@ describe 'New Runner' do
       'watch_radios_1',
       'file-upload_upload_1',
       'optional-file-upload_upload_1',
+      'countries_autocomplete_1'
       ])
 
     expect(rows[1][0]).to match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/) # guid
@@ -288,7 +312,8 @@ describe 'New Runner' do
       '5',
       'Yes',
       'hello_world.txt',
-      ''
+      '',
+      'WK'
     ])
   end
 end

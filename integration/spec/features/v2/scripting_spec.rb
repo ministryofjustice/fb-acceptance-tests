@@ -52,6 +52,11 @@ describe 'New Runner' do
     # optional upload page to check for adding and removing files
     continue
 
+    # autocomplete
+    form.autocomplete_countries_field.set("Na")
+    find('li.autocomplete__option', text: 'Narnia').click
+    continue
+
     # check your answers
     form.change_first_name.click
     expect(alert_present?).to be_falsey
