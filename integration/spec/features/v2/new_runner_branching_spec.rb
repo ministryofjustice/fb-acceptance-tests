@@ -143,7 +143,7 @@ describe 'New Runner Branching App' do
 
     expect(form.text).to include('Application complete')
 
-    pdf_attachments = find_pdf_attachments(id: page_a_answer)
+    pdf_attachments = find_pdf_attachments(id: page_a_answer, expected_emails: 1)
     csv_attachments = find_csv_attachments(id: page_a_answer)
     assert_pdf_contents(pdf_attachments)
     assert_csv_contents(csv_attachments)

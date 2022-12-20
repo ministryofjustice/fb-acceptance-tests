@@ -34,7 +34,7 @@ describe 'New Runner' do
     check_optional_text(page.text)
     continue
     check_error_message(page.text, ['Your email address'])
-    form.email_field.set('fb-acceptance-tests@digital.justice.gov.uk')
+    form.email_field.set('fb-acceptance-tests+confirmation@digital.justice.gov.uk')
     continue
 
     # textarea
@@ -134,7 +134,7 @@ describe 'New Runner' do
     check_optional_text(page.text)
     expect(page.text).to include('First name Stormtrooper')
     expect(page.text).to include("Last name #{generated_name}")
-    expect(page.text).to include('Your email address fb-acceptance-tests@digital.justice.gov.uk')
+    expect(page.text).to include('Your email address fb-acceptance-tests+confirmation@digital.justice.gov.uk')
     expect(page.text).to include('Your cat My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?')
     expect(page.text).to include('Optional text (Optional)')
     expect(page.text).to include('Optional textarea (Optional)')
@@ -176,20 +176,24 @@ describe 'New Runner' do
 
     form.submit_button.click
 
-    expect(form.text).to include("You've sent us the answers about your cat!")
+    expect(page.text).to include('You still need to pay')
+    expect(page).to have_css('.govuk-button', text: 'Continue to pay')
+    reference_number = page.find(:css, 'strong').text
+    expect(page.text).to include('Your reference number is:')
+    expect(page.text).to include(reference_number)
 
-    pdf_attachments = find_pdf_attachments(id: generated_name)
-    csv_attachments = find_csv_attachments(id: generated_name)
+    pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
+    csv_attachments = find_csv_attachments(id: reference_number)
 
 
-    assert_pdf_contents(pdf_attachments)
-    assert_csv_contents(csv_attachments)
+    assert_pdf_contents(pdf_attachments, reference_number)
+    assert_csv_contents(csv_attachments, reference_number)
 
     expect(pdf_attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
   end
 
 
-  def assert_pdf_contents(attachments)
+  def assert_pdf_contents(attachments, reference_number)
     pdf_path = "/tmp/submission-#{SecureRandom.uuid}.pdf"
     File.open(pdf_path, 'w') do |file|
       file.write(attachments[:pdf_answers])
@@ -200,10 +204,7 @@ describe 'New Runner' do
     p 'Asserting PDF contents'
 
     expect(result).to include(
-      'Submission subheading for new-runner-acceptance-tests'
-    )
-    expect(result).to include(
-      'Submission for new-runner-acceptance-'
+      "reference number: #{reference_number}"
     )
     expect(result).to include('tests')
 
@@ -215,7 +216,7 @@ describe 'New Runner' do
 
     # email
     expect(result).to include('Your email address')
-    expect(result).to include('fb-acceptance-tests@digital.justice.gov.uk')
+    expect(result).to include('fb-acceptance-tests+confirmation@digital.justice.gov.uk')
 
     # textarea
     expect(result).to include('Your cat')
@@ -262,7 +263,7 @@ describe 'New Runner' do
     check_optional_text(result)
   end
 
-  def assert_csv_contents(attachments)
+  def assert_csv_contents(attachments, reference_number)
     content = attachments[:csvs].first || ""
     csv_path = "/tmp/submission-#{SecureRandom.uuid}.csv"
     File.open(csv_path, 'w') do |file|
@@ -273,11 +274,11 @@ describe 'New Runner' do
     p 'Asserting CSV contents'
 
     expect(rows[0]).to match_array([
-      'submission_id',
+      'reference_number',
       'submission_at',
       'name_text_1',
       'name_text_2',
-      'your-email-address_text_1',
+      'your-email-address_email_1',
       'your-cat_textarea_1',
       'optional-questions_text_1',
       'optional-questions_textarea_1',
@@ -294,12 +295,12 @@ describe 'New Runner' do
       'countries_autocomplete_1'
       ])
 
-    expect(rows[1][0]).to match(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/) # guid
+    expect(rows[1][0]).to match(reference_number) # guid
     expect(rows[1][1]).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/) # iso timestamp
     expect(rows[1][2..]).to match_array([
       'Stormtrooper',
       generated_name,
-      'fb-acceptance-tests@digital.justice.gov.uk',
+      'fb-acceptance-tests+confirmation@digital.justice.gov.uk',
       'My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?',
       '',
       '',

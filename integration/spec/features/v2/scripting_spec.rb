@@ -12,9 +12,10 @@ describe 'New Runner' do
     continue
 
     form.email_field.set(script)
+    form.email_field.set('name@example.com')
     continue
 
-    # text
+    # textarea
     fill_in 'Your cat',
       with: script
     continue
