@@ -8,9 +8,11 @@ updates:
     timezone: Europe/London
   open-pull-requests-limit: 10
   reviewers:
-  - brenetic
   - mattempty
   - njseeto
+  - chrispymm
+  - H3ll3m4
+  - StevenLeighton21
   ignore:
   - dependency-name: parallel_tests
     versions:
@@ -29,9 +31,11 @@ updates:
     timezone: Europe/London
   open-pull-requests-limit: 10
   reviewers:
-  - brenetic
   - mattempty
   - njseeto
+  - chrispymm
+  - H3ll3m4
+  - StevenLeighton21
   ignore:
   - dependency-name: ruby
     versions:
