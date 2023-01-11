@@ -33,7 +33,9 @@ workflows:
   version: 2
   commit-workflow:
     jobs:
-      - test
+      - test:
+          context: &context
+            - moj-forms
   nightly:
     triggers:
       - schedule:
@@ -43,4 +45,5 @@ workflows:
               only:
                 - master
     jobs:
-      - clear_old_emails
+      - clear_old_emails:
+          context: *context
