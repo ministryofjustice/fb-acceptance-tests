@@ -176,7 +176,7 @@ describe 'New Runner' do
 
     form.submit_button.click
 
-    expect(page.text).to include('You still need to pay')
+    expect(page.text).to include("You've sent us the answers about your cat!")
     expect(page).to have_css('.govuk-button', text: 'Continue to pay')
     reference_number = page.find(:css, 'strong').text
     expect(page.text).to include('Your reference number is:')
