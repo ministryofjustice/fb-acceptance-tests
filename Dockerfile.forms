@@ -29,6 +29,7 @@ RUN chown appuser:appgroup /usr/lib/ruby
 EXPOSE 3000
 USER appuser
 
+ENV BUNDLER_VERSION 2.3.18
 RUN gem install bundler --user-install
 RUN BUNDLE_JOBS=4 bundle install --verbose
 
