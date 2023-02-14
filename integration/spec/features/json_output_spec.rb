@@ -105,7 +105,7 @@ describe 'JSON Output' do
     expect(result[:attachments][0][:filename]).to eql('hello_world.txt')
     expect(result[:attachments][0][:mimetype]).to eql('text/plain')
 
-    file_contents = open(result[:attachments][0][:url], 'rb').read
+    file_contents = URI.open(result[:attachments][0][:url], 'rb').read
 
     crypto = Cryptography.new(
       encryption_key: Base64.strict_decode64(result[:attachments][0][:encryption_key]),
@@ -126,7 +126,7 @@ describe 'JSON Output' do
 
     until tries > max_tries
       puts "GET #{submission_path}"
-      response = HTTParty.get(submission_path, { open_timeout: 10, read_timeout: 5 })
+      response = HTTParty.get(submission_path, **{ open_timeout: 10, read_timeout: 5 })
 
       if response.code == 200
         break
@@ -149,7 +149,7 @@ describe 'JSON Output' do
   def delete_adapter_submissions
     HTTParty.delete(
       "#{base_adapter_domain}/submissions",
-      { open_timeout: 10, read_timeout: 10 }
+      **{ open_timeout: 10, read_timeout: 10 }
     )
   end
 
