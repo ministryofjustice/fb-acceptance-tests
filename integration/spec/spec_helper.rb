@@ -19,6 +19,7 @@ RSpec.configure do |c|
     chrome_options = Selenium::WebDriver::Chrome::Options.new.tap do |o|
       o.add_argument '--headless'
       o.add_argument '--no-sandbox'
+      o.add_argument '--disable-dev-shm-usage'
     end
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
   end
