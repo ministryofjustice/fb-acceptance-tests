@@ -4,7 +4,7 @@ module Fb
       attr_accessor :options
 
       def initialize(args)
-        @options = Options.new(args).parse
+        @options = Options.new(**args).parse
       end
 
       def run
