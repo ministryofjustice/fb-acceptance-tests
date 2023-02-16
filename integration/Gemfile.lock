@@ -70,8 +70,11 @@ GEM
       concurrent-ruby (~> 1.0)
     jwe (0.4.0)
     jwt (2.2.2)
-    mail (2.7.1)
+    mail (2.8.1)
       mini_mime (>= 0.1.1)
+      net-imap
+      net-pop
+      net-smtp
     matrix (0.4.2)
     memoist (0.16.2)
     mini_mime (1.1.2)
