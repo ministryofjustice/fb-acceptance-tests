@@ -19,10 +19,15 @@ RSpec.configure do |c|
     chrome_options = Selenium::WebDriver::Chrome::Options.new.tap do |o|
       o.add_argument '--headless'
       o.add_argument '--no-sandbox'
+      o.add_argument '--disable-dev-shm-usage'
     end
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.read_timeout = 120
+    client.open_timeout = 120
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options, http_client: client)
   end
   Capybara.default_driver = :selenium
+  Capybara.default_max_wait_time = 15
 
   Capybara.app_host = 'http://localhost:3003'
   c.include Capybara::DSL

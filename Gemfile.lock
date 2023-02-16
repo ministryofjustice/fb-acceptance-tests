@@ -11,7 +11,7 @@ GEM
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     json (2.3.0)
-    minitest (5.14.1)
+    minitest (5.17.0)
     procodile (1.0.26)
       json
     thread_safe (0.3.6)
@@ -27,4 +27,4 @@ DEPENDENCIES
   procodile
 
 BUNDLED WITH
-   2.1.4
+   2.4.6

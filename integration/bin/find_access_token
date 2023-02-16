@@ -23,6 +23,6 @@ end
 
 private_key = OpenSSL::PKey::RSA.new(Base64.strict_decode64(encoded_private_key.chomp))
 
-jwt = JWT.encode({sub: user_identifier, iat: Time.current.to_i}, private_key, 'RS256')
+jwt = JWT.encode(**{sub: user_identifier, iat: Time.current.to_i}, private_key, 'RS256')
 
 puts "#{jwt}"

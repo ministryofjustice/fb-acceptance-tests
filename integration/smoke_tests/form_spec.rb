@@ -30,6 +30,7 @@ class SmokeTestForm < ServiceApp
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{ENV['SMOKE_TEST_FORM'] % { user: '*****', password: '*****' }}"
     SitePrism::Page.instance_method(:load).bind(self).call
+    self.wait_until_displayed
   end
 end
 

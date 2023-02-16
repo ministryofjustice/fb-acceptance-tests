@@ -1,4 +1,4 @@
-FROM ruby:2.6.5-alpine3.9
+FROM ruby:3.1.3-alpine3.16
 
 ARG UID=1001
 
@@ -13,6 +13,7 @@ RUN chown appuser:appgroup /app
 
 COPY --chown=appuser:appgroup Gemfile Gemfile.lock ./
 
+ENV BUNDLER_VERSION 2.3.18
 RUN gem install bundler
 
 ARG BUNDLE_ARGS='--jobs 4 --without test development'
