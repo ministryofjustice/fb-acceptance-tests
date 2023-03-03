@@ -14,13 +14,21 @@ class Inbox
       subject = Array(
         email.payload.headers
       ).find { |header| header.name == 'Subject' }&.value
+      reply_to = Array(
+        email.payload.headers
+      ).find { |header| header.name == 'Reply-To' }&.value
+      from = Array(
+        email.payload.headers
+      ).find { |header| header.name == 'From' }&.value
 
       AcceptanceTestEmail.new(
         email_id: email.id,
         subject: subject,
         snippet: email.snippet,
         attachments: all_attachments_for(email),
-        raw: email
+        raw: email,
+        reply_to: reply_to,
+        from: from
       )
     end
   end
