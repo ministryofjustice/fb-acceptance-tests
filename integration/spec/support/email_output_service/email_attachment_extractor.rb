@@ -2,7 +2,8 @@ class EmailAttachmentExtractor
   def self.find(
     id:,
     expected_emails: nil,
-    find_criteria: nil
+    find_criteria: nil,
+    include_whole_email: false
   )
     tries = 1
     max_tries = 20
@@ -24,8 +25,12 @@ class EmailAttachmentExtractor
     if tries == max_tries || !email_finder.email_received?
       raise "Email '#{email_finder.id}' not found"
     else
-      email_finder.attachments.tap do
-        email_finder.remove_emails
+      if include_whole_email == true
+        email_finder.emails
+      else
+        email_finder.attachments.tap do
+          email_finder.remove_emails
+        end
       end
     end
   end

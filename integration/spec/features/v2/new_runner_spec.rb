@@ -182,9 +182,13 @@ describe 'New Runner' do
     expect(page.text).to include('Your reference number is:')
     expect(page.text).to include(reference_number)
 
+    confirmation_email = get_confirmation_email(reference_number)
+
+    expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
+    expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
+
     pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
     csv_attachments = find_csv_attachments(id: reference_number)
-
 
     assert_pdf_contents(pdf_attachments, reference_number)
     assert_csv_contents(csv_attachments, reference_number)
@@ -192,6 +196,11 @@ describe 'New Runner' do
     expect(pdf_attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
   end
 
+  def get_confirmation_email(reference_number)
+    find_email_by_subject(id: reference_number).select do |email|
+      email.subject.include?('Confirmation email')
+    end
+  end
 
   def assert_pdf_contents(attachments, reference_number)
     pdf_path = "/tmp/submission-#{SecureRandom.uuid}.pdf"
