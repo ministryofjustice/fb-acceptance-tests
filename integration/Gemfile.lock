@@ -75,7 +75,7 @@ GEM
     matrix (0.4.2)
     memoist (0.16.2)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
+    mini_portile2 (2.8.1)
     minitest (5.14.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -89,7 +89,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nokogiri (1.13.10)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     os (1.1.1)
@@ -103,7 +103,7 @@ GEM
       ruby-rc4
       ttfunk
     public_suffix (4.0.6)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (3.0.6)
     rack-test (2.0.2)
       rack (>= 1.3)
