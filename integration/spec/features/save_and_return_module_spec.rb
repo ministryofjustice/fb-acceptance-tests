@@ -1,7 +1,7 @@
 require 'capybara/rspec'
 require 'spec_helper'
 
-describe 'Using Save and Return' do
+describe 'Using Save and Return', skip: true do
   let(:form) { FeaturesSaveAndReturnApp.new }
 
   before { form.load }

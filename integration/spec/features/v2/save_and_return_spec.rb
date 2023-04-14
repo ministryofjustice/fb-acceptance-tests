@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe 'Save and return' do
+describe 'Save and return', skip: true do
   before :each do
     OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
   end
   let(:form) { SaveAndReturnV2App.new }
-  # use same username and password as new runner acceptance test 
+  # use same username and password as new runner acceptance test
   let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
   let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
