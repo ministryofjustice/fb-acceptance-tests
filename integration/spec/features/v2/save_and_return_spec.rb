@@ -25,7 +25,7 @@ describe 'Save and return', skip: true do
     form.email.set('email@')
     continue
     check_validation_error_message('Enter an email address in the correct format, like name@example.com')
-    form.email.set('email@example.com')
+    form.email.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
     check_validation_error_message("can't be blank")
     form.secret_question_1.choose
@@ -39,10 +39,23 @@ describe 'Save and return', skip: true do
     check_optional_text(page.text)
     form.email_confirmation.set('email@email.com')
     check_validation_error_message("Check your email address is correct")
-    form.email_confirmation.set('email@example.com')
+    form.email_confirmation.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
     check_optional_text(page.text)
     expect(page.text).to include('Your form has been saved')
-    expect(page.text).to include('We have sent a one-off link to email@example.com')
+    expect(page.text).to include('We have sent a one-off link to fb-acceptance-tests@digital.justice.gov.uk')
+
+    confirmation_email = get_resume_email('save-and-return-v2-acceptance-test')
+
+    puts(confirmation_email)
+    
+    # expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
+    # expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
+  end
+
+  def get_resume_email(reference_number)
+    find_email_by_subject(id: reference_number, expect_emails: 1).select do |email|
+      email.subject.include?('Resuming your application to')
+    end
   end
 end
