@@ -47,17 +47,32 @@ describe 'Save and return' do
     expect(page.text).to include('We have sent a one-off link to fb-acceptance-tests@digital.justice.gov.uk')
 
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
-
-    # puts(resume_progress_email)
-    puts(resume_progress_email.body)
+    byebug
+    resume_link = extract_link_from_email(resume_progress_email)
     
-    # expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
-    # expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
+    visit resume_link
+
+    expect(page.text).to include('Continue with "save-and-return-v2-acceptance-test"')
+    form.resume_secret_answer.set('bar')
+    continue
+    check_validation_error_message('Your answer is incorrect. You have 3 attempts remaining.')
+    form.resume_secret_answer.set('foo')
+    continue
+    expect(page.text).to include('You have sucessfuly retrieved your saved information.')
   end
 
   def get_resume_email(reference_number)
     find_save_and_return_email(id: reference_number, expect_emails: nil).select do |email|
       email.subject.include?('Resuming your application to')
-    end.last
+    end.sort_by { |email| email.raw.payload.headers[18].value }.last
+  end
+
+  def extract_link_from_email(email)
+    message_body = email.raw.payload.parts[0].parts[0].body.data
+    uuid_regex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
+    uuid = message_body.match(uuid_regex)
+    host = "https://#{username}:#{password}@save-and-return-v2-acceptance-test.dev.test.form.service.justice.gov.uk/return/#{uuid}"
+
+    host
   end
 end

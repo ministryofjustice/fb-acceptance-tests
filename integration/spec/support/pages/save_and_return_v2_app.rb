@@ -13,6 +13,7 @@ class SaveAndReturnV2App < FeaturesEmailApp
   element :secret_question_2, :radio_button, 'What is the last name of your favourite teacher?', visible: false
   element :secret_question_3, :radio_button, 'What is the name of the hospital where you were born?', visible: false
   element :email_confirmation, :field, 'Email Confirmation'
+  element :resume_secret_answer, :field, 'What is your mother\'s maiden name?'
 
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{ENV['SAVE_AND_RETURN_V2_APP'] % { user: '*****', password: '*****' }}"
