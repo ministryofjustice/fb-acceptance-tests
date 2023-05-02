@@ -90,7 +90,8 @@ def find_save_and_return_email(id:, expect_emails:)
       id: id,
       expected_emails: expect_emails,
       find_criteria: :subject,
-      include_whole_email: true
+      include_whole_email: true,
+      return_all: true,
     )
   else
     {}
