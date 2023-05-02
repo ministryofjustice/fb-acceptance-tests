@@ -46,9 +46,10 @@ describe 'Save and return' do
     expect(page.text).to include('Your form has been saved')
     expect(page.text).to include('We have sent a one-off link to fb-acceptance-tests@digital.justice.gov.uk')
 
-    confirmation_email = get_resume_email('save-and-return-v2-acceptance-test')
+    resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
 
-    puts(confirmation_email)
+    puts(resume_progress_email)
+    puts(resume_progress_email.body)
     
     # expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
     # expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
