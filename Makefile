@@ -134,7 +134,7 @@ endif
 
 ## Experimental ##
 spec-ci:
-	docker-compose -f docker-compose.ci.yml run --rm integration_ci bundle exec parallel_rspec spec/features/v2/save_and_return_spec.rb --exclude-pattern 'spec/features/save_and_return_module_spec.rb' -n 4
+	docker-compose -f docker-compose.ci.yml run --rm integration_ci bundle exec parallel_rspec spec --exclude-pattern 'spec/features/save_and_return_module_spec.rb' -n 4
 
 ## Clears out emails older than 24 hours from the gmail inbox that receives test submissions
 clear-emails:
