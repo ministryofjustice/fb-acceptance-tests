@@ -14,7 +14,7 @@ class GoogleService
 
   def authorize
     creds = Google::Auth::UserRefreshCredentials.new(credentials)
-    # creds.refresh_token = ENV['GOOGLE_REFRESH_TOKEN']
+    creds.refresh_token = ENV['GOOGLE_REFRESH_TOKEN']
     creds.fetch_access_token!
     creds
   end
