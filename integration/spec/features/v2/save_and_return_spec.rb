@@ -11,6 +11,7 @@ describe 'Save and return' do
 
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
+  let(:q1_answer) { 'Hello' }
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
@@ -20,7 +21,7 @@ describe 'Save and return' do
     form.start_now_button.click
 
     check_optional_text(page.text)
-    form.question_1.set('hello')
+    form.question_1.set(q1_answer)
     continue
     form.save_and_return.click
     form.email.set('email@')
@@ -47,7 +48,6 @@ describe 'Save and return' do
     expect(page.text).to include('We have sent a one-off link to fb-acceptance-tests@digital.justice.gov.uk')
 
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
-    byebug
     resume_link = extract_link_from_email(resume_progress_email)
     
     visit resume_link
@@ -58,7 +58,12 @@ describe 'Save and return' do
     check_validation_error_message('Your answer is incorrect. You have 3 attempts remaining.')
     form.resume_secret_answer.set('foo')
     continue
-    expect(page.text).to include('You have sucessfuly retrieved your saved information.')
+    # expect(page.text).to include('You have sucessfuly retrieved your saved information.')
+    expect(page.text).to include(q1_answer)
+
+    visit resume_link
+
+    expect(page.text).to include('That link has already been used')
   end
 
   def get_resume_email(reference_number)
