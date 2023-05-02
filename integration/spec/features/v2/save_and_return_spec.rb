@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Save and return', skip: true do
+describe 'Save and return' do
   before :each do
     OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
   end
@@ -8,6 +8,7 @@ describe 'Save and return', skip: true do
   # use same username and password as new runner acceptance test
   let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
   let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
+
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
 
@@ -54,8 +55,8 @@ describe 'Save and return', skip: true do
   end
 
   def get_resume_email(reference_number)
-    find_email_by_subject(id: reference_number, expect_emails: 1).select do |email|
+    find_save_and_return_email(id: reference_number, expect_emails: nil).select do |email|
       email.subject.include?('Resuming your application to')
-    end
+    end.last
   end
 end

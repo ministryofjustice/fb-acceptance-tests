@@ -71,7 +71,20 @@ def continue
   form.continue_button.click
 end
 
-def find_email_by_subject(id, expect_emails = 3)
+def find_email_by_subject(id:)
+  if ENV['CI_MODE'].present?
+    EmailAttachmentExtractor.find(
+      id: id,
+      expected_emails: 3,
+      find_criteria: :subject,
+      include_whole_email: true
+    )
+  else
+    {}
+  end
+end
+
+def find_save_and_return_email(id:, expect_emails:)
   if ENV['CI_MODE'].present?
     EmailAttachmentExtractor.find(
       id: id,
