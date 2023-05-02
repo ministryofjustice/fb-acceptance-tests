@@ -48,7 +48,7 @@ describe 'Save and return' do
 
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
 
-    puts(resume_progress_email)
+    # puts(resume_progress_email)
     puts(resume_progress_email.body)
     
     # expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
