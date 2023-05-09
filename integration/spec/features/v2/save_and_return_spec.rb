@@ -29,18 +29,16 @@ describe 'Save and return' do
     check_validation_error_message('Enter an email address in the correct format, like name@example.com')
     form.email.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
-    check_validation_error_message("can't be blank")
+    check_validation_error_message('Enter an answer for "Secret question"')
     form.secret_question_1.choose
     form.secret_question_2.choose
     form.secret_question_3.choose
     continue
-    check_validation_error_message("can't be blank")
+    check_validation_error_message('Enter an answer for "Secret answer"')
     form.secret_answer.set('foo')
     form.secret_question_1.choose
     continue
     check_optional_text(page.text)
-    form.email_confirmation.set('email@email.com')
-    check_validation_error_message("Check your email address is correct")
     form.email_confirmation.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
     check_optional_text(page.text)
@@ -55,11 +53,16 @@ describe 'Save and return' do
     expect(page.text).to include('Continue with "save-and-return-v2-acceptance-test"')
     form.resume_secret_answer.set('bar')
     continue
-    check_validation_error_message('Your answer is incorrect. You have 3 attempts remaining.')
+    sleep 1
+    check_validation_error_message('Your answer is incorrect. You have 2 attempts remaining.')
     form.resume_secret_answer.set('foo')
+    sleep 1
     continue
-    # expect(page.text).to include('You have sucessfuly retrieved your saved information.')
+    sleep 1
+    expect(page.text).to include('You have sucessfuly retrieved your saved information.')
     expect(page.text).to include(q1_answer)
+    form.continue_form.click
+    expect(page.text).to include('The Second Question')
 
     visit resume_link
 
@@ -68,7 +71,7 @@ describe 'Save and return' do
 
   def get_resume_email(reference_number)
     find_save_and_return_email(id: reference_number, expect_emails: nil).select do |email|
-      email.subject.include?('Resuming your application to')
+      email.subject.include?('Your saved form - \'save-and-return-v2-acceptance-test\'')
     end.sort_by { |email| email.raw.payload.headers[18].value }.last
   end
 
