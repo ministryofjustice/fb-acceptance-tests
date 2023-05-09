@@ -72,7 +72,7 @@ describe 'Save and return' do
   def get_resume_email(reference_number)
     find_save_and_return_email(id: reference_number, expect_emails: nil).select do |email|
       email.subject.include?('Your saved form - \'save-and-return-v2-acceptance-test\'')
-    end.sort_by { |email| email.raw.payload.headers[18].value }.last
+    end.sort_by { |email| email.raw.payload.headers.find { |h| h.name == 'Date' }&.value }.last
   end
 
   def extract_link_from_email(email)
