@@ -84,6 +84,20 @@ def find_email_by_subject(id:)
   end
 end
 
+def find_save_and_return_email(id:, expect_emails:)
+  if ENV['CI_MODE'].present?
+    EmailAttachmentExtractor.find(
+      id: id,
+      expected_emails: expect_emails,
+      find_criteria: :subject,
+      include_whole_email: true,
+      return_all: true,
+    )
+  else
+    {}
+  end
+end
+
 def find_pdf_attachments(id:, expected_emails:)
   if ENV['CI_MODE'].present?
     EmailAttachmentExtractor.find(

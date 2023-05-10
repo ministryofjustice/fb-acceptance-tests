@@ -7,16 +7,19 @@ class EmailFinder
     service:,
     id:,
     expected_emails: nil,
-    find_criteria: nil
+    find_criteria: nil,
+    return_all: false
   )
     @service = service.new.authenticated_service
     @id = id
     @find_criteria = find_criteria || :subject
     @expected_emails = expected_emails || 2
     @inbox = Inbox.new(@service)
+    @return_all = return_all
   end
 
   def email_received?
+    return true if @return_all
     emails.size == @expected_emails
   end
 
