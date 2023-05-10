@@ -35,6 +35,7 @@ describe 'Save and return' do
     form.secret_question_3.choose
     continue
     check_validation_error_message('Enter an answer for "Secret answer"')
+    expect(page.text).to_not include('Enter an answer for "Secret question"')
     form.secret_answer.set('foo')
     form.secret_question_1.choose
     continue
