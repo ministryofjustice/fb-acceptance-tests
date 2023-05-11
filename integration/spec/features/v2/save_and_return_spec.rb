@@ -12,6 +12,7 @@ describe 'Save and return' do
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
   let(:q1_answer) { 'Hello' }
+  let(:q2_answer) { 'Goodybe' }
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
