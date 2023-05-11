@@ -44,6 +44,7 @@ describe 'Save and return' do
     # cancel then answer another question then save progress
     form.cancel_saving.click
     form.question_2.set(q2_answer)
+    continue
     form.save_and_return.click
     sleep 1
     form.email.set('fb-acceptance-tests@digital.justice.gov.uk')
