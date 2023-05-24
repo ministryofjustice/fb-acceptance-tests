@@ -24,6 +24,8 @@ describe 'API Submission' do
     form.question_1.set('42')
     continue
     click_on 'Submit'
+
+    expect(form.text).to include('Application Complete')
   end
 
   def wait_for_request
