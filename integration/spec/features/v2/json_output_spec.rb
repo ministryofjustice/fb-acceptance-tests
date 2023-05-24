@@ -18,12 +18,13 @@ describe 'API Submission' do
   # comment above line and uncomment below and export user and password ENV vars for local testing
   # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
-  # it 'sends an API submission' do
-  #   form.start_now_button.click
-  #   check_optional_text(page.text)
-  #   form.question_1.set('42')
-  #   continue
-  # end
+  it 'sends an API submission' do
+    form.start_now_button.click
+    check_optional_text(page.text)
+    form.question_1.set('42')
+    continue
+    click_on 'Submit'
+  end
 
   def wait_for_request
     submission_path = "#{base_adapter_domain}/submission"
