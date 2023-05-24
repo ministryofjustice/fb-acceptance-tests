@@ -45,6 +45,8 @@ RSpec.configure do |c|
   Dir[
     File.expand_path(File.join(File.dirname(__FILE__), 'support', '**', '*.rb'))
   ].each { |f| require f }
+
+  c.include JsonHelper, type: :feature
 end
 
 OPTIONAL_TEXT = [
