@@ -30,6 +30,7 @@ describe 'API Submission' do
     result = wait_for_request
 
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
+    expect(result[:ultimate-question_number_1]).to eq('42')
   end
 
   def wait_for_request
