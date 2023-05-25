@@ -16,7 +16,7 @@ jobs:
           command: make setup-ci -s # -s hides output of environment variables in logs
       - run:
           name: Run acceptance tests
-          command: make spec-ci
+          command: make feature FEATURE=json_output_api_submission_v2
   clear_old_emails:
     docker:
       - image: cimg/ruby:3.1.3
