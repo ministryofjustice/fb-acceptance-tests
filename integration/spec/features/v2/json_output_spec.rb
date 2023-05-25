@@ -36,6 +36,8 @@ describe 'API Submission' do
     expect(result[:attachment_upload_1]).to eq("hello_world.txt")
     expect(result[:attachment2_upload_1]).to eq("goodbye_world.txt")
     expect(result[:attachments].size).to eql(2)
+    expect(result[:attachments][0][:filename]).to eq("hello_world.txt")
+    expect(result[:attachments][1][:filename]).to eq("goodbye_world.txt")
   end
 
   def wait_for_request
