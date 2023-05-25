@@ -23,6 +23,10 @@ describe 'API Submission' do
     check_optional_text(page.text)
     form.question_1.set('42')
     continue
+    attach_file("Hello", 'spec/fixtures/files/hello_world.txt')
+    continue
+    attach_file("Goodbye", 'spec/fixtures/files/goodbye_world.txt')
+    continue
     form.submit_button.click
 
     expect(page.text).to include('Application complete')
@@ -31,6 +35,9 @@ describe 'API Submission' do
 
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
     expect(result[:ultimate-question_number_1]).to eq('42')
+    expect(result[:attachment_upload_1]).to eq("Hello")
+    expect(result[:attachment2_upload_1]).to eq("Goodbye")
+    expect(result[:attachments].size).to eql(2)
   end
 
   def wait_for_request
