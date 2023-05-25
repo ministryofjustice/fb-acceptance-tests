@@ -13,6 +13,8 @@ describe 'API Submission' do
   let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
+  let(:filename1) { 'hello_world.txt' }
+  let(:filename2) { 'goodbye_world.txt' }
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
@@ -33,11 +35,11 @@ describe 'API Submission' do
     result = wait_for_request
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
     expect(result[:submissionAnswers][:question_text_1]).to eq('42')
-    expect(result[:attachment_upload_1]).to eq("hello_world.txt")
-    expect(result[:attachment2_upload_1]).to eq("goodbye_world.txt")
+    expect(result[:submissionAnswers][:attachment_upload_1]).to eq(filename1)
+    expect(result[:submissionAnswers][:attachment2_upload_1]).to eq(filename2)
     expect(result[:attachments].size).to eql(2)
-    expect(result[:attachments][0][:filename]).to eq("hello_world.txt")
-    expect(result[:attachments][1][:filename]).to eq("goodbye_world.txt")
+    expect(result[:attachments][0][:filename]).to eq(filename1)
+    expect(result[:attachments][1][:filename]).to eq(filename2)
   end
 
   def wait_for_request
