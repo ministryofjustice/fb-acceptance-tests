@@ -32,7 +32,7 @@ describe 'API Submission' do
     expect(page.text).to include('Application complete')
     result = wait_for_request
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
-    expect(result[:question_text_1]).to eq('42')
+    expect(result[:submissionAnswers][:question_text_1]).to eq('42')
     expect(result[:attachment_upload_1]).to eq("hello_world.txt")
     expect(result[:attachment2_upload_1]).to eq("goodbye_world.txt")
     expect(result[:attachments].size).to eql(2)
