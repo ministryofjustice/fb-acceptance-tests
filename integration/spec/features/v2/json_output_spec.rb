@@ -36,6 +36,8 @@ describe 'API Submission' do
     expect(result[:attachments].size).to eql(2)
     expect(result[:attachments][0][:filename]).to eq(filename1)
     expect(result[:attachments][1][:filename]).to eq(filename2)
+
+    delete_adapter_submissions
   end
 
   def wait_for_request
