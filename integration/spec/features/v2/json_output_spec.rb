@@ -16,15 +16,16 @@ describe 'API Submission' do
   it 'sends an API submission' do
     form.start_now_button.click
     check_optional_text(page.text)
-    form.win_checkbox.set('Bertha Benz')
+    form.option_Bertha.check
+    form.option_Margaret.check
     continue
     form.question.set('42')
     continue
     form.proof.set('The web')
-    form.proof.day('01')
-    form.proof.day('01')
-    form.proof.day('1999')
-    form.references.set('Others')
+    form.day.set('01')
+    form.month.set('01')
+    form.year.set('1111')
+    form.option_Others.choose
     continue
     attach_file('Attachment 1', 'spec/fixtures/files/hello_world.txt')
     continue
@@ -36,9 +37,10 @@ describe 'API Submission' do
     result = wait_for_request
     expect(result).to have_key(:submissionId)
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
-    expect(result[:submissionAnswers][:win_checkboxes_1]).to eq('Bertha Benz')
+    expect(result[:submissionAnswers][:win_checkboxes_1]).to eq('Bertha Benz; Margaret Wilcox')
     expect(result[:submissionAnswers][:question_text_1]).to eq('42')
-    expect(result[:submissionAnswers][:multiple_text_1]).to eq('1 January 1999')
+    expect(result[:submissionAnswers][:multiple_text_1]).to eq('The web')
+    expect(result[:submissionAnswers][:multiple_date_1]).to eq('01 January 1111')
     expect(result[:submissionAnswers][:multiple_radios_1]).to eq('Others')
     expect(result[:submissionAnswers][:attachment_upload_1]).to eq(filename1)
     expect(result[:submissionAnswers][:attachment2_upload_1]).to eq(filename2)
