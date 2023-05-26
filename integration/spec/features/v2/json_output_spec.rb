@@ -34,6 +34,23 @@ describe 'API Submission' do
     expect(result[:attachments][0][:filename]).to eq(filename1)
     expect(result[:attachments][1][:filename]).to eq(filename2)
 
+    expect(result[:attachments][0][:encryption_iv].size).to eql(24)
+    expect(result[:attachments][0][:encryption_key].size).to eql(44)
+    expect(result[:attachments][0][:filename]).to eql('hello_world.txt')
+    expect(result[:attachments][0][:mimetype]).to eql('text/plain')
+
+    file_contents = URI.open(result[:attachments][0][:url], 'rb').read
+
+    crypto = Cryptography.new(
+      encryption_key: Base64.strict_decode64(result[:attachments][0][:encryption_key]),
+      encryption_iv: Base64.strict_decode64(result[:attachments][0][:encryption_iv])
+    )
+
+    decrypted_file_contents = crypto.decrypt(file: file_contents)
+
+    expect(decrypted_file_contents).to eql("hello world\n")
+    expect(result).to have_key(:submissionId)
+
     delete_adapter_submissions
   end
 end
