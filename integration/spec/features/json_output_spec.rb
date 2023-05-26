@@ -1,5 +1,6 @@
 require 'capybara/rspec'
 require 'spec_helper'
+require 'json_helper'
 
 describe 'JSON Output' do
   let(:form) { FeaturesJSONApp.new }
