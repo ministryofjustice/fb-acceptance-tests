@@ -34,6 +34,7 @@ describe 'API Submission' do
 
     expect(page.text).to include('Application complete')
     result = wait_for_request
+    expect(result).to have_key(:submissionId)
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
     expect(result[:submissionAnswers][:win_checkboxes_1]).to eq('Bertha Benz')
     expect(result[:submissionAnswers][:question_text_1]).to eq('42')
@@ -44,7 +45,6 @@ describe 'API Submission' do
     expect(result[:attachments].size).to eql(2)
     expect(result[:attachments][0][:filename]).to eq(filename1)
     expect(result[:attachments][1][:filename]).to eq(filename2)
-
     expect(result[:attachments][0][:encryption_iv].size).to eql(24)
     expect(result[:attachments][0][:encryption_key].size).to eql(44)
     expect(result[:attachments][0][:filename]).to eql('hello_world.txt')
@@ -60,7 +60,10 @@ describe 'API Submission' do
     decrypted_file_contents = crypto.decrypt(file: file_contents)
 
     expect(decrypted_file_contents).to eql("hello world\n")
-    expect(result).to have_key(:submissionId)
+    expect(result[:attachments][1][:encryption_iv].size).to eql(24)
+    expect(result[:attachments][1][:encryption_key].size).to eql(44)
+    expect(result[:attachments][1][:filename]).to eql('goodbye_world.txt')
+    expect(result[:attachments][1][:mimetype]).to eql('text/plain')
 
     delete_adapter_submissions
   end
