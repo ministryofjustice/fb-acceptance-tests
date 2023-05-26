@@ -9,8 +9,6 @@ describe 'API Submission' do
   end
 
   let(:form) { FeaturesJsonSubmissionApiApp.new }
-  let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
-  let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:filename1) { 'hello_world.txt' }
   let(:filename2) { 'goodbye_world.txt' }
 
