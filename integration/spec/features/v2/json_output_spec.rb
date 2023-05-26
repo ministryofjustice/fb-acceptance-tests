@@ -16,7 +16,15 @@ describe 'API Submission' do
   it 'sends an API submission' do
     form.start_now_button.click
     check_optional_text(page.text)
+    form.win_checkbox.set('Bertha Benz')
+    continue
     form.question.set('42')
+    continue
+    form.proof.set('The web')
+    form.proof.day('01')
+    form.proof.day('01')
+    form.proof.day('1999')
+    form.references.set('Others')
     continue
     attach_file('Attachment 1', 'spec/fixtures/files/hello_world.txt')
     continue
