@@ -35,7 +35,10 @@ describe 'API Submission' do
     expect(page.text).to include('Application complete')
     result = wait_for_request
     expect(result[:serviceSlug]).to eq('json-acceptance-test')
+    expect(result[:submissionAnswers][:win_checkboxes_1]).to eq('Bertha Benz')
     expect(result[:submissionAnswers][:question_text_1]).to eq('42')
+    expect(result[:submissionAnswers][:multiple_text_1]).to eq('1 January 1999')
+    expect(result[:submissionAnswers][:multiple_radios_1]).to eq('Others')
     expect(result[:submissionAnswers][:attachment_upload_1]).to eq(filename1)
     expect(result[:submissionAnswers][:attachment2_upload_1]).to eq(filename2)
     expect(result[:attachments].size).to eql(2)
