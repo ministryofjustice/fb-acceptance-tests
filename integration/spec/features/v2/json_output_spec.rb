@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'json_helper'
 
 describe 'API Submission' do
   before :each do
