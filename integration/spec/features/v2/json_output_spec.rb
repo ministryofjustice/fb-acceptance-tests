@@ -11,8 +11,6 @@ describe 'API Submission' do
   let(:form) { FeaturesJsonSubmissionApiApp.new }
   let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
   let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
-  let(:generated_name) { "FN-#{SecureRandom.uuid}" }
-  let(:error_message) { 'There is a problem' }
   let(:filename1) { 'hello_world.txt' }
   let(:filename2) { 'goodbye_world.txt' }
 
