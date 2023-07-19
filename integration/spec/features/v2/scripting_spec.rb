@@ -53,6 +53,14 @@ describe 'New Runner' do
     # optional upload page to check for adding and removing files
     continue
 
+    # multifile upload, continue twice
+    attach_file('Upload a file', 'spec/fixtures/files/<img src=a onerror=alert(document.domain)>.txt')
+    continue
+    continue
+
+    # optional multi file
+    continue
+
     # autocomplete
     form.autocomplete_countries_field.set("Na")
     find('li.autocomplete__option', text: 'Narnia').click
