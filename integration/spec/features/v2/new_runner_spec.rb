@@ -13,7 +13,7 @@ describe 'New Runner' do
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
+  # before { visit "https://#{username}:#{password}@new-runner-acceptance-test-multifile.dev.test.form.service.justice.gov.uk" }
 
   it 'sends an email with the submission in a PDF and a CSV' do
     form.start_now_button.click
@@ -121,6 +121,36 @@ describe 'New Runner' do
     attach_file('Optional file upload', 'spec/fixtures/files/goodbye_world.txt')
     continue
 
+    # attach file to multi file
+    check_optional_text(page.text)
+    continue
+    check_error_message(page.text, [form.find('h1').text]) # required
+    attach_file('answers-multfile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
+    continue
+    expect(page.text).to include('hello_world_multi_1.txt')
+    check_optional_text(page.text)
+    form.add_another.click
+    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
+    continue
+    expect(page.text).to include('The selected file cannot have the same name as a file you have already selected')
+    form.add_another.click
+    attach_file('answers-multfile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
+    continue
+    form.delete_file.click
+    expect(page.text).not_to include('hello_world_multi_1.txt')
+    expect(page.text).to include('hello_world_multi_2.txt')
+    form.add_another.click
+    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
+    continue
+    expect(page.text).to include('hello_world_multi_1.txt')
+    expect(page.text).to include('hello_world_multi_2.txt')
+    continue
+
+    # optional multi upload upload page
+    check_optional_text(page.text)
+    expect(page.text).to include('Optional multi file upload')
+    continue
+
     # autocomplete
     check_optional_text(page.text)
     form.autocomplete_countries_field.set("Wonderland\n")
@@ -185,20 +215,24 @@ describe 'New Runner' do
     confirmation_email = get_confirmation_email(reference_number)
 
     expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
-    expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
+    expect(confirmation_email[0].from).to include('new-runner-acceptance-test-multifile')
 
     pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
     csv_attachments = find_csv_attachments(id: reference_number)
 
     assert_pdf_contents(pdf_attachments, reference_number)
     assert_csv_contents(csv_attachments, reference_number)
-
-    expect(pdf_attachments[:file_upload]).to eq(File.read('spec/fixtures/files/hello_world.txt'))
+    
+    # we read all the attached files into one string, then compare against expected uploads
+    attached_files = pdf_attachments[:multi_uploads].split("\n")
+    expect(attached_files.include?(File.read('spec/fixtures/files/hello_world.txt').strip)).to eq(true)
+    expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_1.txt').strip)).to eq(true)
+    expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_2.txt').strip)).to eq(true)
   end
 
   def get_confirmation_email(reference_number)
     find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Confirmation email')
+      email.subject.include?('Your submission to')
     end
   end
 
@@ -255,13 +289,21 @@ describe 'New Runner' do
     expect(result).to include('chosen you?')
     expect(result).to include('5')
 
-    # file upload
+    # file upload (legacy single file)
     expect(result).to include('Upload a file')
     expect(result).to include('hello_world.txt')
 
-    # optional file upload
+    # optional file upload (legacy single file)
     expect(result).to include('Optional file upload')
     expect(result).not_to include('goodbye_world.text')
+
+    # multifile upload
+    expect(result).to include('Multi file upload')
+    expect(result).to include('hello_world_multi_1.txt')
+    expect(result).to include('hello_world_multi_2.txt')
+    
+    # optional multi file upload
+    expect(result).to include('Optional multi file upload')
 
     # autocomplete
     expect(result).to include('Where do you like to')
@@ -301,6 +343,8 @@ describe 'New Runner' do
       'watch_radios_1',
       'file-upload_upload_1',
       'optional-file-upload_upload_1',
+      'multfile_multiupload_1',
+      'multi-optional_multiupload_1',
       'countries_autocomplete_1'
       ])
 
@@ -322,6 +366,8 @@ describe 'New Runner' do
       '5',
       'Yes',
       'hello_world.txt',
+      'hello_world_multi_2.txt; hello_world_multi_1.txt',
+      '',
       '',
       'WK'
     ])

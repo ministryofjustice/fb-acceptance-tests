@@ -83,6 +83,7 @@ class EmailFinder
       if email.attachments[:csvs]
         result = email.attachments[:csvs].first || ''
         puts "Looking for attachment with #{id} in #{email.subject}"
+
         if result.include?(id)
           puts '=' * 80
           puts "Found in #{email.subject}! #{id}"
