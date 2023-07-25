@@ -232,7 +232,7 @@ describe 'New Runner' do
 
   def get_confirmation_email(reference_number)
     find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Your submission to')
+      email.subject.include?('Confirmation email for')
     end
   end
 
