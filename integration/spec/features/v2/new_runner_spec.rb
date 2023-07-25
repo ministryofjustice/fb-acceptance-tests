@@ -125,22 +125,22 @@ describe 'New Runner' do
     check_optional_text(page.text)
     continue
     check_error_message(page.text, [form.find('h1').text]) # required
-    attach_file('answers-multfile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
+    attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('hello_world_multi_1.txt')
     check_optional_text(page.text)
     form.add_another.click
-    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
+    attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('The selected file cannot have the same name as a file you have already selected')
     form.add_another.click
-    attach_file('answers-multfile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
+    attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
     continue
     form.delete_file.click
     expect(page.text).not_to include('hello_world_multi_1.txt')
     expect(page.text).to include('hello_world_multi_2.txt')
     form.add_another.click
-    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
+    attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('hello_world_multi_1.txt')
     expect(page.text).to include('hello_world_multi_2.txt')
@@ -343,7 +343,7 @@ describe 'New Runner' do
       'watch_radios_1',
       'file-upload_upload_1',
       'optional-file-upload_upload_1',
-      'multfile_multiupload_1',
+      'multifile_multiupload_1',
       'multi-optional_multiupload_1',
       'countries_autocomplete_1'
       ])
