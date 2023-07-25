@@ -66,6 +66,7 @@ class Inbox
       if part.mime_type == 'application/pdf'
         all_attachments[:pdf_answers] = data
       elsif part.mime_type == 'text/plain'
+        all_attachments[:multi_uploads] = all_attachments[:multi_uploads].present? ? all_attachments[:multi_uploads] + data : data
         all_attachments[:file_upload] = data
       elsif part.filename.include?('.csv')
         all_attachments[:csvs] << data
