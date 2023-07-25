@@ -13,7 +13,7 @@ describe 'New Runner' do
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@new-runner-acceptance-test-multifile.dev.test.form.service.justice.gov.uk" }
+  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
   it 'sends an email with the submission in a PDF and a CSV' do
     form.start_now_button.click
@@ -215,7 +215,7 @@ describe 'New Runner' do
     confirmation_email = get_confirmation_email(reference_number)
 
     expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
-    expect(confirmation_email[0].from).to include('new-runner-acceptance-test-multifile')
+    expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
 
     pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
     csv_attachments = find_csv_attachments(id: reference_number)
