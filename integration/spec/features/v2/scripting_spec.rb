@@ -54,7 +54,7 @@ describe 'New Runner' do
     continue
 
     # multifile upload, continue twice
-    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/<img src=a onerror=alert(document.domain)>.txt')
+    attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/<img src=a onerror=alert(document.domain)>.txt')
     continue
     continue
 
