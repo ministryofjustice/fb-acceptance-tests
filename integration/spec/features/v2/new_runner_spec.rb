@@ -13,7 +13,7 @@ describe 'New Runner' do
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@new-runner-acceptance-test-multifile.dev.test.form.service.justice.gov.uk" }
+  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
   it 'sends an email with the submission in a PDF and a CSV' do
     form.start_now_button.click
@@ -125,22 +125,22 @@ describe 'New Runner' do
     check_optional_text(page.text)
     continue
     check_error_message(page.text, [form.find('h1').text]) # required
-    attach_file('answers-multfile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
+    attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('hello_world_multi_1.txt')
     check_optional_text(page.text)
     form.add_another.click
-    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
+    attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('The selected file cannot have the same name as a file you have already selected')
     form.add_another.click
-    attach_file('answers-multfile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
+    attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
     continue
     form.delete_file.click
     expect(page.text).not_to include('hello_world_multi_1.txt')
     expect(page.text).to include('hello_world_multi_2.txt')
     form.add_another.click
-    attach_file('answers-multfile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
+    attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('hello_world_multi_1.txt')
     expect(page.text).to include('hello_world_multi_2.txt')
@@ -215,7 +215,7 @@ describe 'New Runner' do
     confirmation_email = get_confirmation_email(reference_number)
 
     expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
-    expect(confirmation_email[0].from).to include('new-runner-acceptance-test-multifile')
+    expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
 
     pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
     csv_attachments = find_csv_attachments(id: reference_number)
@@ -232,7 +232,7 @@ describe 'New Runner' do
 
   def get_confirmation_email(reference_number)
     find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Your submission to')
+      email.subject.include?('Confirmation email for')
     end
   end
 
@@ -343,7 +343,7 @@ describe 'New Runner' do
       'watch_radios_1',
       'file-upload_upload_1',
       'optional-file-upload_upload_1',
-      'multfile_multiupload_1',
+      'multifile_multiupload_1',
       'multi-optional_multiupload_1',
       'countries_autocomplete_1'
       ])
