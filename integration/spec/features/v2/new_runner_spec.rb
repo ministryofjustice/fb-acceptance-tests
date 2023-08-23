@@ -35,6 +35,7 @@ describe 'New Runner' do
     continue
     check_error_message(page.text, ['Your email address'])
     form.email_field.set('fb-acceptance-tests+confirmation@digital.justice.gov.uk')
+    expect(page.text).to include('We will use this address to')
     continue
 
     # textarea
@@ -179,6 +180,8 @@ describe 'New Runner' do
     expect(page.text).to include('Upload a file hello_world.txt')
     expect(page.text).to include('Optional file upload (Optional) goodbye_world.txt')
     expect(page.text).to include('Narnia')
+
+    expect(page.text).to include('We will send a confirmation email with a copy of these answers to')
 
     # Checking changing answer for optional checkboxes
     # Also checking optional checkboxes will remove a users previous answer
