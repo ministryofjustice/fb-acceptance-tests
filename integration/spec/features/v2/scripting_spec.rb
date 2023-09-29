@@ -118,8 +118,8 @@ describe 'New Runner' do
   end
 
   def go_to_page(url)
-    form.set_url(url)
-    form.load
+    page_url = 'https://new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk' + url
+    visit page_url
   end
 
   def expect_to_see_403
