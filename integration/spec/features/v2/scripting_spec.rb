@@ -10,8 +10,18 @@ describe 'New Runner' do
     form.first_name_field.set(script)
     form.last_name_field.set(script)
     continue
+    expect_to_see_403
+    go_to_page('/name')
+
+    form.first_name_field.set('name')
+    form.last_name_field.set('othername')
+    continue
 
     form.email_field.set(script)
+    continue
+    expect_to_see_403
+    go_to_page('/your-email-address')
+
     form.email_field.set('name@example.com')
     continue
 
@@ -19,8 +29,15 @@ describe 'New Runner' do
     fill_in 'Your cat',
       with: script
     continue
+    expect_to_see_403
+    go_to_page('/your-cat')
 
+    fill_in 'Your cat',
+      with: 'one two three four five'
     # optional fields
+    continue
+
+    # totally optional page
     continue
 
     # checkbox
@@ -32,7 +49,8 @@ describe 'New Runner' do
     form.month_field.set(script)
     form.year_field.set(script)
     continue
-    check_date_error_message(page.text, [form.find('h1').text])
+    expect_to_see_403
+    go_to_page('/when')
     form.day_field.set('12')
     form.month_field.set('11')
     form.year_field.set('2007')
@@ -49,12 +67,20 @@ describe 'New Runner' do
     # attach file
     attach_file('Upload a file', 'spec/fixtures/files/<img src=a onerror=alert(document.domain)>.txt')
     continue
+    expect_to_see_403
+    go_to_page('/file-upload')
+    attach_file('Upload a file', 'spec/fixtures/files/1.jpg')
+    continue
 
     # optional upload page to check for adding and removing files
     continue
 
     # multifile upload, continue twice
     attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/<img src=a onerror=alert(document.domain)>.txt')
+    continue
+    expect_to_see_403
+    go_to_page('/multifile')
+    attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     continue
 
@@ -89,6 +115,15 @@ describe 'New Runner' do
 
   def continue
     form.continue_button.click
+  end
+
+  def go_to_page(url)
+    page_url = 'https://new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk' + url
+    visit page_url
+  end
+
+  def expect_to_see_403
+    expect(page.text).to include('403')
   end
 
   def check_date_error_message(text, fields)
