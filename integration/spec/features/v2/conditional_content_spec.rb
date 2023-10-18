@@ -14,5 +14,7 @@ describe 'Conditional Content' do
     form.checkbox_1.check
     continue
     expect(page.text).to include(always_content)
+    expect(page.text).to include('If radio a && checkbox Option 1')
+    expect(page.text).to include('If radio is a && checkbox is 1 OR radio is b && checkbox is 2')
   end
 end
