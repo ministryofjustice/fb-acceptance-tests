@@ -9,4 +9,5 @@ class ConditionalContentV2App < ServiceApp
   element :checkbox_O, :checkbox, 'Option', visible: false
   element :radio_a, :radio_button, 'a', visible: false
   element :radio_b, :radio_button, 'b', visible: false
+  element :back, :link, text: 'Back', visible: false
 end
