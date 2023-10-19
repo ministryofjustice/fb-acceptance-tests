@@ -3,6 +3,8 @@ describe 'Conditional Content' do
   let(:always_content) { 'This is always shown' }
   let(:never_content) { 'This is never shown' }
   let(:logic_combination_content) { 'If radio is a && checkbox is 1 OR radio is b && checkbox is 2' }
+  let(:negative_logic_combination) { 'If radio is not a OR checkbox is not Option 1 OR checkbox is not Option 2' }
+
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
@@ -19,6 +21,7 @@ describe 'Conditional Content' do
     expect(page.text).not_to include(never_content)
     expect(page.text).to include('If radio a && checkbox Option 1')
     expect(page.text).to include(logic_combination_content)
+
     form.back.click
     form.checkbox_1.uncheck
     form.checkbox_2.check
@@ -26,6 +29,6 @@ describe 'Conditional Content' do
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
     expect(page.text).to include('If radio b II checkbox Option 2')
-    expect(page.text).to include(logic_combination_content)
+    expect(page.text).to include(negative_logic_combination)
   end
 end
