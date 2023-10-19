@@ -22,6 +22,7 @@ describe 'Conditional Content' do
     expect(page.text).to include('If radio a && checkbox Option 1')
     expect(page.text).to include(logic_combination_content)
 
+    # Check with negative logic
     form.back.click
     form.checkbox_1.uncheck
     form.checkbox_2.check
@@ -32,6 +33,7 @@ describe 'Conditional Content' do
     expect(page.text).to include(negative_logic_combination)
     expect(page.text).not_to include(checkbox_contains_substring)
 
+    # Check it does catch Option substring
     form.back.click
     form.checkbox_2.uncheck
     form.checkbox_0.check
