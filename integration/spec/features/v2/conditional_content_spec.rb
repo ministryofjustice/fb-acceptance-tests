@@ -6,6 +6,8 @@ describe 'Conditional Content' do
   let(:negative_logic_combination) { 'If radio is not a OR checkbox is not Option 1 OR checkbox is not Option 2' }
   let(:checkbox_contains_substring) { 'If checkbox contains Option, it should not show if Option 1 or Option 2' }
   let(:optional_question_unanswered) { 'If checkbox is not answered' }
+  let(:and_rule) { 'If radio a && checkbox Option 1' }
+  let(:or_rule) { 'If radio b II checkbox Option 2' }
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
@@ -20,7 +22,7 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
-    expect(page.text).to include('If radio a && checkbox Option 1')
+    expect(page.text).to include(and_rule)
     expect(page.text).to include(logic_combination_content)
 
     # Check with negative logic
@@ -30,7 +32,7 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
-    expect(page.text).to include('If radio b II checkbox Option 2')
+    expect(page.text).to include(or_rule)
     expect(page.text).to include(negative_logic_combination)
     expect(page.text).not_to include(checkbox_contains_substring)
 
@@ -41,7 +43,7 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
-    expect(page.text).to include('If radio a && checkbox Option 1')
+    expect(page.text).to include(and_rule)
     expect(page.text).to include(checkbox_contains_substring)
     expect(page.text).to include(negative_logic_combination)
 
@@ -51,8 +53,20 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
-    expect(page.text).to include('If radio a && checkbox Option 1')
     expect(page.text).to include(optional_question_unanswered)
     expect(page.text).to include(negative_logic_combination)
+
+    # Case to check the right side of the logic combination expression
+    form.back.click
+    form.back.click
+    form.radio_b.choose
+    continue
+    form.checkbox_2.check
+    continue
+    expect(page.text).to include(always_content)
+    expect(page.text).not_to include(never_content)
+    expect(page.text).to include(or_rule)
+    expect(page.text).to include(negative_logic_combination)
+    expect(page.text).to include(logic_combination_content)
   end
 end
