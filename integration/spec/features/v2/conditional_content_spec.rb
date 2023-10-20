@@ -8,6 +8,7 @@ describe 'Conditional Content' do
   let(:optional_question_unanswered) { 'If checkbox is not answered' }
   let(:and_rule) { 'If radio a && checkbox Option 1' }
   let(:or_rule) { 'If radio b II checkbox Option 2' }
+  let(:legacy_content) { 'This is legacy conditional content that should be picked up by default' }
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
@@ -68,5 +69,9 @@ describe 'Conditional Content' do
     expect(page.text).to include(or_rule)
     expect(page.text).to include(negative_logic_combination)
     expect(page.text).to include(logic_combination_content)
+
+    # Checking legacy content is shown
+    continue
+    expect(page.text).to include(legacy_content)
   end
 end
