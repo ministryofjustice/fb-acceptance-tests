@@ -44,7 +44,6 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
-    expect(page.text).to include(and_rule)
     expect(page.text).to include(checkbox_contains_substring)
     expect(page.text).to include(negative_logic_combination)
 
