@@ -224,7 +224,7 @@ describe 'New Runner' do
     expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
     expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
 
-    some_answers = 'First name Stormtrooper'
+    some_answers = 'First nameStormtrooper'
     expect(confirmation_message_body).to include(some_answers)
     expect(submission_message_body).to include(some_answers)
 
