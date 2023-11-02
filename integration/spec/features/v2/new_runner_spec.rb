@@ -216,11 +216,17 @@ describe 'New Runner' do
     expect(page.text).to include(reference_number)
 
     confirmation_email = get_confirmation_email(reference_number)
-    message_body = email_body(confirmation_email[0])
+    submission_email = get_submission_email(reference_number)
+
+    confirmation_message_body = email_body(confirmation_email[0])
+    submission_message_body = email_body(submission_email[0])
 
     expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
     expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
-    expect(message_body).to include('Wakanda', 'Where do you like to holiday?')
+
+    some_answers = 'First name Stormtrooper'
+    expect(confirmation_message_body).to include(some_answers)
+    expect(submission_message_body).to include(some_answers)
 
     pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
     csv_attachments = find_csv_attachments(id: reference_number)
@@ -380,5 +386,11 @@ describe 'New Runner' do
 
   def email_body(email)
     email.raw.payload.parts[0].parts[0].body.data
+  end
+
+  def get_submission_email(reference_number)
+    find_email_by_subject(id: reference_number).select do |email|
+      email.subject.include?('Submission from')
+    end
   end
 end
