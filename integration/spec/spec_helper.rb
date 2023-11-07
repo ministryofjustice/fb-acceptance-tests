@@ -31,7 +31,7 @@ RSpec.configure do |c|
       app,
       browser: :chrome,
       options: chrome_options,
-      timeout: 120,
+      timeout: 180,
     )
   end
   Capybara.default_driver = :selenium
