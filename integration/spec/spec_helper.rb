@@ -91,15 +91,7 @@ def get_email_by(reference:, subject:)
 end
 
 def email_body(email)
-  body = email.raw.payload.parts[0].parts[0].body.data
-
-  puts "************** email body *************"
-  puts email.subject
-  puts "***************************************"
-  puts body
-  puts "***************************************"
-
-  body
+  email.raw.payload.parts[0].parts[0].body.data
 end
 
 def find_email_by_subject(id:)
