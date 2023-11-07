@@ -3,11 +3,13 @@ require "googleauth"
 
 class GoogleService
   APPLICATION_NAME = 'FB Acceptance Tests'.freeze
+  MAX_RETRIES = 3
   SCOPE = [Google::Apis::GmailV1::AUTH_GMAIL_MODIFY].freeze
 
   def authenticated_service
     service = Google::Apis::GmailV1::GmailService.new
     service.client_options.application_name = APPLICATION_NAME
+    service.request_options.retries = MAX_RETRIES
     service.authorization = authorize
     service
   end
