@@ -217,34 +217,31 @@ describe 'New Runner' do
 
     confirmation_email = get_confirmation_email(reference_number)
     submission_email = get_submission_email(reference_number)
+    submission_csv_email = get_submission_email(reference_number, 'CSV - Submission from')
 
     confirmation_message_body = email_body(confirmation_email[0])
     submission_message_body = email_body(submission_email[0])
+    submission_csv_message_body = email_body(submission_csv_email[0])
 
     expect(confirmation_email[0].reply_to).to include('fb-acceptance-tests+reply-to@digital.justice.gov.uk')
     expect(confirmation_email[0].from).to include('new-runner-acceptance-tests')
 
-    some_answers = 'First nameStormtrooper'
+    some_answers = 'Where do you like to holiday?WK'
     expect(confirmation_message_body).to include(some_answers)
     expect(submission_message_body).to include(some_answers)
+    expect(submission_csv_message_body).to be_blank
 
     pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
     csv_attachments = find_csv_attachments(id: reference_number)
 
     assert_pdf_contents(pdf_attachments, reference_number)
     assert_csv_contents(csv_attachments, reference_number)
-    
+
     # we read all the attached files into one string, then compare against expected uploads
     attached_files = pdf_attachments[:multi_uploads].split("\n")
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world.txt').strip)).to eq(true)
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_1.txt').strip)).to eq(true)
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_2.txt').strip)).to eq(true)
-  end
-
-  def get_confirmation_email(reference_number)
-    find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Confirmation email for')
-    end
   end
 
   def assert_pdf_contents(attachments, reference_number)
@@ -382,15 +379,5 @@ describe 'New Runner' do
       '',
       'WK'
     ])
-  end
-
-  def email_body(email)
-    email.raw.payload.parts[0].parts[0].body.data
-  end
-
-  def get_submission_email(reference_number)
-    find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Submission from')
-    end
   end
 end

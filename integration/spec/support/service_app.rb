@@ -14,7 +14,7 @@ class ServiceApp < SitePrism::Page
 
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
-    super
+    load_with_retry(app: self.class.name) { super }
   end
 
   def all_headings
@@ -27,5 +27,17 @@ class ServiceApp < SitePrism::Page
 
   def in_summaries_page?
     all_headings.include?(check_your_answers)
+  end
+
+  def load_with_retry(app:, max_retries: 2, &block)
+    retry_count = 0
+
+    begin
+      retry_count += 1
+      block.call
+    rescue Net::OpenTimeout, Net::ReadTimeout
+      puts "Retrying #{app} load... Attempts: #{retry_count}/#{max_retries}"
+      retry if retry_count < max_retries
+    end
   end
 end

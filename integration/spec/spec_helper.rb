@@ -26,13 +26,16 @@ RSpec.configure do |c|
       o.add_argument '--no-sandbox'
       o.add_argument '--disable-dev-shm-usage'
     end
-    client = Selenium::WebDriver::Remote::Http::Default.new
-    client.read_timeout = 120
-    client.open_timeout = 120
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options, http_client: client)
+
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :chrome,
+      options: chrome_options,
+      timeout: 180,
+    )
   end
   Capybara.default_driver = :selenium
-  Capybara.default_max_wait_time = 15
+  Capybara.default_max_wait_time = 20
 
   Capybara.app_host = 'http://localhost:3003'
   c.include Capybara::DSL
@@ -74,6 +77,24 @@ end
 
 def continue
   form.continue_button.click
+end
+
+def get_confirmation_email(reference_number)
+  get_email_by(reference: reference_number, subject: 'Confirmation email for')
+end
+
+def get_submission_email(reference_number, subject = 'Submission from')
+  get_email_by(reference: reference_number, subject:)
+end
+
+def get_email_by(reference:, subject:)
+  find_email_by_subject(id: reference).select do |email|
+    email.subject.start_with?(subject)
+  end
+end
+
+def email_body(email)
+  email.raw.payload.parts[0].parts[0].body.data
 end
 
 def find_email_by_subject(id:)
@@ -127,40 +148,40 @@ def find_csv_attachments(id:)
   end
 end
 
-  def wait_for_request
-    submission_path = "#{base_adapter_domain}/submission"
-    tries = 0
-    max_tries = 20
+def wait_for_request
+  submission_path = "#{base_adapter_domain}/submission"
+  tries = 0
+  max_tries = 20
 
-    until tries > max_tries
-      puts "GET #{submission_path}"
-      response = HTTParty.get(submission_path, **{ open_timeout: 10, read_timeout: 5 })
+  until tries > max_tries
+    puts "GET #{submission_path}"
+    response = HTTParty.get(submission_path, **{ open_timeout: 10, read_timeout: 5 })
 
-      if response.code == 200
-        break
-      else
-        sleep 3
-        tries += 1
-      end
-    end
-
-    if tries == max_tries || response.code != 200
-      raise "Base adapter didn't receive the submission: Adapter response: '#{response.body}'"
+    if response.code == 200
+      break
     else
-      JSON.parse(
-        response.body,
-        symbolize_names: true
-      )
+      sleep 3
+      tries += 1
     end
   end
 
-  def delete_adapter_submissions
-    HTTParty.delete(
-      "#{base_adapter_domain}/submissions",
-      **{ open_timeout: 10, read_timeout: 10 }
+  if tries == max_tries || response.code != 200
+    raise "Base adapter didn't receive the submission: Adapter response: '#{response.body}'"
+  else
+    JSON.parse(
+      response.body,
+      symbolize_names: true
     )
   end
+end
 
-  def base_adapter_domain
-    ENV.fetch('FORM_BUILDER_BASE_ADAPTER_ENDPOINT')
-  end
+def delete_adapter_submissions
+  HTTParty.delete(
+    "#{base_adapter_domain}/submissions",
+    **{ open_timeout: 10, read_timeout: 10 }
+  )
+end
+
+def base_adapter_domain
+  ENV.fetch('FORM_BUILDER_BASE_ADAPTER_ENDPOINT')
+end

@@ -101,7 +101,6 @@ describe 'New Runner' do
       page.driver.browser.switch_to.alert.accept
       true
     rescue
-      Selenium::WebDriver::Error::NoAlertPresentError
       false
     end
   end
