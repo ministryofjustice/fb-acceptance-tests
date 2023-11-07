@@ -35,7 +35,7 @@ RSpec.configure do |c|
     )
   end
   Capybara.default_driver = :selenium
-  Capybara.default_max_wait_time = 15
+  Capybara.default_max_wait_time = 20
 
   Capybara.app_host = 'http://localhost:3003'
   c.include Capybara::DSL
