@@ -241,12 +241,6 @@ describe 'New Runner' do
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_2.txt').strip)).to eq(true)
   end
 
-  def get_confirmation_email(reference_number)
-    find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Confirmation email for')
-    end
-  end
-
   def assert_pdf_contents(attachments, reference_number)
     pdf_path = "/tmp/submission-#{SecureRandom.uuid}.pdf"
     File.open(pdf_path, 'w') do |file|
@@ -382,15 +376,5 @@ describe 'New Runner' do
       '',
       'WK'
     ])
-  end
-
-  def email_body(email)
-    email.raw.payload.parts[0].parts[0].body.data
-  end
-
-  def get_submission_email(reference_number)
-    find_email_by_subject(id: reference_number).select do |email|
-      email.subject.include?('Submission from')
-    end
   end
 end
