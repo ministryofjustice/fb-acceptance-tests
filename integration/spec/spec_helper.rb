@@ -94,11 +94,12 @@ def email_body(email)
   body = email.raw.payload.parts[0].parts[0].body.data
 
   puts "************** email body *************"
-  puts body
-  puts "***"
-  puts email.raw.payload.parts.size
-  puts email.raw.payload.parts[0].parts.size
+  puts email.subject
   puts "***************************************"
+  puts body
+  puts "***************************************"
+
+  body
 end
 
 def find_email_by_subject(id:)
