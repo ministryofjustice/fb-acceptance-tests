@@ -215,6 +215,10 @@ describe 'New Runner' do
     expect(page.text).to include('Your reference number is:')
     expect(page.text).to include(reference_number)
 
+    puts "*********** reference_number ***********"
+    puts reference_number
+    puts "***************************************"
+
     confirmation_email = get_confirmation_email(reference_number)
     submission_email = get_submission_email(reference_number)
 

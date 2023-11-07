@@ -95,6 +95,9 @@ def email_body(email)
 
   puts "************** email body *************"
   puts body
+  puts "***"
+  puts email.raw.payload.parts.size
+  puts email.raw.payload.parts[0].parts.size
   puts "***************************************"
 end
 
