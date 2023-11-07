@@ -80,13 +80,13 @@ def get_confirmation_email(reference_number)
   get_email_by(reference: reference_number, subject: 'Confirmation email for')
 end
 
-def get_submission_email(reference_number)
-  get_email_by(reference: reference_number, subject: 'Submission from')
+def get_submission_email(reference_number, subject = 'Submission from')
+  get_email_by(reference: reference_number, subject:)
 end
 
 def get_email_by(reference:, subject:)
   find_email_by_subject(id: reference).select do |email|
-    email.subject.include?(subject)
+    email.subject.start_with?(subject)
   end
 end
 
