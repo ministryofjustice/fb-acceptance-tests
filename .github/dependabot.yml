@@ -12,16 +12,6 @@ updates:
   - chrispymm
   - H3ll3m4
   - StevenLeighton21
-  ignore:
-  - dependency-name: parallel_tests
-    versions:
-    - 3.6.0
-  - dependency-name: activesupport
-    versions:
-    - 6.1.2
-  - dependency-name: capybara
-    versions:
-    - 3.35.2
 - package-ecosystem: docker
   directory: "/integration"
   schedule:
@@ -34,8 +24,3 @@ updates:
   - chrispymm
   - H3ll3m4
   - StevenLeighton21
-  ignore:
-  - dependency-name: ruby
-    versions:
-    - 3.0.0.pre.alpine
-    - 3.0.1.pre.alpine

@@ -29,7 +29,7 @@ class ServiceApp < SitePrism::Page
     all_headings.include?(check_your_answers)
   end
 
-  def load_with_retry(app:, max_retries: 2, &block)
+  def load_with_retry(app:, max_retries: 3, &block)
     retry_count = 0
 
     begin
