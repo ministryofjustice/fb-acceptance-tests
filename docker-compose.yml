@@ -194,14 +194,6 @@ services:
       AWS_SECRET_KEY: qwerty
       AWS_SECRET_ACCESS_KEY: qwerty
 
-  save-and-return-simulator:
-    container_name: save-and-return-simulator
-    build:
-      context: ./mock-apps/save-and-return-simulator
-      dockerfile: ./Dockerfile
-    ports:
-      - 3005:3000
-
   integration:
     build:
       context: integration
@@ -215,7 +207,6 @@ services:
       SERVICE_OUTPUT_JSON_KEY: 19a56ee0e50dd83g
       FORM_BUILDER_BASE_ADAPTER_ENDPOINT: http://base-adapter-app:4567
     depends_on:
-      - save-and-return-simulator
       - output-recorder
       - base-adapter-app
 
@@ -228,7 +219,6 @@ services:
       - 16081:16081
       - 16082:16082
       - 16083:16083
-      - 16084:16084
       - 16085:16085
       - 16086:16086
       - 18000:18000
@@ -243,3 +233,4 @@ services:
       - 18009:18009
       - 18010:18010
       - 18011:18011
+      - 18012:18012
