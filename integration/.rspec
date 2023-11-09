@@ -1,3 +1,2 @@
 --require spec_helper
 -f doc
---format ParallelTests::RSpec::SummaryLogger
