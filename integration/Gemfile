@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'activesupport'
+gem 'activesupport', '~> 7.1.0'
 gem 'byebug'
 gem 'capybara'
 gem 'dotenv'
@@ -8,9 +8,6 @@ gem 'google-apis-gmail_v1'
 gem 'httparty'
 gem 'jwe'
 gem 'mail'
-gem 'net-imap', require: false
-gem 'net-pop', require: false
-gem 'net-smtp', require: false
 gem 'parallel_tests'
 gem 'pdf-reader'
 gem 'rspec'

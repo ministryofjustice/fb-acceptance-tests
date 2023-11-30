@@ -1,26 +1,22 @@
 version: 2
 updates:
 - package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  # Disable version updates, but leave security updates
+  open-pull-requests-limit: 0
+
+- package-ecosystem: bundler
   directory: "/integration"
   schedule:
     interval: daily
-    time: "03:00"
-    timezone: Europe/London
-  open-pull-requests-limit: 10
-  reviewers:
-  - mattempty
-  - chrispymm
-  - H3ll3m4
-  - StevenLeighton21
+  # Disable version updates, but leave security updates
+  open-pull-requests-limit: 0
+
 - package-ecosystem: docker
   directory: "/integration"
   schedule:
     interval: daily
-    time: "03:00"
-    timezone: Europe/London
-  open-pull-requests-limit: 10
-  reviewers:
-  - mattempty
-  - chrispymm
-  - H3ll3m4
-  - StevenLeighton21
+  # Disable version updates, but leave security updates
+  open-pull-requests-limit: 0
