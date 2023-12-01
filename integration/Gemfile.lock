@@ -2,7 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     Ascii85 (1.1.0)
-    activesupport (7.1.1)
+    activesupport (7.1.2)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -35,7 +35,7 @@ GEM
     dotenv (2.8.1)
     drb (2.2.0)
       ruby2_keywords
-    faraday (2.7.11)
+    faraday (2.7.12)
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -49,7 +49,7 @@ GEM
       retriable (>= 2.0, < 4.a)
       rexml
       webrick
-    google-apis-gmail_v1 (0.35.0)
+    google-apis-gmail_v1 (0.36.0)
       google-apis-core (>= 0.11.0, < 2.a)
     googleauth (1.8.1)
       faraday (>= 0.17.3, < 3.a)
@@ -78,7 +78,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     mutex_m (0.2.0)
-    net-imap (0.4.4)
+    net-imap (0.4.7)
       date
       net-protocol
     net-pop (0.1.2)
@@ -87,7 +87,7 @@ GEM
       timeout
     net-smtp (0.4.0)
       net-protocol
-    nokogiri (1.15.4)
+    nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     os (1.1.4)
@@ -100,7 +100,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
-    public_suffix (5.0.3)
+    public_suffix (5.0.4)
     racc (1.7.3)
     rack (3.0.8)
     rack-test (2.1.0)
@@ -157,7 +157,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
+  activesupport (~> 7.1.0)
   byebug
   capybara
   dotenv
@@ -165,9 +165,6 @@ DEPENDENCIES
   httparty
   jwe
   mail
-  net-imap
-  net-pop
-  net-smtp
   parallel_tests
   pdf-reader
   rspec
