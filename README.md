@@ -86,7 +86,7 @@ Commands to start, stop or restart the containers:
 
 It is possible to fun a set of feature or component specs instead of the whole suite:
 
-    $ make feature FEATURE=save_and_return_module
+    $ make feature FEATURE=conditional_steps
 
 or
 
@@ -98,7 +98,6 @@ Available features:
 - email_output
 - json_output
 - maintenance_mode
-- save_and_return_module
 
 Available components:
 

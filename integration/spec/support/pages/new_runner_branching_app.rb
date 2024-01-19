@@ -26,7 +26,11 @@ class NewRunnerBranchingApp < ServiceApp
 
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{ENV['NEW_RUNNER_BRANCHING_APP'] % { user: '*****', password: '*****' }}"
-    SitePrism::Page.instance_method(:load).bind(self).call
+
+    load_with_retry(app: self.class.name) do
+      SitePrism::Page.instance_method(:load).bind(self).call
+    end
+
     self.wait_until_displayed
   end
 end

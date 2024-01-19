@@ -83,7 +83,7 @@ describe 'Save and return' do
     sleep 1
     continue
     sleep 1
-    expect(page.text).to include('You have sucessfuly retrieved your saved information.')
+    expect(page.text).to include('You have successfully retrieved your saved information.')
     expect(page.text).to include(q1_answer)
     expect(page.text).to include(q2_answer)
     form.continue_form.click

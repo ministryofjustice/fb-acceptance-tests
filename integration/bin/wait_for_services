@@ -2,7 +2,7 @@
 set -x
 
 port=16080
-while [ "$port" -le 16084 ]; do
+while [ "$port" -le 16083 ]; do
   until docker-compose exec services wget http://localhost:$port/ping.json -O - | grep APP_SHA; do
     echo "Waiting for service on port ${port} to start accepting traffic...";
     sleep 5
