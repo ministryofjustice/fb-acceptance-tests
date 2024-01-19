@@ -161,6 +161,11 @@ describe 'New Runner' do
     find('li.autocomplete__option', text: 'Narnia').click
     continue
 
+    # hotel address
+    form.address_line_1.set('999 street')
+    form.city.set('Wondercity')
+    form.postcode.set('SW1H 9AJ')
+
     # check your answers
     check_optional_text(page.text)
     expect(page.text).to include('First name Stormtrooper')
@@ -180,6 +185,7 @@ describe 'New Runner' do
     expect(page.text).to include('Upload a file hello_world.txt')
     expect(page.text).to include('Optional file upload (Optional) goodbye_world.txt')
     expect(page.text).to include('Narnia')
+    expect(page.text).to include("999 street\nWondercity\nSW1H 9AJ\nUnited Kingdom")
 
     expect(page.text).to include('We will send a confirmation email with a copy of these answers to')
 
@@ -318,6 +324,9 @@ describe 'New Runner' do
     expect(result).to include('holiday?')
     expect(result).to include('WK')
 
+    # address component
+    expect(result).to include('999 street, Wondercity, SW1H 9AJ, United Kingdom')
+
     # optional text
     check_optional_text(result)
   end
@@ -353,7 +362,8 @@ describe 'New Runner' do
       'optional-file-upload_upload_1',
       'multifile_multiupload_1',
       'multi-optional_multiupload_1',
-      'countries_autocomplete_1'
+      'countries_autocomplete_1',
+      'hotel-address_address_1'
       ])
 
     expect(rows[1][0]).to match(reference_number) # guid
@@ -377,7 +387,8 @@ describe 'New Runner' do
       'hello_world_multi_2.txt; hello_world_multi_1.txt',
       '',
       '',
-      'WK'
+      'WK',
+      '"999 street, Wondercity, SW1H 9AJ, United Kingdom"'
     ])
   end
 end
