@@ -1,21 +1,19 @@
 require 'spec_helper'
 
 describe 'Page with external start page' do
-  # before :each do
-  #   OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  # end
+  before :each do
+    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
+  end
   let(:form) { EternalStartPageApp.new }
 
   # use same username and password as new runner acceptance test
-  # let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
-  # let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
-  let(:username) { 'picard' }
-  let(:password) { 'makeitso' }
+  let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
+  let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:q1_answer) { 'Hello' }
 
-  # before { form.load }
+  before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
-  before { visit "https://#{username}:#{password}@external-start-page-acceptance-test.dev.test.form.service.justice.gov.uk/" }
+  # before { visit "https://#{username}:#{password}@external-start-page-acceptance-test.dev.test.form.service.justice.gov.uk/" }
 
   it 'uses an external start page' do
     # bypasses start page
