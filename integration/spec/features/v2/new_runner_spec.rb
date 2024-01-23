@@ -165,6 +165,7 @@ describe 'New Runner' do
     form.address_line_1.set('999 street')
     form.city.set('Wondercity')
     form.postcode.set('SW1H 9AJ')
+    continue
 
     # check your answers
     check_optional_text(page.text)
