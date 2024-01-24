@@ -66,6 +66,9 @@ describe 'New Runner' do
     find('li.autocomplete__option', text: 'Narnia').click
     continue
 
+    # optional address component
+    continue
+
     # check your answers
     form.change_first_name.click
     expect(alert_present?).to be_falsey
