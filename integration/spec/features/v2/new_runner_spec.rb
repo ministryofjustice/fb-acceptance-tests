@@ -391,7 +391,7 @@ describe 'New Runner' do
       '',
       '',
       'WK',
-      '"999 street, Wondercity, SW1H 9AJ, United Kingdom"'
+      '999 street, Wondercity, SW1H 9AJ, United Kingdom'
     ])
   end
 end
