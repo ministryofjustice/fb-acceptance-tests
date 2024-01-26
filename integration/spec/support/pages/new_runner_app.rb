@@ -17,7 +17,6 @@ class NewRunnerApp < FeaturesEmailApp
   element :change_cat, :link, text: 'Your answer for Your cat', visible: false
   element :change_upload, :link, text: 'Your answer for Upload a file', visible: false
   element :change_autocomplete, :link, text: 'Where do you like to holiday?', visible: false
-  element :autocomplete_countries_field, :field, 'Where do you like to holiday?'
 
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{ENV['NEW_RUNNER_APP'] % { user: '*****', password: '*****' }}"
