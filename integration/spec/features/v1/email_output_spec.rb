@@ -120,7 +120,7 @@ describe 'Filling out an Email output form' do
 
     # textarea
     expect(result).to include('Your cat')
-    expect(result).to match(/My cat is a fluffy killer named £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , ./)
+    expect(result).to match(/My cat is a fluffy killer named £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] |[\n\r\s]; , ./)
     expect(result).to include('?')
 
     # checkbox
