@@ -122,8 +122,8 @@ describe 'Filling out an Email output form' do
     expect(result).to include('Your cat')
 
     # this output gets pushed across lines, so match them separately
-    expect(result).to match(/My cat is a fluffy killer named £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] |/)
-    expect(result).to match(/; , ./)
+    expect(result).to match(/My cat is a fluffy killer named £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ;/)
+    expect(result).to match(/, . ?/)
 
     expect(result).to include('?')
 
