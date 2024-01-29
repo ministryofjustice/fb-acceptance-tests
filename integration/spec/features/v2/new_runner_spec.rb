@@ -320,7 +320,8 @@ describe 'New Runner' do
     expect(result).to include('hello_world_multi_2.txt')
     
     # optional multi file upload
-    expect(result).to match(/Optional multi file upload/)
+    expect(result).to match(/Optional multi file/)
+    expect(result).to match(/upload (optional)/)
 
     # autocomplete
     expect(result).to include('Where do you like to')
