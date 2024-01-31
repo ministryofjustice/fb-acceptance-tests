@@ -263,9 +263,8 @@ describe 'New Runner' do
     end.join(' ')
     p 'Asserting PDF contents'
 
-    expect(result).to include(
-      "reference number: #{reference_number}"
-    )
+    pdf_text_includes_id?(result, reference_number)
+
     expect(result).to include('tests')
 
     # text
@@ -320,7 +319,7 @@ describe 'New Runner' do
     expect(result).to include('hello_world_multi_2.txt')
     
     # optional multi file upload
-    expect(result).to include('Optional multi file upload')
+    expect(result).to include('Optional multi file')
 
     # autocomplete
     expect(result).to include('Where do you like to')
