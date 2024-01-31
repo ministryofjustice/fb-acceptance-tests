@@ -263,9 +263,8 @@ describe 'New Runner' do
     end.join(' ')
     p 'Asserting PDF contents'
 
-    expect(result).to include(
-      "reference number: #{reference_number}"
-    )
+    pdf_text_includes_id?(result, reference_number)
+
     expect(result).to include('tests')
 
     # text

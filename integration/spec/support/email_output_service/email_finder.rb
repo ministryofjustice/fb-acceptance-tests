@@ -66,14 +66,13 @@ class EmailFinder
           file.write(email.attachments[:pdf_answers])
         end
         result = PDF::Reader.new(pdf_path).pages.map(&:text).join(' ')
-
         puts "Looking for attachment with #{id} in #{email.subject}"
-        if result.include?(id)
+        if pdf_text_includes_id?(result, id)
           puts '=' * 80
           puts "Found in #{email.subject}! #{id}"
           puts '=' * 80
         end
-        result.include?(id)
+        pdf_text_includes_id?(result, id)
       end
     end
   end

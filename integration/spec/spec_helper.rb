@@ -185,3 +185,11 @@ end
 def base_adapter_domain
   ENV.fetch('FORM_BUILDER_BASE_ADAPTER_ENDPOINT')
 end
+
+def pdf_text_includes_id?(text, id)
+  # we look for ids in the format XXX-XXXX-XXX however they can be split across newlines
+  # so we insert newline skips and build a regex so we can catch the id if it is wrapping
+  parts = id.split('-')
+  regex = Regexp.new(parts.join('-([\s\S]*?)')) # add an ignore new line after the - in the id
+  text.match?(regex)
+end
