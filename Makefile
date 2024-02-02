@@ -135,7 +135,7 @@ endif
 ## Experimental ##
 spec-ci:
 	docker-compose -f docker-compose.ci.yml run --rm integration_ci \
-	bundle exec rspec $(or $(SPEC_DIR),spec) --fail-fast
+	bundle exec rspec $(or $(SPEC_DIR),spec/features/v2) --fail-fast
 
 ## Clears out emails older than 24 hours from the gmail inbox that receives test submissions
 clear-emails:
