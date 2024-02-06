@@ -68,11 +68,6 @@ describe 'Save and return' do
     expect(page.text).to include('Your form has been saved')
     sleep 10
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
-
-    puts '---------------- resume_progress_email ----------'
-    puts resume_progress_email
-    puts '--------------------------'
-
     resume_link = extract_link_from_email(resume_progress_email)
 
     puts '---------------- resume_link --------------'
@@ -115,8 +110,18 @@ describe 'Save and return' do
 
   def extract_link_from_email(email)
     message_body = email.raw.payload.parts[0].parts[0].body.data
+
+    puts '---------------- message_body ----------'
+    puts message_body
+    puts '--------------------------'
+
     uuid_regex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
     uuid = message_body.match(uuid_regex)
+
+    puts '---------------- uuid ----------'
+    puts uuid.to_s
+    puts '--------------------------'
+
     host = "https://#{username}:#{password}@save-and-return-v2-acceptance-test.dev.test.form.service.justice.gov.uk/return/#{uuid}"
 
     host
