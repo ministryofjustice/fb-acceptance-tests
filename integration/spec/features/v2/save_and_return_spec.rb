@@ -109,7 +109,10 @@ describe 'Save and return' do
   end
 
   def extract_link_from_email(email)
-    message_body = email.raw.payload.parts[0].parts[0].body.data
+    message_body = email.raw.payload.parts[0].parts[1].body.data
+
+    puts "email.raw.payload.parts size #{email.raw.payload.parts.size}"
+    puts "email.raw.payload.parts[0].parts size #{email.raw.payload.parts[0].parts.size}"
 
     puts '---------------- message_body ----------'
     puts message_body
