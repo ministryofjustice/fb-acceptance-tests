@@ -68,7 +68,16 @@ describe 'Save and return' do
     expect(page.text).to include('Your form has been saved')
     sleep 10
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
+
+    puts '---------------- resume_progress_email ----------'
+    puts resume_progress_email
+    puts '--------------------------'
+
     resume_link = extract_link_from_email(resume_progress_email)
+
+    puts '---------------- resume_link --------------'
+    puts resume_link[-44..]
+    puts '--------------------------'
 
     visit resume_link
 

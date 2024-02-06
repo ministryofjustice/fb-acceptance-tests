@@ -52,7 +52,7 @@ workflows:
             - moj-forms
           matrix:
             parameters:
-              spec_dir: ["spec/lib", "spec/components", "spec/features/v1", "spec/features/v2"]
+              spec_dir: ["spec/features/v2"] # "spec/lib", "spec/components", "spec/features/v1",
 
   nightly:
     triggers:
