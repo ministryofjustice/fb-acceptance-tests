@@ -104,8 +104,10 @@ describe 'Save and return' do
     end.last
   end
 
+  # NOTE: using `parts[1]` because that is the html message
+  # `parts[0]` is plain text and does not include html nor the link
   def extract_link_from_email(email)
-    message_body = email.raw.payload.parts[0].parts[0].body.data
+    message_body = email.raw.payload.parts[0].parts[1].body.data
     uuid_regex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
     uuid = message_body.match(uuid_regex)
     host = "https://#{username}:#{password}@save-and-return-v2-acceptance-test.dev.test.form.service.justice.gov.uk/return/#{uuid}"
