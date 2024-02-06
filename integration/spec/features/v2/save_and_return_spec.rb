@@ -70,10 +70,6 @@ describe 'Save and return' do
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
     resume_link = extract_link_from_email(resume_progress_email)
 
-    puts '---------------- resume_link --------------'
-    puts resume_link[-44..]
-    puts '--------------------------'
-
     visit resume_link
 
     expect(page.text).to include('Continue with "save-and-return-v2-acceptance-test"')
@@ -108,23 +104,12 @@ describe 'Save and return' do
     end.last
   end
 
+  # NOTE: using `parts[1]` because that is the html message
+  # `parts[0]` is plain text and does not include html nor the link
   def extract_link_from_email(email)
     message_body = email.raw.payload.parts[0].parts[1].body.data
-
-    puts "email.raw.payload.parts size #{email.raw.payload.parts.size}"
-    puts "email.raw.payload.parts[0].parts size #{email.raw.payload.parts[0].parts.size}"
-
-    puts '---------------- message_body ----------'
-    puts message_body
-    puts '--------------------------'
-
     uuid_regex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
     uuid = message_body.match(uuid_regex)
-
-    puts '---------------- uuid ----------'
-    puts uuid.to_s
-    puts '--------------------------'
-
     host = "https://#{username}:#{password}@save-and-return-v2-acceptance-test.dev.test.form.service.justice.gov.uk/return/#{uuid}"
 
     host
