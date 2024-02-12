@@ -1,4 +1,6 @@
 class ServiceApp < SitePrism::Page
+  element :auth_username, :field, '#auth-form-username-field'
+  element :auth_password, :field, '#auth-form-password-field'
   element :start_button, :button, 'Start'
   element :start_now_button, :button, 'Start now'
   element :continue_button, :button, 'Continue'
@@ -15,6 +17,12 @@ class ServiceApp < SitePrism::Page
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
     load_with_retry(app: self.class.name) { super }
+  end
+
+  def wait_until_displayed
+    super
+    enter_credentials
+    super
   end
 
   def all_headings
@@ -39,5 +47,18 @@ class ServiceApp < SitePrism::Page
       puts "Retrying #{app} load... Attempts: #{retry_count}/#{max_retries}"
       retry if retry_count < max_retries
     end
+  end
+
+  def enter_credentials
+    expect(page.text).to include('Enter form credentials')
+
+    form.auth_username.set(
+      ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
+    )
+    form.auth_password.set(
+      ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
+    )
+
+    form.continue_button.click
   end
 end
