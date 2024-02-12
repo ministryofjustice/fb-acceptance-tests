@@ -10,14 +10,4 @@ class ConditionalContentV2App < ServiceApp
   element :radio_a, :radio_button, 'a', visible: false
   element :radio_b, :radio_button, 'b', visible: false
   element :back, :link, text: 'Back', visible: false
-
-  def load(expansion_or_html = {}, &block)
-    puts "Visiting form: #{ENV['CONDITIONAL_CONTENT_V2_APP'] % { user: '*****', password: '*****' }}"
-
-    load_with_retry(app: self.class.name) do
-      SitePrism::Page.instance_method(:load).bind(self).call
-    end
-
-    self.wait_until_displayed
-  end
 end

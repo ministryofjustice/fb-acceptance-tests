@@ -17,12 +17,7 @@ class ServiceApp < SitePrism::Page
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
     load_with_retry(app: self.class.name) { super }
-  end
-
-  def wait_until_displayed
-    super
     enter_credentials
-    super
   end
 
   def all_headings
