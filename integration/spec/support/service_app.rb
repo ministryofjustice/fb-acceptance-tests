@@ -17,7 +17,6 @@ class ServiceApp < SitePrism::Page
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
     load_with_retry(app: self.class.name) { super }
-    enter_credentials
   end
 
   def all_headings
@@ -42,18 +41,5 @@ class ServiceApp < SitePrism::Page
       puts "Retrying #{app} load... Attempts: #{retry_count}/#{max_retries}"
       retry if retry_count < max_retries
     end
-  end
-
-  def enter_credentials
-    expect(page.text).to include('Enter form credentials')
-
-    form.auth_username.set(
-      ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
-    )
-    form.auth_password.set(
-      ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
-    )
-
-    form.continue_button.click
   end
 end

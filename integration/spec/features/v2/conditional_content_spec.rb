@@ -11,10 +11,13 @@ describe 'Conditional Content' do
   let(:or_rule) { 'If radio b II checkbox Option 2' }
   let(:legacy_content) { 'This is legacy conditional content that should be picked up by default' }
 
-  before { form.load }
+  before do
+    form.load
+    enter_credentials
+  end
+
   # comment above line and uncomment below and export user and password ENV vars for local testing
   # before { visit "https://#{username}:#{password}@conditional-content-acceptance-test-v2.dev.test.form.service.justice.gov.uk" }
-
 
   it 'shows appropriate conditional content depending on users answers' do
     form.start_now_button.click
