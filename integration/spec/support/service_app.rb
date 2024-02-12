@@ -1,6 +1,6 @@
 class ServiceApp < SitePrism::Page
-  element :auth_username, :field, '#auth-form-username-field'
-  element :auth_password, :field, '#auth-form-password-field'
+  element :auth_username, '#auth-form-username-field'
+  element :auth_password, '#auth-form-password-field'
   element :start_button, :button, 'Start'
   element :start_now_button, :button, 'Start now'
   element :continue_button, :button, 'Continue'
