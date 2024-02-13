@@ -17,14 +17,4 @@ class NewRunnerApp < FeaturesEmailApp
   element :change_cat, :link, text: 'Your answer for Your cat', visible: false
   element :change_upload, :link, text: 'Your answer for Upload a file', visible: false
   element :change_autocomplete, :link, text: 'Where do you like to holiday?', visible: false
-
-  def load(expansion_or_html = {}, &block)
-    puts "Visiting form: #{ENV['NEW_RUNNER_APP'] % { user: '*****', password: '*****' }}"
-
-    load_with_retry(app: self.class.name) do
-      SitePrism::Page.instance_method(:load).bind(self).call
-    end
-
-    self.wait_until_displayed
-  end
 end

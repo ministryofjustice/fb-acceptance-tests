@@ -34,7 +34,7 @@ describe 'Maintenance mode' do
 
     context 'when visiting the maintenance page' do
       it 'does not redirect requests to the maintenance page' do
-        form.load('restricted/maintenance')
+        form.load(url: 'restricted/maintenance')
 
         expect(form.text).to_not include(maintenance_content)
       end
