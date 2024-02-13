@@ -17,6 +17,15 @@ class ServiceApp < SitePrism::Page
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
     load_with_retry(app: self.class.name) { super }
+
+    auth_username.set(
+      ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
+    )
+    auth_password.set(
+      ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
+    )
+
+    continue_button.click
   end
 
   def all_headings

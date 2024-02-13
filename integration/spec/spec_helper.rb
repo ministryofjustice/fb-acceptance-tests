@@ -62,19 +62,6 @@ OPTIONAL_TEXT = [
   '[Optional hint text]'
 ]
 
-def enter_credentials
-  expect(page.text).to include('Enter form credentials')
-
-  form.auth_username.set(
-    ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
-  )
-  form.auth_password.set(
-    ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
-  )
-
-  form.continue_button.click
-end
-
 def check_optional_text(text)
   OPTIONAL_TEXT.each { |optional| expect(text).not_to include(optional) }
 end

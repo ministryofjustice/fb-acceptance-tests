@@ -13,7 +13,6 @@ describe 'Conditional Content' do
 
   before do
     form.load
-    enter_credentials
   end
 
   # comment above line and uncomment below and export user and password ENV vars for local testing
