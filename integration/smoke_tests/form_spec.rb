@@ -22,20 +22,6 @@ class SmokeTestForm < ServiceApp
   element :postcode, :field, 'Text Field with Postcode Regex'
   element :red, :checkbox, 'Red', visible: false
   element :add_upload, :radio_button, 'Yes, add this upload', visible: false
-
-  # Service app will log the url which will contain user
-  # and password.
-  # Overwriting the signature method will
-  # make the tests to not print anything.
-  def load(expansion_or_html = {}, &block)
-    puts "Visiting form: #{ENV['SMOKE_TEST_FORM'] % { user: '*****', password: '*****' }}"
-
-    load_with_retry(app: self.class.name) do
-      SitePrism::Page.instance_method(:load).bind(self).call
-    end
-
-    self.wait_until_displayed
-  end
 end
 
 describe 'Smoke test' do
