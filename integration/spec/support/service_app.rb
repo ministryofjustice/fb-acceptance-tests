@@ -19,7 +19,7 @@ class ServiceApp < SitePrism::Page
     load_with_retry(app: self.class.name) { super }
 
     # Legacy runner does not use authentication
-    authenticate if self.current_url.end_with('/auth')
+    authenticate if self.current_url.end_with?('/auth')
   end
 
   def all_headings
