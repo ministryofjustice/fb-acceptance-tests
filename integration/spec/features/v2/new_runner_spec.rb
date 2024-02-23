@@ -343,30 +343,34 @@ describe 'New Runner' do
 
     p 'Asserting CSV contents'
 
-    expect(rows[0]).to match_array([
-      'reference_number',
-      'submission_at',
-      'name_text_1',
-      'name_text_2',
-      'your-email-address_email_1',
-      'your-cat_textarea_1',
-      'optional-questions_text_1',
-      'optional-questions_textarea_1',
-      'optional-questions_number_1',
-      'optional-questions_radios_1',
-      'optional-questions_checkboxes_1',
-      'optional-questions_date_1',
-      'your-fruit_checkboxes_1',
-      'when_date_1',
-      'how-many_number_1',
-      'watch_radios_1',
-      'file-upload_upload_1',
-      'optional-file-upload_upload_1',
-      'multifile_multiupload_1',
-      'multi-optional_multiupload_1',
-      'countries_autocomplete_1',
-      'hotel-address_address_1'
-      ])
+    expect(rows[0]).to match_array(%w[
+      reference_number
+      submission_at name_text_1
+      name_text_2
+      your-email-address_email_1
+      your-cat_textarea_1
+      optional-questions_text_1
+      optional-questions_textarea_1
+      optional-questions_number_1
+      optional-questions_radios_1
+      optional-questions_checkboxes_1
+      optional-questions_date_1
+      your-fruit_checkboxes_1
+      when_date_1
+      how-many_number_1
+      watch_radios_1
+      file-upload_upload_1
+      optional-file-upload_upload_1
+      multifile_multiupload_1
+      multi-optional_multiupload_1
+      countries_autocomplete_1
+      hotel-address_address_1/address_line_one
+      hotel-address_address_1/address_line_two
+      hotel-address_address_1/city
+      hotel-address_address_1/county
+      hotel-address_address_1/postcode
+      hotel-address_address_1/country
+    ])
 
     expect(rows[1][0]).to match(reference_number) # guid
     expect(rows[1][1]).to match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/) # iso timestamp
@@ -390,7 +394,12 @@ describe 'New Runner' do
       '',
       '',
       'WK',
-      '999 street, Wondercity, SW1H 9AJ, United Kingdom'
+      '999 street',
+      '',
+      'Wondercity',
+      '',
+      'SW1H 9AJ',
+      'United Kingdom'
     ])
   end
 end
