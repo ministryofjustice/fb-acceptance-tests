@@ -240,7 +240,7 @@ describe 'New Runner' do
     expect(submission_message_body).to include(some_answers)
     expect(submission_csv_message_body).to be_blank
 
-    pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 2)
+    pdf_attachments = find_pdf_attachments(id: reference_number, expected_emails: 1)
     csv_attachments = find_csv_attachments(id: reference_number)
 
     assert_pdf_contents(pdf_attachments, reference_number)
