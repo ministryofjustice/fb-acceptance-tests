@@ -11,7 +11,7 @@ class WelshLocaleApp < ServiceApp
 
   elements :footer_links, 'ul.govuk-footer__inline-list a'
 
-  element :start_now_button, :button, 'Dechrau nawr'
-  element :continue_button, :button, 'Parhau'
-  element :save_form_button, :button, 'Cadw at yn hwyrach ymlaen'
+  element :cy_start_now_button, :button, 'Dechrau nawr'
+  element :cy_continue_button, :button, 'Parhau'
+  element :cy_save_form_button, :button, 'Cadw at yn hwyrach ymlaen'
 end
