@@ -83,8 +83,6 @@ describe 'Form with locale set to welsh' do
     expect(form).to have_cancel_and_resume_button
     form.cancel_and_resume_button.click
     expect(form).to have_submit_button
-
-    # confirmation page
     form.submit_button.click
     expect(form.text).to include('Cais wedi\'i gwblhau')
   end

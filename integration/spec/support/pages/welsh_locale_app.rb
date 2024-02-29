@@ -15,7 +15,7 @@ class WelshLocaleApp < ServiceApp
   element :continue_button, :button, 'Parhau'
   element :submit_button, :button, 'Cyflwyno'
   element :save_form_button, :button, 'Cadw at yn hwyrach ymlaen'
-  element :cancel_and_resume_button, :button, 'Canslo cadw a dychwelyd i lenwi’r ffurflen'
+  element :cancel_and_resume_button, :link, 'Canslo cadw a dychwelyd i lenwi’r ffurflen'
   element :back_link, :link, 'Yn ôl'
 
   element :fullname_question, 'input[name="answers[fullname_text_1]"]'
