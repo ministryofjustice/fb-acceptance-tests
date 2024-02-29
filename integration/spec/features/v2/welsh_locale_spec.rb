@@ -6,6 +6,7 @@ describe 'Form with locale set to welsh' do
   end
 
   let(:form) { WelshLocaleApp.new }
+  let(:footer_links) { form.footer_links.map(&:text) }
 
   before { form.load }
 
@@ -19,7 +20,6 @@ describe 'Form with locale set to welsh' do
     form.hide_cookie_message_button.click
     expect(form).not_to have_hide_cookie_message_button
 
-    footer_links = form.footer_links.map(&:text)
     expect(footer_links).to eq(%w[Cwcis Preifatrwydd Hygyrchedd])
 
     form.footer_links.first.click
