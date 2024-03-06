@@ -6,13 +6,14 @@ describe 'Conditional Content' do
   let(:negative_logic_combination) { 'If radio is not a OR checkbox is not Option 1 OR checkbox is not Option 2' }
   let(:checkbox_contains_substring) { 'If checkbox contains Option, it should not show if Option 1 or Option 2' }
   let(:optional_question_unanswered) { 'If checkbox is not answered' }
+  let(:if_this_or_this_and_that) { 'If radio is a OR radio is b && checkbox is 1 && 2' }
   let(:and_rule) { 'If radio a && checkbox Option 1' }
   let(:or_rule) { 'If radio b II checkbox Option 2' }
   let(:legacy_content) { 'This is legacy conditional content that should be picked up by default' }
 
   before { form.load }
   # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
+  # before { visit "https://#{username}:#{password}@conditional-content-acceptance-test-v2.dev.test.form.service.justice.gov.uk" }
 
 
   it 'shows appropriate conditional content depending on users answers' do
@@ -25,6 +26,7 @@ describe 'Conditional Content' do
     expect(page.text).not_to include(never_content)
     expect(page.text).to include(and_rule)
     expect(page.text).to include(logic_combination_content)
+    expect(page.text).to include(if_this_or_this_and_that)
 
     # Check with negative logic
     form.back.click
@@ -65,8 +67,15 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
+    expect(page.text).not_to include(if_this_or_this_and_that) # if b is true, but and option 1 and option two are not
     expect(page.text).to include(or_rule)
     expect(page.text).to include(negative_logic_combination)
+    expect(page.text).to include(logic_combination_content)
+
+    # Check complex logic if b and checkbox 1 and 2
+    form.back.click
+    form.checkbox_1.check # radio is now b, checkbox 1 and 2 are checked
+    continue
     expect(page.text).to include(logic_combination_content)
 
     # Checking legacy content is shown
