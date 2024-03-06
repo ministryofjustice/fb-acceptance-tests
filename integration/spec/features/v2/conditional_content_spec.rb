@@ -67,7 +67,7 @@ describe 'Conditional Content' do
     continue
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
-    expect(page.text).not_to include(if_this_or_this_and_that)
+    expect(page.text).not_to include(if_this_or_this_and_that) # if b is true, but and option 1 and option two are not
     expect(page.text).to include(or_rule)
     expect(page.text).to include(negative_logic_combination)
     expect(page.text).to include(logic_combination_content)
