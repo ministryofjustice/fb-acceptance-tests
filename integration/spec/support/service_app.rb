@@ -4,6 +4,7 @@ class ServiceApp < SitePrism::Page
   element :start_button, :button, 'Start'
   element :start_now_button, :button, 'Start now'
   element :continue_button, :button, 'Continue'
+  element :sign_in_button, 'button[type="submit"].govuk-button'
   elements :summaries, 'dl .govuk-summary-list__value'
   elements :headings, '.govuk-heading-xl'
   elements :change_links, '.govuk-summary-list__actions a.govuk-link'
@@ -53,6 +54,6 @@ class ServiceApp < SitePrism::Page
     auth_password.set(
       ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
     )
-    continue_button.click
+    sign_in_button.click
   end
 end
