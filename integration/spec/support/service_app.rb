@@ -1,10 +1,7 @@
 class ServiceApp < SitePrism::Page
-  element :auth_username, '#auth-form-username-field'
-  element :auth_password, '#auth-form-password-field'
   element :start_button, :button, 'Start'
   element :start_now_button, :button, 'Start now'
   element :continue_button, :button, 'Continue'
-  element :sign_in_button, 'button[type="submit"].govuk-button'
   elements :summaries, 'dl .govuk-summary-list__value'
   elements :headings, '.govuk-heading-xl'
   elements :change_links, '.govuk-summary-list__actions a.govuk-link'
@@ -14,6 +11,11 @@ class ServiceApp < SitePrism::Page
   element :accept_analytics, :button, 'Accept analytics cookies'
   element :reject_analytics, :button, 'Reject analytics cookies'
   element :hide_cookie_message, :button, 'Hide this message'
+
+  # Elements related to the auth sign in page
+  element :auth_username, '#auth-form-username-field'
+  element :auth_password, '#auth-form-password-field'
+  element :sign_in_button, 'button[type="submit"].govuk-button'
 
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
