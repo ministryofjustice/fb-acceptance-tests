@@ -12,9 +12,17 @@ class ServiceApp < SitePrism::Page
   element :reject_analytics, :button, 'Reject analytics cookies'
   element :hide_cookie_message, :button, 'Hide this message'
 
+  # Elements related to the auth sign in page
+  element :auth_username, '#auth-form-username-field'
+  element :auth_password, '#auth-form-password-field'
+  element :sign_in_button, 'button[type="submit"].govuk-button'
+
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
     load_with_retry(app: self.class.name) { super }
+
+    # Legacy runner does not use authentication
+    authenticate if self.current_url.end_with?('/auth')
   end
 
   def all_headings
@@ -39,5 +47,15 @@ class ServiceApp < SitePrism::Page
       puts "Retrying #{app} load... Attempts: #{retry_count}/#{max_retries}"
       retry if retry_count < max_retries
     end
+  end
+
+  def authenticate
+    auth_username.set(
+      ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
+    )
+    auth_password.set(
+      ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
+    )
+    sign_in_button.click
   end
 end
