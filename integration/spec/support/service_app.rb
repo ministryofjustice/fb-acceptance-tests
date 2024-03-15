@@ -50,12 +50,16 @@ class ServiceApp < SitePrism::Page
   end
 
   def authenticate
-    auth_username.set(
-      ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
-    )
-    auth_password.set(
-      ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
-    )
+    auth_username.set(username)
+    auth_password.set(password)
     sign_in_button.click
+  end
+
+  def username
+    ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER']
+  end
+
+  def password
+    ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
   end
 end

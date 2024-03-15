@@ -3,10 +3,7 @@ require 'pdf-reader'
 require 'csv'
 
 class SmokeTestV2RunnerForm < ServiceApp
-  set_url "#{ENV.fetch('SMOKE_TEST_FORM_V2')}" % {
-    user: ENV['SMOKE_TEST_USER'],
-    password: ENV.fetch('SMOKE_TEST_PASSWORD')
-  }
+  set_url ENV.fetch('SMOKE_TEST_FORM_V2')
 
   element :start_button, :button, 'Start now'
   element :name_field, :field, 'Name'
@@ -21,19 +18,23 @@ class SmokeTestV2RunnerForm < ServiceApp
   element :another_number_field, :field, 'Number'
   element :postcode, :field, 'Text Field with Postcode'
   element :red, :checkbox, 'Red', visible: false
+
+  def username
+    ENV['SMOKE_TEST_USER']
+  end
+
+  def password
+    ENV['SMOKE_TEST_PASSWORD']
+  end
 end
 
 describe 'Smoke test' do
   let(:form) { SmokeTestV2RunnerForm.new }
-  let(:username) { ENV.fetch('SMOKE_TEST_USER') }
-  let(:password) { ENV.fetch('SMOKE_TEST_PASSWORD') }
   let(:generated_name) { "Saruman-#{SecureRandom.uuid}" }
   let(:pdf_path) { '/tmp/submission.pdf' }
   let(:csv_path) { '/tmp/submission.csv' }
 
   before { form.load }
-  # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@smoke-test-v2.form.service.justice.gov.uk" }
 
   it 'makes a submission and send an email' do
     form.start_button.click
