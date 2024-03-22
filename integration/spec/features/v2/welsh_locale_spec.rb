@@ -59,7 +59,7 @@ describe 'Form with locale set to welsh' do
     expect(form.text).to include('Mae yna broblem')
     expect(form.text).to include('Nodwch llinell cyfeiriad 1 ar gyfer "Ehowch eich cyfeiriad cartref"')
     expect(form.text).to include('Nodwch tref neu ddinas ar gyfer "Ehowch eich cyfeiriad cartref"')
-    expect(form.text).to include('Nodwch god post y DU dilys ar gyfer "Ehowch eich cyfeiriad cartref"')
+    expect(form.text).to include('Nodwch god post dilys y DU dilys ar gyfer "Ehowch eich cyfeiriad cartref"')
 
     # fix errors and continue
     form.address_line_one.set('Street 123')
