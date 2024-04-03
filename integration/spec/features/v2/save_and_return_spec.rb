@@ -105,7 +105,7 @@ describe 'Save and return' do
     message_body = email.raw.payload.parts[0].parts[1].body.data
     uuid_regex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
     uuid = message_body.match(uuid_regex)
-    host = "https://#{username}:#{password}@save-and-return-v2-acceptance-test.dev.test.form.service.justice.gov.uk/return/#{uuid}"
+    host = "#{ENV['SAVE_AND_RETURN_V2_APP']}/return/#{uuid}"
 
     host
   end
