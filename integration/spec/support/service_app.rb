@@ -20,9 +20,7 @@ class ServiceApp < SitePrism::Page
   def load(expansion_or_html = {}, &block)
     puts "Visiting form: #{self.url}"
     load_with_retry(app: self.class.name) { super }
-
-    # Legacy runner does not use authentication
-    authenticate if self.current_url.end_with?('/auth')
+    authenticate
   end
 
   def all_headings
