@@ -10,8 +10,6 @@ describe 'API Submission' do
   let(:filename2) { 'goodbye_world.txt' }
 
   before { form.load }
-  # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
   it 'sends an API submission' do
     form.start_now_button.click

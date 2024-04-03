@@ -5,15 +5,12 @@ describe 'New Runner' do
   before :each do
     OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
   end
+
   let(:form) { NewRunnerApp.new }
-  let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
-  let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
 
   before { form.load }
-  # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@new-runner-acceptance-tests.dev.test.form.service.justice.gov.uk" }
 
   it 'sends an email with the submission in a PDF and a CSV' do
     form.start_now_button.click

@@ -1,5 +1,6 @@
 describe 'Conditional Content' do
   let(:form) { ConditionalContentV2App.new }
+
   let(:always_content) { 'This is always shown' }
   let(:never_content) { 'This is never shown' }
   let(:logic_combination_content) { 'If radio is a && checkbox is 1 OR radio is b && checkbox is 2' }
@@ -12,9 +13,6 @@ describe 'Conditional Content' do
   let(:legacy_content) { 'This is legacy conditional content that should be picked up by default' }
 
   before { form.load }
-  # comment above line and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@conditional-content-acceptance-test-v2.dev.test.form.service.justice.gov.uk" }
-
 
   it 'shows appropriate conditional content depending on users answers' do
     form.start_now_button.click

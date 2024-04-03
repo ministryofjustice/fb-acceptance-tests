@@ -1,10 +1,4 @@
-require 'spec_helper'
-
 describe 'Form with locale set to welsh' do
-  before :each do
-    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
-
   let(:form) { WelshLocaleApp.new }
   let(:footer_links) { form.footer_links.map(&:text) }
 

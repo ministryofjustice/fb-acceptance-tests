@@ -3,8 +3,7 @@ require 'csv'
 
 describe 'New Runner Branching App' do
   let(:form) { NewRunnerBranchingApp.new }
-  let(:username) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'] }
-  let(:password) { ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD'] }
+
   let(:page_a_answer) { "FN-#{SecureRandom.uuid}" }
   let(:page_b_answer) { 'Page B Option 1' }
   let(:page_b_changed_answer) { 'Page B Option 2' }
@@ -18,8 +17,6 @@ describe 'New Runner Branching App' do
   let(:error_message) { 'There is a problem' }
 
   before { form.load }
-  # comment above and uncomment below and export user and password ENV vars for local testing
-  # before { visit "https://#{username}:#{password}@acceptance-tests-branching-fixture-10.dev.test.form.service.justice.gov.uk" }
 
   it 'navigates the form, changes answers and submits' do
     form.start_now_button.click

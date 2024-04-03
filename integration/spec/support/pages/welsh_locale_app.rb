@@ -1,8 +1,5 @@
 class WelshLocaleApp < ServiceApp
-  set_url ENV['WELSH_LOCALE_APP'] % {
-    user: ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'],
-    password: ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
-  }
+  set_url ENV['WELSH_LOCALE_APP']
 
   element :accept_analytics_button, :button, 'Derbyn cwcis dadansoddol'
   element :reject_analytics_button, :button, 'Gwrthod cwcis dadansoddol'
