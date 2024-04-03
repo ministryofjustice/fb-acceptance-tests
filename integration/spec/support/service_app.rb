@@ -11,6 +11,7 @@ class ServiceApp < SitePrism::Page
   element :accept_analytics, :button, 'Accept analytics cookies'
   element :reject_analytics, :button, 'Reject analytics cookies'
   element :hide_cookie_message, :button, 'Hide this message'
+  element :service_header_link, 'a.govuk-header__service-name'
 
   # Elements related to the auth sign in page
   element :auth_username, '#auth-form-username-field'
