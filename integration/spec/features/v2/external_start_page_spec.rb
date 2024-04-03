@@ -19,7 +19,7 @@ describe 'Page with external start page' do
     form.question_1.set(q1_answer)
     continue
     expect(page.text).to include('Check your answers')
-    visit ENV['EXTERNAL_START_PAGE_APP']
+    form.service_header_link.click
     sleep 1
     # bypasses start page on revisit
     expect(page.text).to include(q1_title)
