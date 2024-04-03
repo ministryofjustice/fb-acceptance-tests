@@ -48,6 +48,7 @@ class ServiceApp < SitePrism::Page
   end
 
   def authenticate
+    puts "Authenticating with username and password"
     auth_username.set(username)
     auth_password.set(password)
     sign_in_button.click
