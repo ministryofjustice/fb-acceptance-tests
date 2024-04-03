@@ -1,6 +1,4 @@
 class FeaturesEmailApp < ServiceApp
-  set_url ENV.fetch('FEATURES_EMAIL_APP')
-
   element :start_button, :button, 'Start'
   element :first_name_field, :field, 'First name'
   element :last_name_field, :field, 'Last name'
