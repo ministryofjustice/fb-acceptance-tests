@@ -13,7 +13,7 @@ Install dependencies with:
 ### Setup all containers
 
 The following command will spin up all form builder platform containers and
-services. It takes approximatelly 13 minutes:
+services. It takes approximately 13 minutes:
 
     $ make setup
 
@@ -43,34 +43,8 @@ The following environment variables are saved in each platform app on CircleCI:
 - NEW_RUNNER_ACCEPTANCE_TEST_USER
 - NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD
 
-The tests run against forms published to the `test-dev` environment. Currently these are:
-
-Features:
-
-- acceptance-tests-conditional-steps
-- acceptance-tests-email-output
-- acceptance-tests-json-output
-- acceptance-tests-maintenance-mode
-
-There will also be a save and return service to test against but it is not currently published
-
-Components:
-
-- acceptance-tests-autocomplete
-- acceptance-tests-checkboxes
-- acceptance-tests-conditional-with-upload
-- acceptance-tests-date
-- acceptance-tests-email-component-form
-- acceptance-tests-exit-page
-- acceptance-tests-fieldset
-- acceptance-tests-number
-- acceptance-tests-radios
-- acceptance-tests-select
-- acceptance-tests-text
-- acceptance-tests-textarea
-- acceptance-tests-upload
-
-Tests for the JSON output are run against the acceptance-tests-json-output form which sends a encrypted JSON payload the fb-base-adapter. This decrypts it and makes it available to be checked.
+The tests run against forms published to the `test-dev` environment.  
+Tests for the JSON output sends an encrypted JSON payload to the fb-base-adapter. This decrypts it and makes it available to be checked.
 
 ## Useful commands
 
@@ -81,38 +55,6 @@ Commands to start, stop or restart the containers:
     $ make start
     $ make stop
     $ make restart
-
-### Features and Components
-
-It is possible to fun a set of feature or component specs instead of the whole suite:
-
-    $ make feature FEATURE=conditional_steps
-
-or
-
-    $ make component COMPONENT=autocomplete
-
-Available features:
-
-- conditional_steps
-- email_output
-- json_output
-- maintenance_mode
-
-Available components:
-
-- autocomplete
-- checkboxes
-- conditionals_and_upload
-- date
-- email
-- fieldset
-- number
-- radios
-- select
-- text
-- textarea
-- upload
 
 ## Glossary
 

@@ -1,8 +1,5 @@
 class NewRunnerApp < FeaturesEmailApp
-  set_url "#{ENV['NEW_RUNNER_APP']}" % {
-    user: ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'],
-    password: ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
-  }
+  set_url ENV['NEW_RUNNER_APP']
 
   element :start_button, :button, 'Start now'
   element :yes_field, :radio_button, 'Yes', visible: false

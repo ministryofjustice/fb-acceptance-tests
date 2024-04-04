@@ -1,8 +1,5 @@
 class NewRunnerBranchingApp < ServiceApp
-  set_url "#{ENV['NEW_RUNNER_BRANCHING_APP']}" % {
-    user: ENV['NEW_RUNNER_ACCEPTANCE_TEST_USER'],
-    password: ENV['NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD']
-  }
+  set_url ENV['NEW_RUNNER_BRANCHING_APP']
 
   element :page_a_field, :field, 'Page A'
 

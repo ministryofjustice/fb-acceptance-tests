@@ -1,10 +1,4 @@
-require 'spec_helper'
-
 describe 'Form with locale set to welsh' do
-  before :each do
-    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
-
   let(:form) { WelshLocaleApp.new }
   let(:footer_links) { form.footer_links.map(&:text) }
 
@@ -27,7 +21,7 @@ describe 'Form with locale set to welsh' do
     expect(form.text).to include('Cwcis dadansoddol')
 
     # go back to the home
-    form.load
+    form.service_header_link.click
     expect(form).to have_start_now_button
     form.start_now_button.click
 
