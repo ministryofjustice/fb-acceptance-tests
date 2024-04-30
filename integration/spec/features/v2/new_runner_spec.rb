@@ -110,7 +110,8 @@ describe 'New Runner' do
     # attach file
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.find('h1').text])
+    expect(page.text).to include(error_message) # required
+    check_validation_error_message('Choose a file to upload')
     attach_file('Upload a file', 'spec/fixtures/files/hello_world.txt')
     continue
 
@@ -122,7 +123,8 @@ describe 'New Runner' do
     # attach file to multi file
     check_optional_text(page.text)
     continue
-    check_error_message(page.text, [form.find('h1').text]) # required
+    expect(page.text).to include(error_message) # required
+    check_validation_error_message('Choose a file to upload')
     attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
     expect(page.text).to include('hello_world_multi_1.txt')
