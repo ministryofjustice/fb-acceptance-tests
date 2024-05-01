@@ -60,7 +60,8 @@ describe 'Save and return' do
     expect(page.text).to include('We have sent a one-off link to fb-acceptance-tests@digital.justice.gov.uk')
 
     form.reject.click
-    expect(page.text).to include('Your form has been saved')
+    # check session is destroyed
+    expect(page.text).to include('Session complete')
     sleep 10
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
     resume_link = extract_link_from_email(resume_progress_email)
