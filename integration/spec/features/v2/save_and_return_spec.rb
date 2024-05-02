@@ -61,7 +61,7 @@ describe 'Save and return' do
 
     form.reject.click
     # check session is destroyed
-    expect(page.text).to include('Session complete')
+    expect(page.text).to include('This form has been saved for later')
     sleep 10
     resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
     resume_link = extract_link_from_email(resume_progress_email)
