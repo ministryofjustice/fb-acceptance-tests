@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe 'API Submission' do
-  before :each do
-    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
-
   let(:form) { FeaturesJsonSubmissionApiApp.new }
   let(:filename1) { 'hello_world.txt' }
   let(:filename2) { 'goodbye_world.txt' }

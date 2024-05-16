@@ -10,6 +10,23 @@ Install dependencies with:
 
     $ bundle
 
+## Run individual tests locally without any container setup
+
+For quickly testing individual features, it is possible to run the acceptance tests locally against a 
+deployed test form as follows:
+
+1. First, if you've not done this already, copy the file `integration/tests.env.ci` to `integration/tests.env`. 
+   This file is not commited to the repo.
+2. Uncomment and add the values for `SMOKE_TEST_USER`, `SMOKE_TEST_PASSWORD`, `NEW_RUNNER_ACCEPTANCE_TEST_USER` 
+   and `NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD`
+3. In the terminal, navigate to the `integration` directory and run `bundle`
+4. Now you can run individual tests, for instance: `bundle exec rspec spec/features/v2/welsh_locale_spec.rb`
+
+NOTE: some features that make assertions on received emails, like save and return, will not work unless you also setup 
+some additional ENV variables in your `integration/tests.env` file.
+
+## Run with containers
+
 ### Setup all containers
 
 The following command will spin up all form builder platform containers and
@@ -119,13 +136,6 @@ what repos to clone and the container names to build.
 
 This is done automagically but for more details see
 integration/config_file.rb.sample.
-
-## Output recorder
-
-There is a script that shows the amount of emails or json requests
-send by the submitter, which the output recorder did record. You can run:
-
-    $ ./integration/bin/output-recorder
 
 ## Submitter failed jobs
 

@@ -1,9 +1,0 @@
-{
-  "request": {
-    "method": "POST",
-    "url": "/email"
-  },
-  "response": {
-    "status": 200
-  }
-}

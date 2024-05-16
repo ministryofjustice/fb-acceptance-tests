@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe 'Page with external start page' do
-  before :each do
-    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
-
   let(:form) { ExternalStartPageApp.new }
   let(:q1_answer) { 'Hello' }
   let(:q1_title) { 'First question' }

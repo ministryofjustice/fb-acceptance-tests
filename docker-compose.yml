@@ -87,8 +87,6 @@ services:
       PDF_GENERATOR_ROOT_URL: http://pdf-generator-app:3000
       RAILS_ENV: development
       SERVICE_TOKEN_CACHE_ROOT_URL: http://service-token-cache-app:3000
-      RUNNER_CALLBACK_URL_OVERRIDE: runner-app
-      EMAIL_ENDPOINT_OVERRIDE: http://output-recorder:8080/email
       ENCRYPTION_KEY: i6USnzeRKljfLMPbRlB2E9oikURx4ou3
       ENCRYPTION_SALT: lGlcn9HabIducdpwlSHcM06e9gFuIfS1Ogg5krtn1Fw=
       MAX_IAT_SKEW_SECONDS: 60
@@ -96,7 +94,6 @@ services:
     depends_on:
       - submitter-worker
       - submitter-db
-      - output-recorder
 
   submitter-worker:
     container_name: submitter-worker
@@ -122,14 +119,11 @@ services:
       SERVICE_TOKEN_CACHE_ROOT_URL: http://service-token-cache-app:3000
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: 'true'
-      RUNNER_CALLBACK_URL_OVERRIDE: runner-app
-      EMAIL_ENDPOINT_OVERRIDE: http://output-recorder:8080/email
       ENCRYPTION_KEY: i6USnzeRKljfLMPbRlB2E9oikURx4ou3
       ENCRYPTION_SALT: lGlcn9HabIducdpwlSHcM06e9gFuIfS1Ogg5krtn1Fw=
     command: bundle exec rake jobs:work
     depends_on:
       - submitter-db
-      - output-recorder
 
   pdf-generator-app:
     container_name: pdf-generator-app
@@ -145,13 +139,6 @@ services:
       RAILS_LOG_TO_STDOUT: 'true'
     ports:
       - 3002:3000
-
-  output-recorder:
-    container_name: output-recorder
-    build:
-      context: ./output-recorder
-    ports:
-      - 3003:8080
 
   service-token-cache-app:
     container_name: service-token-cache-app
@@ -201,13 +188,11 @@ services:
       args:
         BUNDLE_FLAGS: ''
     environment:
-      OUTPUT_RECORDER_ENDPOINT: http://output-recorder:8080
       EMAIL_PATH: /email
       JSON_PATH: /json
       SERVICE_OUTPUT_JSON_KEY: 19a56ee0e50dd83g
       FORM_BUILDER_BASE_ADAPTER_ENDPOINT: http://base-adapter-app:4567
     depends_on:
-      - output-recorder
       - base-adapter-app
 
   services:
