@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe 'Save and return' do
-  before :each do
-    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
-
   let(:form) { SaveAndReturnV2App.new }
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }

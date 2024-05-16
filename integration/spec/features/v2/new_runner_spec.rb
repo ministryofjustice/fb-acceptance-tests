@@ -2,10 +2,6 @@ require 'pdf-reader'
 require 'csv'
 
 describe 'New Runner' do
-  before :each do
-    OutputRecorder.cleanup_recorded_requests if ENV['CI_MODE'].blank?
-  end
-
   let(:form) { NewRunnerApp.new }
   let(:generated_name) { "FN-#{SecureRandom.uuid}" }
   let(:error_message) { 'There is a problem' }
