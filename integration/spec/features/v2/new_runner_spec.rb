@@ -241,11 +241,54 @@ describe 'New Runner' do
     assert_pdf_contents(pdf_attachments, reference_number)
     assert_csv_contents(csv_attachments, reference_number)
 
+    assert_ms_list_item_contents(reference_number)
+
     # we read all the attached files into one string, then compare against expected uploads
     attached_files = pdf_attachments[:multi_uploads].split("\n")
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world.txt').strip)).to eq(true)
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_1.txt').strip)).to eq(true)
     expect(attached_files.include?(File.read('spec/fixtures/files/hello_world_multi_2.txt').strip)).to eq(true)
+  end
+
+  def assert_ms_list_item_contents(reference_number)
+    sleep (20) # we have to wait for email to arrive before MS list post is processed 
+
+    uri = URI.parse("#{root_graph_url}/sites/#{site_id}/lists/#{list_id}/items")
+    connection ||= Faraday.new(uri) do |conn|
+    end
+
+    res = connection.get do |req|
+      req.headers['Authorization'] = "Bearer #{get_auth_token}"
+      req.body = body.to_json
+    end
+
+    row_id = JSON.parse(res.body)['value'].last['id']
+  
+    single_item_uri = URI.parse("#{root_graph_url}/sites/#{site_id}/lists/#{list_id}/items/#{row_id}?expand=fields")
+    connection_2 ||= Faraday.new(single_item_uri) do |conn|
+    end
+
+    res = connection_2.get do |req|
+      req.headers['Authorization'] = "Bearer #{get_auth_token}"
+      req.body = body.to_json
+    end
+
+    row = JSON.parse(res.body)['fields'].values
+
+    expect(row).to include('Stormtrooper')
+    expect(row).to include(generated_name)
+    expect(row).to include(reference_number)
+    expect(row).to include('fb-acceptance-tests+confirmation@digital.justice.gov.uk')
+    expect(row).to include('My cat is a fluffy killer £ % ~ ! @ # $ ^ * ( ) - _ = + [ ] | ; , . ?')
+    expect(row).to include('WK')
+    expect(row).to include("Apples; Pears")
+    expect(row).to include('12 November 2007')
+    expect(row).to include('5')
+    expect(row).to include('Yes')
+    expect(row).to include("hotel-address_address_1; What is your hotel address? (optional); &#123;&quot;address_line_one&quot;=&gt;&quot;999 street&quot;, &quot;address_line_two&quot;=&gt;&quot;&quot;, &quot;city&quot;=&gt;&quot;Wondercity&quot;, &quot;county&quot;=&gt;&quot;&quot;, &quot;postcode&quot;=&gt;&quot;SW1H 9AJ&quot;, &quot;country&quot;=&gt;&quot;United Kingdom&quot;&#125;")
+    expect(row.any?(/\/sites\/MoJFormsDevelopment\/Shared%20Documents\/new-runner-acceptance-tests-test/)).to eq(true)
+    expect(row.any?(/hello_world_multi_1.txt/)).to eq(true)
+    expect(row.any?(/hello_world.txt/)).to eq(true)
   end
 
   def assert_pdf_contents(attachments, reference_number)
@@ -396,5 +439,58 @@ describe 'New Runner' do
       'SW1H 9AJ',
       'United Kingdom'
     ])
+  end
+
+  def get_auth_token
+    response = auth_connection.post do |req|
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.body = URI.encode_www_form(form_data)
+    end
+
+    response_body = JSON.parse(response.body)
+
+    response_body['access_token']
+  end
+
+  def auth_connection
+    @auth_connection ||= Faraday.new(URI.parse(auth_url)) do |conn|
+      conn.response :raise_error
+      conn.request :multipart
+      conn.request :url_encoded
+      conn.adapter :net_http
+    end
+  end
+
+  def form_data
+    {
+      client_id: admin_app,
+      client_secret: admin_secret,
+      grant_type: 'client_credentials',
+      resource: 'https://graph.microsoft.com/'
+    }
+  end
+
+  def admin_app
+    ENV['MS_ADMIN_APP_ID']
+  end
+
+  def admin_secret
+    ENV['MS_ADMIN_APP_SECRET']
+  end
+
+  def auth_url
+    ENV['MS_OAUTH_URL']
+  end
+
+  def root_graph_url
+    'https://graph.microsoft.com/v1.0/'
+  end
+
+  def site_id
+    ENV['MS_SITE_ID']
+  end
+
+  def list_id
+    ENV['MS_LIST_ID']
   end
 end
