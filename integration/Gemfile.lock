@@ -198,7 +198,7 @@ DEPENDENCIES
   httparty
   jwe
   mail
-  parallel (~> 1.11, >= 1.11.2)
+  parallel (~> 1.25)
   parallel_tests
   pdf-reader
   rspec
