@@ -154,8 +154,8 @@ new-runner-acceptance-test-env-vars:
 	echo "NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD=${NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD}" >> ./integration/tests.env
 
 ms-list-env-vars:
-echo "MS_LIST_ID=${MS_LIST_ID}" >> ./integration/tests.env
-echo "MS_SITE_ID=${MS_SITE_ID}" >> ./integration/tests.env
-echo "MS_OAUTH_URL=${MS_OAUTH_URL}" >> ./integration/tests.env
-echo "MS_ADMIN_APP_SECRET=${MS_ADMIN_APP_SECRET}" >> ./integration/tests.env
-echo "MS_ADMIN_APP_ID=${MS_ADMIN_APP_ID}" >> ./integration/tests.env
+	echo "MS_LIST_ID=${MS_LIST_ID}" >> ./integration/tests.env
+	echo "MS_SITE_ID=${MS_SITE_ID}" >> ./integration/tests.env
+	echo "MS_OAUTH_URL=${MS_OAUTH_URL}" >> ./integration/tests.env
+	echo "MS_ADMIN_APP_SECRET=${MS_ADMIN_APP_SECRET}" >> ./integration/tests.env
+	echo "MS_ADMIN_APP_ID=${MS_ADMIN_APP_ID}" >> ./integration/tests.env
