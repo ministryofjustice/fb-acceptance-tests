@@ -96,7 +96,7 @@ ci-env-vars:
 	cp integration/tests.env.ci integration/tests.env
 
 ## Experimental ##
-start-ci: ci-env-vars ci-google-envars new-runner-acceptance-test-env-vars
+start-ci: ci-env-vars ci-google-envars new-runner-acceptance-test-env-vars ms-list-env-vars
 	docker-compose -f docker-compose.ci.yml up -d --build integration_ci
 
 setup-ci: start-ci
@@ -152,3 +152,10 @@ smoke-tests-v2: ci-env-vars smoke-test-env-vars ci-google-envars
 new-runner-acceptance-test-env-vars:
 	echo "NEW_RUNNER_ACCEPTANCE_TEST_USER=${NEW_RUNNER_ACCEPTANCE_TEST_USER}" >> ./integration/tests.env
 	echo "NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD=${NEW_RUNNER_ACCEPTANCE_TEST_PASSWORD}" >> ./integration/tests.env
+
+ms-list-env-vars:
+	echo "MS_LIST_ID=${MS_LIST_ID}" >> ./integration/tests.env
+	echo "MS_SITE_ID=${MS_SITE_ID}" >> ./integration/tests.env
+	echo "MS_OAUTH_URL=${MS_OAUTH_URL}" >> ./integration/tests.env
+	echo "MS_ADMIN_APP_SECRET=${MS_ADMIN_APP_SECRET}" >> ./integration/tests.env
+	echo "MS_ADMIN_APP_ID=${MS_ADMIN_APP_ID}" >> ./integration/tests.env
