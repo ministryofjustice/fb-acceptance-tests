@@ -15,23 +15,27 @@ describe 'Save and return' do
     check_optional_text(page.text)
     form.question_1.set(q1_answer)
     continue
+    sleep 1
     form.save_and_return.click
     form.email.set('email@')
     continue
+    sleep 1
     check_validation_error_message('Enter an email address in the correct format, like name@example.com')
     form.email.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
+    sleep 1
     check_validation_error_message('Enter an answer for "Secret question"')
     form.secret_question_1.choose
     form.secret_question_2.choose
     form.secret_question_3.choose
     continue
+    sleep 1
     check_validation_error_message('Enter an answer for "Secret answer"')
     expect(page.text).to_not include('Enter an answer for "Secret question"')
     form.secret_answer.set('foo')
     form.secret_question_1.choose
     continue
-
+    sleep 1
     # cancel then answer another question then save progress
     form.cancel_saving.click
     form.question_2.set(q2_answer)
@@ -50,7 +54,7 @@ describe 'Save and return' do
     sleep 1
     form.email_confirmation.set('fb-acceptance-tests@digital.justice.gov.uk')
     continue
-
+    sleep 1
     check_optional_text(page.text)
     expect(page.text).to include('Your form has been saved')
     expect(page.text).to include('We have sent a one-off link to fb-acceptance-tests@digital.justice.gov.uk')
@@ -80,7 +84,7 @@ describe 'Save and return' do
     expect(page.text).to include(q2_answer)
     form.continue_form.click
     expect(page.text).to include('The Third Question')
-
+    sleep 1
     visit resume_link
 
     expect(page.text).to include('That link has already been used')
