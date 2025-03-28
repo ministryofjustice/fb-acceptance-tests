@@ -63,6 +63,7 @@ OPTIONAL_TEXT = [
 ]
 
 def check_optional_text(text)
+  sleep 1
   OPTIONAL_TEXT.each { |optional| expect(text).not_to include(optional) }
 end
 
@@ -78,6 +79,7 @@ def check_validation_error_message(error)
 end
 
 def continue
+  sleep 1
   form.continue_button.click
 end
 
