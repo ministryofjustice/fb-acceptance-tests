@@ -18,8 +18,10 @@ describe 'Conditional Content' do
     form.start_now_button.click
     form.radio_a.choose
     continue
+    sleep 1
     form.checkbox_1.check
     continue
+    sleep 1
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
     expect(page.text).to include(and_rule)
@@ -28,9 +30,11 @@ describe 'Conditional Content' do
 
     # Check with negative logic
     form.back.click
+    sleep 1
     form.checkbox_1.uncheck
     form.checkbox_2.check
     continue
+    sleep 1
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
     expect(page.text).to include(or_rule)
@@ -42,6 +46,7 @@ describe 'Conditional Content' do
     form.checkbox_2.uncheck
     form.checkbox_0.check
     continue
+    sleep 1
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
     expect(page.text).to include(checkbox_contains_substring)
@@ -51,6 +56,7 @@ describe 'Conditional Content' do
     form.back.click
     form.checkbox_0.uncheck
     continue
+    sleep 1
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
     expect(page.text).to include(optional_question_unanswered)
@@ -61,8 +67,10 @@ describe 'Conditional Content' do
     form.back.click
     form.radio_b.choose
     continue
+    sleep 1
     form.checkbox_2.check
     continue
+    sleep 1
     expect(page.text).to include(always_content)
     expect(page.text).not_to include(never_content)
     expect(page.text).not_to include(if_this_or_this_and_that) # if b is true, but and option 1 and option two are not
@@ -74,10 +82,12 @@ describe 'Conditional Content' do
     form.back.click
     form.checkbox_1.check # radio is now b, checkbox 1 and 2 are checked
     continue
+    sleep 1
     expect(page.text).to include(logic_combination_content)
 
     # Checking legacy content is shown
     continue
+    sleep 1
     expect(page.text).to include(legacy_content)
   end
 end

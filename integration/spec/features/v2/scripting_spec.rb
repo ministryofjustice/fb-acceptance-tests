@@ -91,6 +91,7 @@ describe 'New Runner' do
   end
 
   def continue
+    sleep 1
     form.continue_button.click
   end
 
