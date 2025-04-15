@@ -16,6 +16,7 @@ describe 'Conditional Content' do
 
   it 'shows appropriate conditional content depending on users answers' do
     form.start_now_button.click
+    sleep 2
     form.radio_a.choose
     continue
     sleep 1
