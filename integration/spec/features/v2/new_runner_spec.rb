@@ -99,6 +99,7 @@ describe 'New Runner' do
     # radio
     check_optional_text(page.text)
     continue
+    sleep 2
     check_error_message(page.text, [form.find('h1').text])
     form.yes_field.choose
     continue
@@ -119,6 +120,7 @@ describe 'New Runner' do
     # attach file to multi file
     check_optional_text(page.text)
     continue
+    sleep 2
     expect(page.text).to include(error_message) # required
     check_validation_error_message('Choose a file to upload')
     attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')

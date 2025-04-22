@@ -19,7 +19,7 @@ describe 'Conditional Content' do
     sleep 2
     form.radio_a.choose
     continue
-    sleep 1
+    sleep 2
     form.checkbox_1.check
     continue
     sleep 1
