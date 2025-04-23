@@ -68,7 +68,7 @@ def check_optional_text(text)
 end
 
 def check_error_message(text, fields)
-  sleep 1
+  sleep 2
   expect(page.text).to include(error_message)
   fields.each { |field| expect(text).to include("Enter an answer for \"#{field}\"")}
 end

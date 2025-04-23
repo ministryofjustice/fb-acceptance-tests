@@ -18,9 +18,11 @@ describe 'Conditional Content' do
     form.start_now_button.click
     sleep 2
     form.radio_a.choose
-    continue
     sleep 2
+    continue
+    sleep 3
     form.checkbox_1.check
+    sleep 2
     continue
     sleep 1
     expect(page.text).to include(always_content)

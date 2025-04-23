@@ -12,6 +12,7 @@ describe 'Form with locale set to welsh' do
     form.reject_analytics_button.click
     expect(form).to have_hide_cookie_message_button
     form.hide_cookie_message_button.click
+    sleep 1
     expect(form).not_to have_hide_cookie_message_button
 
     expect(footer_links).to eq(%w[Cwcis Preifatrwydd Hygyrchedd])

@@ -52,6 +52,7 @@ describe 'New Runner Branching App' do
     # page-e
     check_optional_text(page.text)
     continue
+    sleep 2
     check_error_message(page.text, [form.find('h1').text])
     form.page_e_field.set(page_e_answer)
     continue

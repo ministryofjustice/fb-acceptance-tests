@@ -130,6 +130,7 @@ describe 'New Runner' do
     form.add_another.click
     attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
+    sleep 2
     expect(page.text).to include('The selected file cannot have the same name as a file you have already selected')
     form.add_another.click
     attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
@@ -193,7 +194,9 @@ describe 'New Runner' do
     # Also checking optional checkboxes will remove a users previous answer
     form.change_optional_checkbox.click
     form.find(:css, '#optional-questions_checkboxes_1').uncheck('Celery', visible: false)
+    sleep 1
     continue
+    sleep 1
     expect(page.text).to include('Check your answers')
     expect(page.text).not_to include('Celery')
 
