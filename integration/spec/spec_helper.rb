@@ -25,6 +25,8 @@ RSpec.configure do |c|
       o.add_argument '--headless'
       o.add_argument '--no-sandbox'
       o.add_argument '--disable-dev-shm-usage'
+      # Temporarily pin browser version due to race condition in Chrome 133/134: https://github.com/teamcapybara/capybara/issues/2800
+      o.browser_version = '132'
     end
 
     Capybara::Selenium::Driver.new(
