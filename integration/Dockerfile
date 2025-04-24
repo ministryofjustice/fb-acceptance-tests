@@ -1,6 +1,7 @@
 FROM cimg/ruby:3.2.2-browsers
 
-RUN apk add build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
+# RUN apk add build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
+RUN sudo apt-get update && sudo apt-get install -y build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
 
 WORKDIR /usr/src/app
 
