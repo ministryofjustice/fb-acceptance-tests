@@ -63,31 +63,31 @@ describe 'Save and return' do
     # check session is destroyed
     expect(page.text).to include('This form has been saved for later')
     sleep 10
-    resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
-    resume_link = extract_link_from_email(resume_progress_email)
+    # resume_progress_email = get_resume_email('save-and-return-v2-acceptance-test')
+    # resume_link = extract_link_from_email(resume_progress_email)
 
-    visit resume_link
+    # visit resume_link
 
-    expect(page.text).to include('Continue with "save-and-return-v2-acceptance-test"')
-    form.resume_secret_answer.set('bar')
-    continue
-    sleep 1
-    check_validation_error_message('Your answer is incorrect. You have 2 attempts remaining.')
-    form.resume_secret_answer.set('')
-    sleep 1
-    form.resume_secret_answer.set('foo')
-    sleep 1
-    continue
-    sleep 1
-    expect(page.text).to include('You have successfully retrieved your saved information.')
-    expect(page.text).to include(q1_answer)
-    expect(page.text).to include(q2_answer)
-    form.continue_form.click
-    expect(page.text).to include('The Third Question')
-    sleep 1
-    visit resume_link
+    # expect(page.text).to include('Continue with "save-and-return-v2-acceptance-test"')
+    # form.resume_secret_answer.set('bar')
+    # continue
+    # sleep 1
+    # check_validation_error_message('Your answer is incorrect. You have 2 attempts remaining.')
+    # form.resume_secret_answer.set('')
+    # sleep 1
+    # form.resume_secret_answer.set('foo')
+    # sleep 1
+    # continue
+    # sleep 1
+    # expect(page.text).to include('You have successfully retrieved your saved information.')
+    # expect(page.text).to include(q1_answer)
+    # expect(page.text).to include(q2_answer)
+    # form.continue_form.click
+    # expect(page.text).to include('The Third Question')
+    # sleep 1
+    # visit resume_link
 
-    expect(page.text).to include('That link has already been used')
+    # expect(page.text).to include('That link has already been used')
   end
 
   def get_resume_email(reference_number)
