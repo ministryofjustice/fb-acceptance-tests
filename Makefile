@@ -96,7 +96,7 @@ ci-env-vars:
 	cp integration/tests.env.ci integration/tests.env
 
 ## Experimental ##
-start-ci: ci-env-vars ci-google-envars new-runner-acceptance-test-env-vars ms-list-env-vars
+start-ci: ci-env-vars ci-google-envars new-runner-acceptance-test-env-vars ms-list-env-vars smoke-test-env-vars
 	docker-compose -f docker-compose.ci.yml up -d --build integration_ci
 
 setup-ci: start-ci
