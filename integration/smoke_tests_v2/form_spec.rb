@@ -1,6 +1,16 @@
 require 'spec_helper'
 require 'pdf-reader'
 require 'csv'
+require 'dotenv'
+Dotenv.load('tests.env')
+
+if ENV['CI_MODE'].present?
+  Dotenv.require_keys(
+    'SMOKE_TEST_FORM_V2',
+    'SMOKE_TEST_USER',
+    'SMOKE_TEST_PASSWORD'
+  )
+end
 
 class SmokeTestV2RunnerForm < ServiceApp
   set_url ENV.fetch('SMOKE_TEST_FORM_V2')
