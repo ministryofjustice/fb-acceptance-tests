@@ -145,9 +145,9 @@ smoke-test-env-vars:
 	echo "SMOKE_TEST_USER=${SMOKE_TEST_USER}" >> ./integration/tests.env
 	echo "SMOKE_TEST_PASSWORD=${SMOKE_TEST_PASSWORD}" >> ./integration/tests.env
 
-smoke-tests-v2: ci-env-vars smoke-test-env-vars ci-google-envars
-	docker-compose -f docker-compose.ci.yml up -d --build integration_ci
-	docker-compose -f docker-compose.ci.yml run integration_ci bundle exec rspec smoke_tests_v2/form_spec.rb
+smoke-tests-v2:
+	docker-compose -f docker-compose.ci.yml run --rm integration_ci \
+	bundle exec rspec smoke_tests_v2/form_spec.rb
 
 new-runner-acceptance-test-env-vars:
 	echo "NEW_RUNNER_ACCEPTANCE_TEST_USER=${NEW_RUNNER_ACCEPTANCE_TEST_USER}" >> ./integration/tests.env
