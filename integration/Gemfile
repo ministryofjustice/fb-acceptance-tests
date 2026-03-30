@@ -14,5 +14,6 @@ gem 'parallel', '1.25.1'
 gem 'parallel_tests'
 gem 'pdf-reader'
 gem 'rspec'
+gem "rspec_junit_formatter"
 gem 'selenium-webdriver'
 gem 'site_prism', '< 5.0.0'
