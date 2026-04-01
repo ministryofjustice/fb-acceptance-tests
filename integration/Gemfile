@@ -16,4 +16,4 @@ gem 'pdf-reader'
 gem 'rspec'
 gem "rspec_junit_formatter"
 gem 'selenium-webdriver'
-gem 'site_prism', '< 5.0.0'
+gem 'site_prism', '~> 5.0'
