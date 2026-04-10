@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'activesupport', '~> 7.1.0'
+gem 'activesupport', '~> 7.2.3'
 gem 'byebug'
 gem 'capybara'
 gem 'dotenv'
