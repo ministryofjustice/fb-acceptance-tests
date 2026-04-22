@@ -1,4 +1,5 @@
 require 'pdf-reader'
+require 'ostruct'
 
 class Inbox
   USER_ID = 'me'.freeze
