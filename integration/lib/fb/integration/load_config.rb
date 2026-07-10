@@ -11,7 +11,7 @@ module Fb
       end
 
       def run
-        unless File.exists? config_file
+        unless File.exist? config_file
           puts "Config file #{config_file} not found. Copying sample"
           run_command('./bin/generate_config')
         end
