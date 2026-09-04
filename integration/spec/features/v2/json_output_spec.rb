@@ -27,7 +27,7 @@ describe 'API Submission' do
     continue
     form.submit_button.click
 
-    expect(page.text).to include('Application complete')
+    expect(page).to have_content('Application complete')
     result = wait_for_request
     expect(result).to have_key(:submissionId)
     expect(result[:serviceSlug]).to eq('json-acceptance-test')

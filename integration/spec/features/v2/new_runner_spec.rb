@@ -125,23 +125,23 @@ describe 'New Runner' do
     check_validation_error_message('Choose a file to upload')
     attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
-    expect(page.text).to include('hello_world_multi_1.txt')
+    expect(page).to have_content('hello_world_multi_1.txt')
     check_optional_text(page.text)
     form.add_another.click
     attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
-    expect(page.text).to include('The selected file cannot have the same name as a file you have already selected')
+    expect(page).to have_content('The selected file cannot have the same name as a file you have already selected')
     form.add_another.click
     attach_file('answers-multifile-multiupload-1-field-error', 'spec/fixtures/files/hello_world_multi_2.txt')
     continue
     form.delete_file.click
-    expect(page.text).not_to include('hello_world_multi_1.txt')
-    expect(page.text).to include('hello_world_multi_2.txt')
+    expect(page).to have_no_content('hello_world_multi_1.txt')
+    expect(page).to have_content('hello_world_multi_2.txt')
     form.add_another.click
     attach_file('answers-multifile-multiupload-1-field', 'spec/fixtures/files/hello_world_multi_1.txt')
     continue
-    expect(page.text).to include('hello_world_multi_1.txt')
-    expect(page.text).to include('hello_world_multi_2.txt')
+    expect(page).to have_content('hello_world_multi_1.txt')
+    expect(page).to have_content('hello_world_multi_2.txt')
     continue
 
     # optional multi upload upload page
@@ -194,28 +194,28 @@ describe 'New Runner' do
     form.change_optional_checkbox.click
     form.find(:css, '#optional-questions_checkboxes_1').uncheck('Celery', visible: false)
     continue
-    expect(page.text).to include('Check your answers')
-    expect(page.text).not_to include('Celery')
+    expect(page).to have_content('Check your answers')
+    expect(page).to have_no_content('Celery')
 
     # Checking removing file for optional file upload
     form.change_optional_file_upload.click
     form.remove_file.click
     continue
-    expect(page.text).to include('Check your answers')
-    expect(page.text).to include('Optional file upload (Optional)')
-    expect(page.text).not_to include('goodbye_world.text')
+    expect(page).to have_content('Check your answers')
+    expect(page).to have_content('Optional file upload (Optional)')
+    expect(page).to have_no_content('goodbye_world.text')
 
     # Check changing answer for autocomplete component
     form.change_autocomplete.click
     form.autocomplete_countries_field.set("W")
     find('li.autocomplete__option', text: 'Wakanda').click
     continue
-    expect(page.text).to include('Check your answers')
-    expect(page.text).not_to include('Narnia')
+    expect(page).to have_content('Check your answers')
+    expect(page).to have_no_content('Narnia')
 
     form.submit_button.click
 
-    expect(page.text).to include("You've sent us the answers about your cat!")
+    expect(page).to have_content("You've sent us the answers about your cat!")
     expect(page).to have_css('.govuk-button', text: 'Continue to pay')
     reference_number = page.find(:css, 'strong').text
     expect(page.text).to include('Your reference number is:')

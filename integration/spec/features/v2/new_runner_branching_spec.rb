@@ -138,7 +138,7 @@ describe 'New Runner Branching App' do
 
     form.submit_button.click
 
-    expect(form.text).to include('Application complete')
+    expect(form).to have_content('Application complete')
 
     # pdf_attachments = find_pdf_attachments(id: page_a_answer, expected_emails: 1)
     # csv_attachments = find_csv_attachments(id: page_a_answer)
