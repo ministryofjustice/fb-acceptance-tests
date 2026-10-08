@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe 'Save and return' do
   let(:form) { SaveAndReturnV2App.new }
-  let(:generated_name) { "FN-#{SecureRandom.uuid}" }
-  let(:error_message) { 'There is a problem' }
   let(:q1_answer) { 'Hello' }
   let(:q2_answer) { 'Goodybe' }
 
