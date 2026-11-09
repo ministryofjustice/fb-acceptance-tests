@@ -1,10 +1,10 @@
-FROM ruby:3.4.9-alpine
+FROM ruby:4.0.9-alpine
 
 RUN apk add build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
 
 WORKDIR /usr/src/app
 
-COPY Gemfile* ./
+COPY Gemfile* .ruby-version ./
 
 RUN gem update --system && gem install bundler
 RUN bundle check || bundle install --jobs 4
