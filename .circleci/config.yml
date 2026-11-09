@@ -1,9 +1,14 @@
 version: 2.1
 
+parameters:
+  ruby-version:
+    type: string
+    default: "4.0.9"
+
 jobs:
   test:
     docker:
-      - image: cimg/ruby:3.4
+      - image: cimg/ruby:<< pipeline.parameters.ruby-version >>
     resource_class: large
     parameters:
       spec_dir:
@@ -33,7 +38,7 @@ jobs:
           command: make spec-ci SPEC_DIR=<< parameters.spec_dir >>
   clear_old_emails:
     docker:
-      - image: cimg/ruby:3.4
+      - image: cimg/ruby:<< pipeline.parameters.ruby-version >>
     steps:
       - checkout
       - run:
