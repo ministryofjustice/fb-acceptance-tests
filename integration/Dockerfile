@@ -1,4 +1,4 @@
-FROM ruby:4.0.9-alpine
+FROM ruby:4.0.10-alpine
 
 RUN apk add build-base bash tzdata chromium-chromedriver chromium zlib-dev xorg-server
 
