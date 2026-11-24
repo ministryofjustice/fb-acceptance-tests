@@ -10,6 +10,28 @@ require 'httparty'
 require 'jwe'
 require 'open-uri'
 
+module ChromeStorageResetCompatibility
+  private
+
+  # Temporary workaround for https://github.com/teamcapybara/capybara/issues/2865.
+  # The Ruby 4.0.10 Alpine image includes Chrome 158, which rejects the '*' origin
+  # passed to Storage.clearDataForOrigin by Capybara 3.40.0 via Selenium 4.41.0.
+  # Remove this once Capybara provides a compatible fix.
+  def execute_cdp(command, params = {})
+    super
+  rescue Selenium::WebDriver::Error::InvalidArgumentError => e
+    raise unless command == 'Storage.clearDataForOrigin' &&
+                 params[:origin] == '*' &&
+                 e.message.include?('* is not a valid URL')
+
+    # Chrome 158 rejects Capybara 3.40's wildcard origin, so restart the
+    # browser to provide the clean session state that the reset requires.
+    quit
+  end
+end
+
+Capybara::Selenium::Driver::ChromeDriver.prepend(ChromeStorageResetCompatibility)
+
 
 if ENV['CI_MODE'].present?
   Dotenv.require_keys(
